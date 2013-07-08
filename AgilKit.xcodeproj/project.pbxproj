@@ -1,0 +1,354 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		341462961703A2DF00DC9BBB /* AKCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 341462951703A2DF00DC9BBB /* AKCache.m */; };
+		341BA07C17039934009CACDD /* AKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 341BA07B17039934009CACDD /* AKCrypto.m */; };
+		341DF768170DE1A800834B2F /* AKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 341DF767170DE1A800834B2F /* AKBase64.m */; };
+		343469281704B8DC0077D298 /* AKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 343469271704B8DC0077D298 /* AKKeychain.m */; };
+		3434692B1704BBEF0077D298 /* AKStringEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 3434692A1704BBEF0077D298 /* AKStringEscape.m */; };
+		3434692E1704C5400077D298 /* AKKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3434692D1704C5400077D298 /* AKKeyboard.m */; };
+		343469311704CE2D0077D298 /* AKXMLDOMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 343469301704CE2D0077D298 /* AKXMLDOMParser.m */; };
+		343469341704D6750077D298 /* AKXMLSAXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 343469331704D6750077D298 /* AKXMLSAXParser.m */; };
+		3434693B1704D88B0077D298 /* AKQueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3434693A1704D88B0077D298 /* AKQueryString.m */; };
+		3434693E1704D94A0077D298 /* AKMultipartFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3434693D1704D9490077D298 /* AKMultipartFormData.m */; };
+		3444EB8B173D441F00D2332C /* AKTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3444EB8A173D441F00D2332C /* AKTimer.m */; };
+		344788881705DFB5005658F4 /* AKNetActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 344788871705DFB5005658F4 /* AKNetActivityIndicator.m */; };
+		3451F9AA170356410046B9A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3451F9A9170356410046B9A9 /* Foundation.framework */; };
+		345FDE851705F808002C8B23 /* AKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 345FDE841705F808002C8B23 /* AKColor.m */; };
+		345FDE881705FB5D002C8B23 /* AKImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 345FDE871705FB5D002C8B23 /* AKImage.m */; };
+		347B5E97170357110006F928 /* AKLocStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 347B5E96170357110006F928 /* AKLocStr.m */; };
+		347B5E9E17035A8D0006F928 /* AKWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 347B5E9D17035A8D0006F928 /* AKWindowView.m */; };
+		347B5EA117035B970006F928 /* AKHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 347B5EA017035B970006F928 /* AKHex.m */; };
+		349CE38517035E480051A81C /* AKNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 349CE38417035E480051A81C /* AKNetRequest.m */; };
+		349CE387170371D90051A81C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 349CE386170371D90051A81C /* UIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3451F9A4170356410046B9A9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		341462941703A2DF00DC9BBB /* AKCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCache.h; sourceTree = "<group>"; };
+		341462951703A2DF00DC9BBB /* AKCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCache.m; sourceTree = "<group>"; };
+		341BA07A17039934009CACDD /* AKCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCrypto.h; sourceTree = "<group>"; };
+		341BA07B17039934009CACDD /* AKCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCrypto.m; sourceTree = "<group>"; };
+		341DF766170DE1A800834B2F /* AKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBase64.h; sourceTree = "<group>"; };
+		341DF767170DE1A800834B2F /* AKBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKBase64.m; sourceTree = "<group>"; };
+		343469261704B8DC0077D298 /* AKKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKKeychain.h; sourceTree = "<group>"; };
+		343469271704B8DC0077D298 /* AKKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKKeychain.m; sourceTree = "<group>"; };
+		343469291704BBEF0077D298 /* AKStringEscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKStringEscape.h; sourceTree = "<group>"; };
+		3434692A1704BBEF0077D298 /* AKStringEscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKStringEscape.m; sourceTree = "<group>"; };
+		3434692C1704C5400077D298 /* AKKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKKeyboard.h; sourceTree = "<group>"; };
+		3434692D1704C5400077D298 /* AKKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKKeyboard.m; sourceTree = "<group>"; };
+		3434692F1704CE2D0077D298 /* AKXMLDOMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKXMLDOMParser.h; sourceTree = "<group>"; };
+		343469301704CE2D0077D298 /* AKXMLDOMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKXMLDOMParser.m; sourceTree = "<group>"; };
+		343469321704D6750077D298 /* AKXMLSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKXMLSAXParser.h; sourceTree = "<group>"; };
+		343469331704D6750077D298 /* AKXMLSAXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKXMLSAXParser.m; sourceTree = "<group>"; };
+		343469391704D88B0077D298 /* AKQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKQueryString.h; sourceTree = "<group>"; };
+		3434693A1704D88B0077D298 /* AKQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKQueryString.m; sourceTree = "<group>"; };
+		3434693C1704D9490077D298 /* AKMultipartFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMultipartFormData.h; sourceTree = "<group>"; };
+		3434693D1704D9490077D298 /* AKMultipartFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMultipartFormData.m; sourceTree = "<group>"; };
+		3444EB89173D441F00D2332C /* AKTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTimer.h; sourceTree = "<group>"; };
+		3444EB8A173D441F00D2332C /* AKTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTimer.m; sourceTree = "<group>"; };
+		344788861705DFB5005658F4 /* AKNetActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNetActivityIndicator.h; sourceTree = "<group>"; };
+		344788871705DFB5005658F4 /* AKNetActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNetActivityIndicator.m; sourceTree = "<group>"; };
+		3451F9A6170356410046B9A9 /* libAgilKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAgilKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3451F9A9170356410046B9A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		345FDE831705F808002C8B23 /* AKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKColor.h; sourceTree = "<group>"; };
+		345FDE841705F808002C8B23 /* AKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKColor.m; sourceTree = "<group>"; };
+		345FDE861705FB5D002C8B23 /* AKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKImage.h; sourceTree = "<group>"; };
+		345FDE871705FB5D002C8B23 /* AKImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKImage.m; sourceTree = "<group>"; };
+		347B5E95170357110006F928 /* AKLocStr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKLocStr.h; sourceTree = "<group>"; };
+		347B5E96170357110006F928 /* AKLocStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKLocStr.m; sourceTree = "<group>"; };
+		347B5E98170357980006F928 /* AgilKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AgilKit-Prefix.pch"; sourceTree = "<group>"; };
+		347B5E9C17035A8D0006F928 /* AKWindowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowView.h; sourceTree = "<group>"; };
+		347B5E9D17035A8D0006F928 /* AKWindowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowView.m; sourceTree = "<group>"; };
+		347B5E9F17035B970006F928 /* AKHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHex.h; sourceTree = "<group>"; };
+		347B5EA017035B970006F928 /* AKHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHex.m; sourceTree = "<group>"; };
+		349CE38317035E480051A81C /* AKNetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNetRequest.h; sourceTree = "<group>"; };
+		349CE38417035E480051A81C /* AKNetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNetRequest.m; sourceTree = "<group>"; };
+		349CE386170371D90051A81C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3451F9A3170356410046B9A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3451F9AA170356410046B9A9 /* Foundation.framework in Frameworks */,
+				349CE387170371D90051A81C /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3451F99D170356410046B9A9 = {
+			isa = PBXGroup;
+			children = (
+				347B5E94170357110006F928 /* Classes */,
+				3451F9A8170356410046B9A9 /* Frameworks */,
+				3451F9A7170356410046B9A9 /* Products */,
+				3451F9B71703569B0046B9A9 /* Supporting Files */,
+			);
+			sourceTree = "<group>";
+		};
+		3451F9A7170356410046B9A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3451F9A6170356410046B9A9 /* libAgilKit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3451F9A8170356410046B9A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3451F9A9170356410046B9A9 /* Foundation.framework */,
+				349CE386170371D90051A81C /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3451F9B71703569B0046B9A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				347B5E98170357980006F928 /* AgilKit-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		347B5E94170357110006F928 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				341DF766170DE1A800834B2F /* AKBase64.h */,
+				341DF767170DE1A800834B2F /* AKBase64.m */,
+				341462941703A2DF00DC9BBB /* AKCache.h */,
+				341462951703A2DF00DC9BBB /* AKCache.m */,
+				345FDE831705F808002C8B23 /* AKColor.h */,
+				345FDE841705F808002C8B23 /* AKColor.m */,
+				341BA07A17039934009CACDD /* AKCrypto.h */,
+				341BA07B17039934009CACDD /* AKCrypto.m */,
+				347B5E9F17035B970006F928 /* AKHex.h */,
+				347B5EA017035B970006F928 /* AKHex.m */,
+				345FDE861705FB5D002C8B23 /* AKImage.h */,
+				345FDE871705FB5D002C8B23 /* AKImage.m */,
+				3434692C1704C5400077D298 /* AKKeyboard.h */,
+				3434692D1704C5400077D298 /* AKKeyboard.m */,
+				343469261704B8DC0077D298 /* AKKeychain.h */,
+				343469271704B8DC0077D298 /* AKKeychain.m */,
+				347B5E95170357110006F928 /* AKLocStr.h */,
+				347B5E96170357110006F928 /* AKLocStr.m */,
+				3434693C1704D9490077D298 /* AKMultipartFormData.h */,
+				3434693D1704D9490077D298 /* AKMultipartFormData.m */,
+				344788861705DFB5005658F4 /* AKNetActivityIndicator.h */,
+				344788871705DFB5005658F4 /* AKNetActivityIndicator.m */,
+				349CE38317035E480051A81C /* AKNetRequest.h */,
+				349CE38417035E480051A81C /* AKNetRequest.m */,
+				343469391704D88B0077D298 /* AKQueryString.h */,
+				3434693A1704D88B0077D298 /* AKQueryString.m */,
+				343469291704BBEF0077D298 /* AKStringEscape.h */,
+				3434692A1704BBEF0077D298 /* AKStringEscape.m */,
+				3444EB89173D441F00D2332C /* AKTimer.h */,
+				3444EB8A173D441F00D2332C /* AKTimer.m */,
+				347B5E9C17035A8D0006F928 /* AKWindowView.h */,
+				347B5E9D17035A8D0006F928 /* AKWindowView.m */,
+				3434692F1704CE2D0077D298 /* AKXMLDOMParser.h */,
+				343469301704CE2D0077D298 /* AKXMLDOMParser.m */,
+				343469321704D6750077D298 /* AKXMLSAXParser.h */,
+				343469331704D6750077D298 /* AKXMLSAXParser.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3451F9A5170356410046B9A9 /* AgilKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3451F9B4170356410046B9A9 /* Build configuration list for PBXNativeTarget "AgilKit" */;
+			buildPhases = (
+				3451F9A2170356410046B9A9 /* Sources */,
+				3451F9A3170356410046B9A9 /* Frameworks */,
+				3451F9A4170356410046B9A9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AgilKit;
+			productName = AgilKit;
+			productReference = 3451F9A6170356410046B9A9 /* libAgilKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3451F99E170356410046B9A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Agilstream, LLC";
+			};
+			buildConfigurationList = 3451F9A1170356410046B9A9 /* Build configuration list for PBXProject "AgilKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3451F99D170356410046B9A9;
+			productRefGroup = 3451F9A7170356410046B9A9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3451F9A5170356410046B9A9 /* AgilKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3451F9A2170356410046B9A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				341DF768170DE1A800834B2F /* AKBase64.m in Sources */,
+				341462961703A2DF00DC9BBB /* AKCache.m in Sources */,
+				345FDE851705F808002C8B23 /* AKColor.m in Sources */,
+				341BA07C17039934009CACDD /* AKCrypto.m in Sources */,
+				347B5EA117035B970006F928 /* AKHex.m in Sources */,
+				345FDE881705FB5D002C8B23 /* AKImage.m in Sources */,
+				3434692E1704C5400077D298 /* AKKeyboard.m in Sources */,
+				343469281704B8DC0077D298 /* AKKeychain.m in Sources */,
+				347B5E97170357110006F928 /* AKLocStr.m in Sources */,
+				3434693E1704D94A0077D298 /* AKMultipartFormData.m in Sources */,
+				344788881705DFB5005658F4 /* AKNetActivityIndicator.m in Sources */,
+				349CE38517035E480051A81C /* AKNetRequest.m in Sources */,
+				3434693B1704D88B0077D298 /* AKQueryString.m in Sources */,
+				3434692B1704BBEF0077D298 /* AKStringEscape.m in Sources */,
+				347B5E9E17035A8D0006F928 /* AKWindowView.m in Sources */,
+				343469311704CE2D0077D298 /* AKXMLDOMParser.m in Sources */,
+				343469341704D6750077D298 /* AKXMLSAXParser.m in Sources */,
+				3444EB8B173D441F00D2332C /* AKTimer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3451F9B2170356410046B9A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3451F9B3170356410046B9A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3451F9B5170356410046B9A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/AgilKit.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AgilKit-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		3451F9B6170356410046B9A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/AgilKit.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AgilKit-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3451F9A1170356410046B9A9 /* Build configuration list for PBXProject "AgilKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3451F9B2170356410046B9A9 /* Debug */,
+				3451F9B3170356410046B9A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3451F9B4170356410046B9A9 /* Build configuration list for PBXNativeTarget "AgilKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3451F9B5170356410046B9A9 /* Debug */,
+				3451F9B6170356410046B9A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3451F99E170356410046B9A9 /* Project object */;
+}
