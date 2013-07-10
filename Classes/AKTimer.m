@@ -63,12 +63,17 @@
 {
 	if (self = [super init]) {
 		m_delegate = delegate;
-		m_timer = [[NSTimer
+		m_timer = [NSTimer
 			timerWithTimeInterval:timeInterval
 			target:self
 			selector:@selector(onTimer:)
 			userInfo:nil
-			repeats:YES] retain];
+			repeats:YES];
+
+		#if !__has_feature(objc_arc)
+			[m_timer retain];
+		#endif
+
 		[[NSRunLoop currentRunLoop] addTimer:m_timer forMode:commonModes ?
 			NSRunLoopCommonModes : NSDefaultRunLoopMode];
 	}
@@ -80,7 +85,11 @@
 - (void)invalidate {
 	m_delegate = nil;
 	[m_timer invalidate];
-	[m_timer release];
+
+	#if !__has_feature(objc_arc)
+		[m_timer release];
+	#endif
+
 	m_timer = nil;
 }
 
@@ -98,7 +107,7 @@
 //
 
 
-@interface AKTimer() <AKTimerPrivateDelegate> {
+@interface AKTimer () <AKTimerPrivateDelegate> {
 	@private AKTimerPrivate *m_timerPrivate;
 }
 
@@ -111,9 +120,16 @@
 - (void)dealloc {
 	m_delegate = nil;
 	[m_timerPrivate invalidate];
-	[m_timerPrivate release];
+
+	#if !__has_feature(objc_arc)
+		[m_timerPrivate release];
+	#endif
+
 	m_timerPrivate = nil;
-	[super dealloc];
+
+	#if !__has_feature(objc_arc)
+		[super dealloc];
+	#endif
 }
 
 

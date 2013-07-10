@@ -42,7 +42,10 @@
 	[ms appendString:@"</data></dict>"];
 
 	NSData *data = [ms dataUsingEncoding:NSUTF8StringEncoding];
-	[ms release];
+
+	#if !__has_feature(objc_arc)
+		[ms release];
+	#endif
 
 	NSError *error = nil;
 
@@ -76,8 +79,11 @@
 		return nil;
 	}
 
-	NSString *xml = [[[NSString alloc] initWithData:xmlData encoding:NSUTF8StringEncoding]
-		autorelease];
+	NSString *xml = [[NSString alloc] initWithData:xmlData encoding:NSUTF8StringEncoding];
+
+	#if !__has_feature(objc_arc)
+		[xml autorelease];
+	#endif
 
 	NSRange range0 = [xml rangeOfString:@"<data>"];
 	NSRange range1 = [xml rangeOfString:@"</data>" options:NSBackwardsSearch];
@@ -97,7 +103,13 @@
 		}
 	}
 
-	return [[[NSString alloc] initWithData:md encoding:NSUTF8StringEncoding] autorelease];
+	NSString *s = [[NSString alloc] initWithData:md encoding:NSUTF8StringEncoding];
+
+	#if !__has_feature(objc_arc)
+		[s autorelease];
+	#endif
+
+	return s;
 }
 
 

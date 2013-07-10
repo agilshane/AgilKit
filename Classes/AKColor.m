@@ -26,7 +26,7 @@
 #import "AKHex.h"
 
 
-@interface AKColor()
+@interface AKColor ()
 
 + (int)hexCharToInt:(unichar)hexChar;
 

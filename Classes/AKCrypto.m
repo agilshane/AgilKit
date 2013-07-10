@@ -31,7 +31,7 @@
 #define kKeySize 16
 
 
-@interface AKCrypto()
+@interface AKCrypto ()
 
 + (NSData *)keyForPassword:(NSString *)password;
 
@@ -84,7 +84,13 @@
 	}
 
 	NSData *data = [self decryptData:[AKHex dataFromString:s] password:password];
-	return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+	s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+	#if !__has_feature(objc_arc)
+		[s autorelease];
+	#endif
+
+	return s;
 }
 
 
@@ -130,9 +136,7 @@
 		return nil;
 	}
 
-	NSData *data = [self encryptData:[s dataUsingEncoding:NSUTF8StringEncoding]
-		password:password];
-
+	NSData *data = [self encryptData:[s dataUsingEncoding:NSUTF8StringEncoding] password:password];
 	return [AKHex stringFromData:data];
 }
 

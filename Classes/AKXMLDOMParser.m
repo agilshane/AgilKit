@@ -29,12 +29,14 @@
 
 
 - (void)dealloc {
-	[m_currPath release];
-	[m_currText release];
-	[m_dictPathToAttributeDict release];
-	[m_dictPathToValue release];
-	[m_error release];
-	[super dealloc];
+	#if !__has_feature(objc_arc)
+		[m_currPath release];
+		[m_currText release];
+		[m_dictPathToAttributeDict release];
+		[m_dictPathToValue release];
+		[m_error release];
+		[super dealloc];
+	#endif
 }
 
 
@@ -52,7 +54,10 @@
 		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
 		[parser setDelegate:self];
 		[parser parse];
-		[parser release];
+
+		#if !__has_feature(objc_arc)
+			[parser release];
+		#endif
 
 		if (error != nil && m_error != nil) {
 			*error = m_error;
@@ -72,8 +77,11 @@
 	NSString *path = [[NSString alloc] initWithString:m_currPath];
 	NSString *text = [[NSString alloc] initWithString:m_currText];
 	[m_dictPathToValue setObject:text forKey:path];
-	[text release];
-	[path release];
+
+	#if !__has_feature(objc_arc)
+		[text release];
+		[path release];
+	#endif
 
 	[m_currText setString:@""];
 	NSRange range = [m_currPath rangeOfString:@"/" options:NSBackwardsSearch];
@@ -100,7 +108,10 @@
 	[m_currPath appendString:elementName];
 	NSString *path = [[NSString alloc] initWithString:m_currPath];
 	[m_dictPathToAttributeDict setObject:attributeDict forKey:path];
-	[path release];
+
+	#if !__has_feature(objc_arc)
+		[path release];
+	#endif
 }
 
 
@@ -117,7 +128,11 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)error {
 	if (m_error == nil) {
-		m_error = [error retain];
+		m_error = error;
+
+		#if !__has_feature(objc_arc)
+			[m_error retain];
+		#endif
 	}
 }
 

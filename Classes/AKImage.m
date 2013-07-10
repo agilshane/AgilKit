@@ -123,7 +123,13 @@
 
 
 + (UIImage *)imageNamed:(NSString *)imageName {
-	return [[self createImageNamed:imageName] autorelease];
+	UIImage *image = [self createImageNamed:imageName];
+
+	#if !__has_feature(objc_arc)
+		[image autorelease];
+	#endif
+
+	return image;
 }
 
 

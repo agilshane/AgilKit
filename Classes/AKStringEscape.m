@@ -30,13 +30,24 @@
 
 + (NSString *)percentEscape:(NSString *)s {
 	if (s != nil) {
-		s = (NSString *)CFURLCreateStringByAddingPercentEscapes(
-			NULL,
-			(CFStringRef)s,
-			NULL,
-			(CFStringRef)@"!*'\"();:@&=+$,/?%#[]",
-			kCFStringEncodingUTF8);
-		[s autorelease];
+		static NSString *chars = @"!*'\"();:@&=+$,/?%#[]";
+
+		#if !__has_feature(objc_arc)
+			s = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+				NULL,
+				(CFStringRef)s,
+				NULL,
+				(CFStringRef)chars,
+				kCFStringEncodingUTF8);
+			[s autorelease];
+		#else
+			s = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+				NULL,
+				(CFStringRef)s,
+				NULL,
+				(CFStringRef)chars,
+				kCFStringEncodingUTF8));
+		#endif
 	}
 
 	return s;
@@ -45,16 +56,11 @@
 
 + (NSString *)xmlEscape:(NSString *)s {
 	if (s != nil) {
-		@autoreleasepool {
-			s = [s stringByReplacingOccurrencesOfString:@"&"  withString:@"&amp;"];
-			s = [s stringByReplacingOccurrencesOfString:@"<"  withString:@"&lt;"];
-			s = [s stringByReplacingOccurrencesOfString:@">"  withString:@"&gt;"];
-			s = [s stringByReplacingOccurrencesOfString:@"'"  withString:@"&apos;"];
-			s = [s stringByReplacingOccurrencesOfString:@"\"" withString:@"&quot;"];
-			s = [s retain];
-		}
-
-		[s autorelease];
+		s = [s stringByReplacingOccurrencesOfString:@"&"  withString:@"&amp;"];
+		s = [s stringByReplacingOccurrencesOfString:@"<"  withString:@"&lt;"];
+		s = [s stringByReplacingOccurrencesOfString:@">"  withString:@"&gt;"];
+		s = [s stringByReplacingOccurrencesOfString:@"'"  withString:@"&apos;"];
+		s = [s stringByReplacingOccurrencesOfString:@"\"" withString:@"&quot;"];
 	}
 
 	return s;

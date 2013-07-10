@@ -66,7 +66,10 @@ static NSString *m_basePath;
 		NSURLConnection *cxn = m_cxn;
 		m_cxn = nil;
 		[cxn cancel];
-		[cxn release];
+
+		#if !__has_feature(objc_arc)
+			[cxn release];
+		#endif
 	}
 }
 
@@ -93,23 +96,31 @@ static NSString *m_basePath;
 
 - (void)dealloc {
 	[self cancel];
-	[super dealloc];
+
+	#if !__has_feature(objc_arc)
+		[super dealloc];
+	#endif
 }
 
 
 - (id)initWithDelegate:(id <AKNetRequestImplDelegate>)delegate request:(NSURLRequest *)request {
 	if (request == nil) {
-		[self release];
+		#if !__has_feature(objc_arc)
+			[self release];
+		#endif
+
 		return nil;
 	}
 
 	if (self = [super init]) {
 		// This adds one to our retain count.
-		m_cxn = [[NSURLConnection alloc] initWithRequest:request
-			delegate:self startImmediately:NO];
+		m_cxn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
 
 		if (m_cxn == nil) {
-			[self release];
+			#if !__has_feature(objc_arc)
+				[self release];
+			#endif
+
 			return nil;
 		}
 	}
@@ -137,7 +148,7 @@ static NSString *m_basePath;
 //
 
 
-@interface AKNetRequest() <AKNetRequestImplDelegate> {
+@interface AKNetRequest () <AKNetRequestImplDelegate> {
 	@private AKNetRequestImpl *m_impl;
 }
 
@@ -202,7 +213,11 @@ static NSString *m_basePath;
 - (void)dealloc {
 	if (m_impl != nil) {
 		[m_impl cancel];
-		[m_impl release];
+
+		#if !__has_feature(objc_arc)
+			[m_impl release];
+		#endif
+
 		m_impl = nil;
 	}
 
@@ -220,18 +235,23 @@ static NSString *m_basePath;
 		[[NSFileManager defaultManager] removeItemAtPath:m_responsePath error:nil];
 	}
 
-	[m_responseBody release];
-	[m_responseHeaders release];
-	[m_responsePath release];
-	[m_url release];
-
-	[super dealloc];
+	#if !__has_feature(objc_arc)
+		[m_responseBody release];
+		[m_responseHeaders release];
+		[m_responsePath release];
+		[m_url release];
+		[super dealloc];
+	#endif
 }
 
 
 - (void)finishUpWithError:(NSError *)error {
 	[m_impl setDelegateToNil];
-	[m_impl autorelease];
+
+	#if !__has_feature(objc_arc)
+		[m_impl autorelease];
+	#endif
+
 	m_impl = nil;
 
 	if (m_ignoreInteraction) {
@@ -306,8 +326,15 @@ static NSString *m_basePath;
 		NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
 		m_statusCode = r.statusCode;
 
-		[m_responseHeaders release];
-		m_responseHeaders = [r.allHeaderFields retain];
+		#if !__has_feature(objc_arc)
+			[m_responseHeaders release];
+		#endif
+
+		m_responseHeaders = r.allHeaderFields;
+
+		#if !__has_feature(objc_arc)
+			[m_responseHeaders retain];
+		#endif
 
 		for (NSString *key in m_responseHeaders) {
 			if ([key.lowercaseString isEqualToString:@"content-length"]) {
@@ -323,7 +350,11 @@ static NSString *m_basePath;
 + (void)initialize {
 	NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
 		NSUserDomainMask, YES) objectAtIndex:0];
-	m_basePath = [[path stringByAppendingPathComponent:@"AKNetRequest"] retain];
+	m_basePath = [path stringByAppendingPathComponent:@"AKNetRequest"];
+
+	#if !__has_feature(objc_arc)
+		[m_basePath retain];
+	#endif
 }
 
 
@@ -372,20 +403,30 @@ static NSString *m_basePath;
 	writeResponseToFile:(BOOL)writeResponseToFile
 {
 	if (url == nil || url.length == 0) {
-		[self release];
+		#if !__has_feature(objc_arc)
+			[self release];
+		#endif
+
 		return nil;
 	}
 
 	NSURL *nsurl = [NSURL URLWithString:url];
 
 	if (nsurl == nil) {
-		[self release];
+		#if !__has_feature(objc_arc)
+			[self release];
+		#endif
+
 		return nil;
 	}
 
 	if (self = [super init]) {
 		m_delegate = delegate;
-		m_url = [url retain];
+		m_url = url;
+
+		#if !__has_feature(objc_arc)
+			[m_url retain];
+		#endif
 
 		NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:nsurl];
 
@@ -420,7 +461,10 @@ static NSString *m_basePath;
 		m_impl = [[AKNetRequestImpl alloc] initWithDelegate:self request:req];
 
 		if (m_impl == nil) {
-			[self release];
+			#if !__has_feature(objc_arc)
+				[self release];
+			#endif
+
 			return nil;
 		}
 
@@ -432,10 +476,15 @@ static NSString *m_basePath;
 			while (YES) {
 				NSFileManager *fm = [NSFileManager defaultManager];
 				NSString *fileName = [NSString stringWithFormat:@"%f_%d.bin", now, rand()];
-				m_responsePath = [m_basePath stringByAppendingPathComponent:fileName];
+				NSString *responsePath = [m_basePath stringByAppendingPathComponent:fileName];
 
-				if (![fm fileExistsAtPath:m_responsePath]) {
-					m_responsePath = [m_responsePath retain];
+				if (![fm fileExistsAtPath:responsePath]) {
+					m_responsePath = responsePath;
+
+					#if !__has_feature(objc_arc)
+						[m_responsePath retain];
+					#endif
+
 					[fm createDirectoryAtPath:m_basePath withIntermediateDirectories:YES
 						attributes:nil error:nil];
 					[fm createFileAtPath:m_responsePath contents:nil attributes:nil];

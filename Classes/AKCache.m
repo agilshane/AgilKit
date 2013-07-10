@@ -43,10 +43,10 @@ static int m_maxBytes = 10000000;
 	@private unsigned long long m_size;
 }
 
-@property (nonatomic, retain) NSString *basePath;
+@property (nonatomic, strong) NSString *basePath;
 @property (nonatomic, assign) NSTimeInterval expiry;
 @property (nonatomic, assign) BOOL keepIfExpired;
-@property (nonatomic, retain) NSDate *modified;
+@property (nonatomic, strong) NSDate *modified;
 @property (nonatomic, assign) unsigned long long size;
 
 @end
@@ -60,9 +60,11 @@ static int m_maxBytes = 10000000;
 @synthesize size = m_size;
 
 - (void)dealloc {
-	[m_basePath release];
-	[m_modified release];
-	[super dealloc];
+	#if !__has_feature(objc_arc)
+		[m_basePath release];
+		[m_modified release];
+		[super dealloc];
+	#endif
 }
 
 @end
@@ -73,7 +75,7 @@ static int m_maxBytes = 10000000;
 //
 
 
-@interface AKCache()
+@interface AKCache ()
 
 + (NSString *)basePathForURL:(NSString *)url;
 + (NSString *)rootPath;
@@ -192,12 +194,14 @@ static int m_maxBytes = 10000000;
 
 
 - (void)dealloc {
-	[m_data release];
-	[m_image release];
-	[m_netRequestData release];
-	[m_netRequestImage release];
-	[m_url release];
-	[super dealloc];
+	#if !__has_feature(objc_arc)
+		[m_data release];
+		[m_image release];
+		[m_netRequestData release];
+		[m_netRequestImage release];
+		[m_url release];
+		[super dealloc];
+	#endif
 }
 
 
@@ -225,8 +229,7 @@ static int m_maxBytes = 10000000;
 
 
 + (BOOL)fileExpiredWithURL:(NSString *)url {
-	NSString *infoPath = [[self basePathForURL:url]
-		stringByAppendingPathComponent:@"file.info"];
+	NSString *infoPath = [[self basePathForURL:url] stringByAppendingPathComponent:@"file.info"];
 	NSString *info = [NSString stringWithContentsOfFile:infoPath
 		encoding:NSUTF8StringEncoding error:nil];
 
@@ -256,12 +259,21 @@ static int m_maxBytes = 10000000;
 
 	if (image != nil) {
 		if (image.scale == 2.0) {
-			return [image autorelease];
+			#if !__has_feature(objc_arc)
+				[image autorelease];
+			#endif
+
+			return image;
 		}
 
-		UIImage *image2 = [[[UIImage alloc] initWithCGImage:image.CGImage
-			scale:2 orientation:image.imageOrientation] autorelease];
-		[image release];
+		UIImage *image2 = [[UIImage alloc] initWithCGImage:image.CGImage
+			scale:2 orientation:image.imageOrientation];
+
+		#if !__has_feature(objc_arc)
+			[image release];
+			[image2 autorelease];
+		#endif
+
 		return image2;
 	}
 
@@ -275,12 +287,21 @@ static int m_maxBytes = 10000000;
 
 	if (image != nil) {
 		if (image.scale == 1.0) {
-			return [image autorelease];
+			#if !__has_feature(objc_arc)
+				[image autorelease];
+			#endif
+
+			return image;
 		}
 
-		UIImage *image2 = [[[UIImage alloc] initWithCGImage:image.CGImage
-			scale:1 orientation:image.imageOrientation] autorelease];
-		[image release];
+		UIImage *image2 = [[UIImage alloc] initWithCGImage:image.CGImage
+			scale:1 orientation:image.imageOrientation];
+
+		#if !__has_feature(objc_arc)
+			[image release];
+			[image2 autorelease];
+		#endif
+
 		return image2;
 	}
 
@@ -299,13 +320,22 @@ static int m_maxBytes = 10000000;
 	m_timeToLive = timeToLive;
 
 	if (url == nil || url.length == 0) {
-		[self release];
+		#if !__has_feature(objc_arc)
+			[self release];
+		#endif
+
 		return nil;
 	}
 
 	if (self = [super init]) {
 		m_delegate = delegate;
-		m_url = [url retain];
+
+		#if !__has_feature(objc_arc)
+			m_url = [url retain];
+		#else
+			m_url = url;
+		#endif
+
 		m_netRequestData = [[AKNetRequest alloc] initWithDelegate:self url:url];
 	}
 
@@ -325,13 +355,22 @@ static int m_maxBytes = 10000000;
 	m_timeToLive = timeToLive;
 
 	if (url == nil || url.length == 0) {
-		[self release];
+		#if !__has_feature(objc_arc)
+			[self release];
+		#endif
+
 		return nil;
 	}
 
 	if (self = [super init]) {
 		m_delegate = delegate;
-		m_url = [url retain];
+
+		#if !__has_feature(objc_arc)
+			m_url = [url retain];
+		#else
+			m_url = url;
+		#endif
+
 		m_netRequestImage = [[AKNetRequest alloc] initWithDelegate:self url:url];
 	}
 
@@ -342,11 +381,17 @@ static int m_maxBytes = 10000000;
 - (void)netRequestDidFinish:(AKNetRequest *)request error:(NSError *)error {
 	if (error != nil) {
 		if (request == m_netRequestData) {
-			[m_netRequestData autorelease];
+			#if !__has_feature(objc_arc)
+				[m_netRequestData autorelease];
+			#endif
+
 			m_netRequestData = nil;
 		}
 		else if (request == m_netRequestImage) {
-			[m_netRequestImage autorelease];
+			#if !__has_feature(objc_arc)
+				[m_netRequestImage autorelease];
+			#endif
+
 			m_netRequestImage = nil;
 		}
 
@@ -362,7 +407,10 @@ static int m_maxBytes = 10000000;
 	}
 
 	if (request == m_netRequestData) {
-		[m_netRequestData autorelease];
+		#if !__has_feature(objc_arc)
+			[m_netRequestData autorelease];
+		#endif
+
 		m_netRequestData = nil;
 		NSData *data = request.responseBody;
 
@@ -381,11 +429,19 @@ static int m_maxBytes = 10000000;
 				keepIfExpired:m_keepIfExpired];
 		}
 
-		m_data = [data retain];
+		#if !__has_feature(objc_arc)
+			m_data = [data retain];
+		#else
+			m_data = data;
+		#endif
+
 		[m_delegate cacheDidFinish:self error:nil];
 	}
 	else if (request == m_netRequestImage) {
-		[m_netRequestImage autorelease];
+		#if !__has_feature(objc_arc)
+			[m_netRequestImage autorelease];
+		#endif
+
 		m_netRequestImage = nil;
 		NSData *data = request.responseBody;
 
@@ -464,7 +520,11 @@ static int m_maxBytes = 10000000;
 		if (image != nil && image.scale != scale) {
 			UIImage *image2 = [[UIImage alloc] initWithCGImage:image.CGImage
 				scale:scale orientation:image.imageOrientation];
-			[image release];
+
+			#if !__has_feature(objc_arc)
+				[image release];
+			#endif
+
 			image = image2;
 		}
 
@@ -490,7 +550,11 @@ static int m_maxBytes = 10000000;
 		[fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 
 		if ([fm fileExistsAtPath:path]) {
-			rootPath = [path retain];
+			#if !__has_feature(objc_arc)
+				rootPath = [path retain];
+			#else
+				rootPath = path;
+			#endif
 		}
 		else {
 			NSLog(@"Could not create the root path!");
@@ -568,7 +632,10 @@ static int m_maxBytes = 10000000;
 			totalSize += item.size;
 
 			[items addObject:item];
-			[item release];
+
+			#if !__has_feature(objc_arc)
+				[item release];
+			#endif
 		}
 	}
 

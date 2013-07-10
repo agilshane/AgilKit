@@ -29,12 +29,19 @@
 
 
 + (void)deleteStringValueForKey:(NSString *)key {
-	NSDictionary *dict = @{
-		(id)kSecAttrAccount : key,
-		(id)kSecClass : (id)kSecClassGenericPassword
-	};
-
-	OSStatus status = SecItemDelete((CFDictionaryRef)dict);
+	#if !__has_feature(objc_arc)
+		NSDictionary *dict = @{
+			(id)kSecAttrAccount : key,
+			(id)kSecClass : (id)kSecClassGenericPassword
+		};
+		OSStatus status = SecItemDelete((CFDictionaryRef)dict);
+	#else
+		NSDictionary *dict = @{
+			(__bridge id)kSecAttrAccount : key,
+			(__bridge id)kSecClass : (__bridge id)kSecClassGenericPassword
+		};
+		OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dict);
+	#endif
 
 	if (status == errSecItemNotFound) {
 		// Not found, no problem.
@@ -54,14 +61,23 @@
 	NSString *oldValue = [self stringValueForKey:key];
 
 	if (oldValue == nil) {
-		NSDictionary *dict = @{
-			(id)kSecAttrAccount : key,
-			(id)kSecClass : (id)kSecClassGenericPassword,
-			(id)kSecValueData : [value dataUsingEncoding:NSUTF8StringEncoding]
-		};
+		#if !__has_feature(objc_arc)
+			NSDictionary *dict = @{
+				(id)kSecAttrAccount : key,
+				(id)kSecClass : (id)kSecClassGenericPassword,
+				(id)kSecValueData : [value dataUsingEncoding:NSUTF8StringEncoding]
+			};
 
-		id outval = nil;
-		OSStatus status = SecItemAdd((CFDictionaryRef)dict, (CFTypeRef *)&outval);
+			OSStatus status = SecItemAdd((CFDictionaryRef)dict, NULL);
+		#else
+			NSDictionary *dict = @{
+				(__bridge id)kSecAttrAccount : key,
+				(__bridge id)kSecClass : (__bridge id)kSecClassGenericPassword,
+				(__bridge id)kSecValueData : [value dataUsingEncoding:NSUTF8StringEncoding]
+			};
+
+			OSStatus status = SecItemAdd((__bridge CFDictionaryRef)dict, NULL);
+		#endif
 
 		if (status != errSecSuccess) {
 			NSLog(@"Failed to set a keychain value (%ld)!", status);
@@ -75,27 +91,49 @@
 
 
 + (NSString *)stringValueForKey:(NSString *)key {
-	NSDictionary *query = @{
-		(id)kSecAttrAccount : key,
-		(id)kSecClass : (id)kSecClassGenericPassword,
-		(id)kSecMatchLimit : (id)kSecMatchLimitOne,
-		(id)kSecReturnData : (id)kCFBooleanTrue
-	};
+	#if !__has_feature(objc_arc)
+		NSDictionary *query = @{
+			(id)kSecAttrAccount : key,
+			(id)kSecClass : (id)kSecClassGenericPassword,
+			(id)kSecMatchLimit : (id)kSecMatchLimitOne,
+			(id)kSecReturnData : (id)kCFBooleanTrue
+		};
+	#else
+		NSDictionary *query = @{
+			(__bridge id)kSecAttrAccount : key,
+			(__bridge id)kSecClass : (__bridge id)kSecClassGenericPassword,
+			(__bridge id)kSecMatchLimit : (__bridge id)kSecMatchLimitOne,
+			(__bridge id)kSecReturnData : (id)kCFBooleanTrue
+		};
+	#endif
 
-	id outval = nil;
-	OSStatus status = SecItemCopyMatching((CFDictionaryRef)query, (CFTypeRef *)&outval);
+	CFDataRef dataRef = nil;
+
+	#if !__has_feature(objc_arc)
+		OSStatus status = SecItemCopyMatching((CFDictionaryRef)query, (CFTypeRef *)&dataRef);
+	#else
+		OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&dataRef);
+	#endif
+
 	NSString *value = nil;
 
 	if (status == errSecItemNotFound) {
 		// Not found, no problem.
 	}
 	else if (status == errSecSuccess) {
-		NSData *data = (NSData *)outval;
+		#if !__has_feature(objc_arc)
+			NSData *data = (NSData *)dataRef;
+		#else
+			NSData *data = CFBridgingRelease(dataRef);
+		#endif
 
 		if (data != nil) {
-			value = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
-				autorelease];
-			[data release];
+			value = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+			#if !__has_feature(objc_arc)
+				[value autorelease];
+				[data release];
+			#endif
 		}
 	}
 	else {

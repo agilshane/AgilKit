@@ -25,7 +25,7 @@
 #import "AKMultipartFormData.h"
 
 
-@interface AKMultipartFormData()
+@interface AKMultipartFormData ()
 
 - (void)beginDataIfNeeded;
 
@@ -99,16 +99,22 @@
 
 
 - (void)dealloc {
-	[m_boundary release];
-	[m_data release];
-	[super dealloc];
+	#if !__has_feature(objc_arc)
+		[m_boundary release];
+		[m_data release];
+		[super dealloc];
+	#endif
 }
 
 
 - (id)init {
 	if (self = [super init]) {
-		m_boundary = [[NSString stringWithFormat:@"---------------------------%X%X",
-			arc4random(), arc4random()] retain];
+		m_boundary = [NSString stringWithFormat:@"---------------------------%X%X",
+			arc4random(), arc4random()];
+
+		#if !__has_feature(objc_arc)
+			[m_boundary retain];
+		#endif
 	}
 
 	return self;

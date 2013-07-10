@@ -29,9 +29,11 @@
 
 
 - (void)dealloc {
-	[m_currPath release];
-	[m_currText release];
-	[super dealloc];
+	#if !__has_feature(objc_arc)
+		[m_currPath release];
+		[m_currText release];
+		[super dealloc];
+	#endif
 }
 
 
@@ -54,7 +56,10 @@
 
 	[parser setDelegate:self];
 	[parser parse];
-	[parser release];
+
+	#if !__has_feature(objc_arc)
+		[parser release];
+	#endif
 }
 
 
@@ -67,8 +72,11 @@
 	NSString *path = [[NSString alloc] initWithString:m_currPath];
 	NSString *text = [[NSString alloc] initWithString:m_currText];
 	[m_delegate xmlsaxParser:self didEndElementPath:path text:text];
-	[text release];
-	[path release];
+
+	#if !__has_feature(objc_arc)
+		[text release];
+		[path release];
+	#endif
 
 	[m_currText setString:@""];
 	NSRange range = [m_currPath rangeOfString:@"/" options:NSBackwardsSearch];
@@ -95,7 +103,10 @@
 	[m_currPath appendString:elementName];
 	NSString *path = [[NSString alloc] initWithString:m_currPath];
 	[m_delegate xmlsaxParser:self didStartElementPath:path attributes:attributeDict];
-	[path release];
+
+	#if !__has_feature(objc_arc)
+		[path release];
+	#endif
 }
 
 

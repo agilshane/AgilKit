@@ -44,8 +44,10 @@
 
 
 - (void)dealloc {
-	[m_string release];
-	[super dealloc];
+	#if !__has_feature(objc_arc)
+		[m_string release];
+		[super dealloc];
+	#endif
 }
 
 

@@ -25,7 +25,7 @@
 #import "AKWindowView.h"
 
 
-@interface AKWindowView()
+@interface AKWindowView ()
 
 - (void)layoutWithOrientation:(UIInterfaceOrientation)orientation;
 
@@ -40,7 +40,10 @@
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
+
+	#if !__has_feature(objc_arc)
+		[super dealloc];
+	#endif
 }
 
 
@@ -49,7 +52,10 @@
 	m_didFinishLaunching = (app.applicationState == UIApplicationStateActive);
 
 	if (contentView == nil) {
-		[self release];
+		#if !__has_feature(objc_arc)
+			[self release];
+		#endif
+
 		return nil;
 	}
 
