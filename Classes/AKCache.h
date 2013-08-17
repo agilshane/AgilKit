@@ -42,7 +42,7 @@ typedef enum {
 
 @interface AKCache : NSObject <AKNetRequestDelegate> {
 	@private NSData *m_data;
-	@private id <AKCacheDelegate> m_delegate;
+	@private __weak id <AKCacheDelegate> m_delegate;
 	@private UIImage *m_image;
 	@private BOOL m_keepIfExpired;
 	@private AKNetRequest *m_netRequestData;

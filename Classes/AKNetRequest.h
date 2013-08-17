@@ -50,7 +50,7 @@ typedef enum {
 @end
 
 @interface AKNetRequest : NSObject {
-	@private id <AKNetRequestDelegate> m_delegate;
+	@private __weak id <AKNetRequestDelegate> m_delegate;
 	@private BOOL m_ignoreInteraction;
 	@private NSMutableData *m_responseBody;
 	@private NSDictionary *m_responseHeaders;
@@ -59,12 +59,14 @@ typedef enum {
 	@private int m_statusCode;
 	@private long long m_totalBytesExpected;
 	@private NSString *m_url;
+	@private NSDictionary *m_userInfo;
 }
 
 @property (nonatomic, readonly) NSData *responseBody;
 @property (nonatomic, readonly) NSDictionary *responseHeaders;
 @property (nonatomic, readonly) NSString *responsePath;
 @property (nonatomic, readonly) int statusCode;
+@property (nonatomic, strong) NSDictionary *userInfo;
 @property (nonatomic, readonly) NSString *url;
 
 //

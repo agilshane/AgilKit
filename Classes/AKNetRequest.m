@@ -27,6 +27,7 @@
 
 
 static NSString *m_basePath;
+static int m_ignoreCount = 0;
 
 
 //
@@ -45,7 +46,7 @@ static NSString *m_basePath;
 
 @interface AKNetRequestImpl : NSObject <NSURLConnectionDataDelegate> {
 	@private NSURLConnection *m_cxn;
-	@private id <AKNetRequestImplDelegate> m_delegate;
+	@private __weak id <AKNetRequestImplDelegate> m_delegate;
 }
 
 - (void)cancel;
@@ -113,6 +114,8 @@ static NSString *m_basePath;
 	}
 
 	if (self = [super init]) {
+		m_delegate = delegate;
+
 		// This adds one to our retain count.
 		m_cxn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
 
@@ -165,6 +168,7 @@ static NSString *m_basePath;
 @synthesize responseHeaders = m_responseHeaders;
 @synthesize responsePath = m_responsePath;
 @synthesize statusCode = m_statusCode;
+@synthesize userInfo = m_userInfo;
 @synthesize url = m_url;
 
 
@@ -223,7 +227,16 @@ static NSString *m_basePath;
 
 	if (m_ignoreInteraction) {
 		m_ignoreInteraction = NO;
-		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+		m_ignoreCount--;
+
+		if (m_ignoreCount < 0) {
+			NSLog(@"AKNetRequest has ended ignoring interaction too many times!");
+			m_ignoreCount = 0;
+		}
+
+		if (m_ignoreCount == 0) {
+			[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+		}
 	}
 
 	if (m_showNetActivityIndicator) {
@@ -240,6 +253,7 @@ static NSString *m_basePath;
 		[m_responseHeaders release];
 		[m_responsePath release];
 		[m_url release];
+		[m_userInfo release];
 		[super dealloc];
 	#endif
 }
@@ -256,7 +270,16 @@ static NSString *m_basePath;
 
 	if (m_ignoreInteraction) {
 		m_ignoreInteraction = NO;
-		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+		m_ignoreCount--;
+
+		if (m_ignoreCount < 0) {
+			NSLog(@"AKNetRequest has ended ignoring interaction too many times!");
+			m_ignoreCount = 0;
+		}
+
+		if (m_ignoreCount == 0) {
+			[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+		}
 	}
 
 	if (m_showNetActivityIndicator) {
@@ -495,7 +518,11 @@ static NSString *m_basePath;
 
 		if (ignoreInteraction) {
 			m_ignoreInteraction = YES;
-			[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+			m_ignoreCount++;
+
+			if (m_ignoreCount == 1) {
+				[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+			}
 		}
 
 		if (showNetActivityIndicator) {

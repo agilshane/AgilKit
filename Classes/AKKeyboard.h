@@ -33,7 +33,7 @@
 @end
 
 @interface AKKeyboard : NSObject {
-	@private id <AKKeyboardDelegate> m_delegate;
+	@private __weak id <AKKeyboardDelegate> m_delegate;
 	@private CGFloat m_height;
 }
 

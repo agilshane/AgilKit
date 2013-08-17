@@ -39,7 +39,7 @@
 @end
 
 @interface AKTimerPrivate : NSObject {
-	@private id <AKTimerPrivateDelegate> m_delegate;
+	@private __weak id <AKTimerPrivateDelegate> m_delegate;
 	@private NSTimer *m_timer;
 }
 

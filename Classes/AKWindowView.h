@@ -27,9 +27,11 @@
 @interface AKWindowView : UIView {
 	@private UIView *m_contentView;
 	@private BOOL m_didFinishLaunching;
+	@private BOOL m_orientationLocked;
 }
 
 @property (nonatomic, readonly) UIView *contentView;
+@property (nonatomic, assign) BOOL orientationLocked;
 
 - (id)initWithContentView:(UIView *)contentView;
 

@@ -36,6 +36,7 @@
 
 
 @synthesize contentView = m_contentView;
+@synthesize orientationLocked = m_orientationLocked;
 
 
 - (void)dealloc {
@@ -122,6 +123,10 @@
 
 
 - (void)onWillChangeStatusBarOrientation:(NSNotification *)notification {
+	if (m_orientationLocked) {
+		return;
+	}
+
 	UIApplication *app = [UIApplication sharedApplication];
 	NSNumber *number = [notification.userInfo objectForKey:
 		UIApplicationStatusBarOrientationUserInfoKey];
