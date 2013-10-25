@@ -40,46 +40,57 @@
 }
 
 
++ (CGRect)fullScreenFrameOfView:(UIView *)view orientation:(UIInterfaceOrientation)orientation {
+	if (view == nil || view.window == nil) {
+		return CGRectZero;
+	}
+
+	CGRect frame = [view convertRect:view.bounds toView:nil];
+	CGSize windowSize = view.window.bounds.size;
+
+	if (orientation == UIInterfaceOrientationPortrait) {
+		// The easy case.
+	}
+	else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+		frame = CGRectMake(
+			windowSize.width - CGRectGetMaxX(frame),
+			windowSize.height - CGRectGetMaxY(frame),
+			frame.size.width,
+			frame.size.height);
+	}
+	else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+		frame = CGRectMake(
+			windowSize.height - CGRectGetMaxY(frame),
+			frame.origin.x,
+			frame.size.height,
+			frame.size.width);
+	}
+	else if (orientation == UIInterfaceOrientationLandscapeRight) {
+		frame = CGRectMake(
+			frame.origin.y,
+			windowSize.width - CGRectGetMaxX(frame),
+			frame.size.height,
+			frame.size.width);
+	}
+	else {
+		NSLog(@"The orientation is unrecognized!");
+	}
+
+	return frame;
+}
+
+
 - (CGFloat)heightOfView:(UIView *)view orientation:(UIInterfaceOrientation)orientation {
-	if (view == nil) {
+	if (view == nil || view.window == nil) {
 		return 0;
 	}
 
-	if (m_height == 0.0) {
-		return view.bounds.size.height;
-	}
-
-	CGFloat f = 0;
-	CGRect r = [view convertRect:view.frame toView:nil];
-
-	if ([view isKindOfClass:[UIScrollView class]]) {
-		UIScrollView *scroll = (UIScrollView *)view;
-		r = CGRectOffset(r, scroll.contentOffset.x, scroll.contentOffset.y);
-	}
-
-	UIWindow *w = view.window;
-
-	if (orientation == UIInterfaceOrientationPortrait) {
-		f = CGRectGetMaxY(r) - (w.frame.size.height - m_height);
-		return r.size.height - f;
-	}
-
-	if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
-		f = (w.frame.size.height - r.origin.y) - (w.frame.size.height - m_height);
-		return r.size.height - f;
-	}
-
-	if (orientation == UIInterfaceOrientationLandscapeLeft) {
-		f = CGRectGetMaxX(r) - (w.frame.size.width - m_height);
-		return r.size.width - f;
-	}
-
-	if (orientation == UIInterfaceOrientationLandscapeRight) {
-		return CGRectGetMaxX(r) - m_height;
-	}
-
-	NSLog(@"The orientation is unrecognized!");
-	return 0;
+	CGFloat windowHeight = UIInterfaceOrientationIsPortrait(orientation) ?
+		view.window.bounds.size.height : view.window.bounds.size.width;
+	CGFloat keyboardOrigin = windowHeight - m_height;
+	CGRect frame = [AKKeyboard fullScreenFrameOfView:view orientation:orientation];
+	CGFloat height = frame.size.height - (CGRectGetMaxY(frame) - keyboardOrigin);
+	return MIN(height, frame.size.height);
 }
 
 

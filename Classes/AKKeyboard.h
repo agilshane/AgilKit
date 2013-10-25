@@ -40,6 +40,9 @@
 // The current height of the keyboard.  The value is 0.0 if hidden.
 @property (nonatomic, readonly) CGFloat height;
 
+// Translates the given view's frame to window coordinates, taking into account the orientation.
++ (CGRect)fullScreenFrameOfView:(UIView *)view orientation:(UIInterfaceOrientation)orientation;
+
 // Returns how high the given view should be in order to make room for the keyboard below it.
 // If the current keyboard height is 0.0, the view's height is returned.
 - (CGFloat)heightOfView:(UIView *)view orientation:(UIInterfaceOrientation)orientation;
