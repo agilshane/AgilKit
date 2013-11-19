@@ -135,4 +135,26 @@
 }
 
 
+- (void)
+	updateInsetsOfScrollView:(UIScrollView *)scrollView
+	orientation:(UIInterfaceOrientation)orientation
+{
+	if (scrollView == nil || scrollView.window == nil) {
+		return;
+	}
+
+	UIEdgeInsets insets = UIEdgeInsetsZero;
+
+	if (m_height > 0.0) {
+		CGRect rect = [AKKeyboard fullScreenFrameOfView:scrollView orientation:orientation];
+		CGFloat windowHeight = UIInterfaceOrientationIsPortrait(orientation) ?
+			scrollView.window.bounds.size.height : scrollView.window.bounds.size.width;
+		insets = UIEdgeInsetsMake(0, 0, CGRectGetMaxY(rect) - windowHeight + m_height, 0);
+	}
+
+	scrollView.contentInset = insets;
+	scrollView.scrollIndicatorInsets = insets;
+}
+
+
 @end

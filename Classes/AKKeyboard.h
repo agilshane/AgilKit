@@ -49,4 +49,9 @@
 
 - (id)initWithDelegate:(id <AKKeyboardDelegate>)delegate;
 
+// Updates the given scroll view's insets based on the current state of the keyboard.
+- (void)
+	updateInsetsOfScrollView:(UIScrollView *)scrollView
+	orientation:(UIInterfaceOrientation)orientation;
+
 @end
