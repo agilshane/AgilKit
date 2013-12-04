@@ -66,8 +66,9 @@ typedef enum {
 @property (nonatomic, readonly) NSDictionary *responseHeaders;
 @property (nonatomic, readonly) NSString *responsePath;
 @property (nonatomic, readonly) int statusCode;
-@property (nonatomic, strong) NSDictionary *userInfo;
+@property (nonatomic, assign) BOOL trustServerRegardlessForDebugging;
 @property (nonatomic, readonly) NSString *url;
+@property (nonatomic, strong) NSDictionary *userInfo;
 
 //
 // A convenience method configured as follows:
