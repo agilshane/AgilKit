@@ -28,6 +28,7 @@
 
 static NSString *m_basePath;
 static int m_ignoreCount = 0;
+static BOOL m_trustServerRegardlessForDebugging = NO;
 
 
 //
@@ -47,10 +48,7 @@ static int m_ignoreCount = 0;
 @interface AKNetRequestImpl : NSObject <NSURLConnectionDataDelegate> {
 	@private NSURLConnection *m_cxn;
 	@private __weak id <AKNetRequestImplDelegate> m_delegate;
-	@private BOOL m_trustServerRegardlessForDebugging;
 }
-
-@property (nonatomic, assign) BOOL trustServerRegardlessForDebugging;
 
 - (void)cancel;
 - (id)initWithDelegate:(id <AKNetRequestImplDelegate>)delegate request:(NSURLRequest *)request;
@@ -61,9 +59,6 @@ static int m_ignoreCount = 0;
 
 
 @implementation AKNetRequestImpl
-
-
-@synthesize trustServerRegardlessForDebugging = m_trustServerRegardlessForDebugging;
 
 
 - (void)cancel {
@@ -560,13 +555,8 @@ static int m_ignoreCount = 0;
 }
 
 
-- (void)setTrustServerRegardlessForDebugging:(BOOL)trustServerRegardlessForDebugging {
-	m_impl.trustServerRegardlessForDebugging = trustServerRegardlessForDebugging;
-}
-
-
-- (BOOL)trustServerRegardlessForDebugging {
-	return m_impl.trustServerRegardlessForDebugging;
++ (void)setTrustServerRegardlessForDebugging:(BOOL)trust {
+	m_trustServerRegardlessForDebugging = trust;
 }
 
 

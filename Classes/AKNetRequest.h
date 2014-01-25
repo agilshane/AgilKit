@@ -66,7 +66,6 @@ typedef enum {
 @property (nonatomic, readonly) NSDictionary *responseHeaders;
 @property (nonatomic, readonly) NSString *responsePath;
 @property (nonatomic, readonly) int statusCode;
-@property (nonatomic, assign) BOOL trustServerRegardlessForDebugging;
 @property (nonatomic, readonly) NSString *url;
 @property (nonatomic, strong) NSDictionary *userInfo;
 
@@ -124,5 +123,7 @@ typedef enum {
 	body:(NSData *)body
 	method:(AKNetRequestMethod)method
 	writeResponseToFile:(BOOL)writeResponseToFile;
+
++ (void)setTrustServerRegardlessForDebugging:(BOOL)trust;
 
 @end
