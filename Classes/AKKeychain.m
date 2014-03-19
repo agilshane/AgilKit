@@ -47,7 +47,7 @@
 		// Not found, no problem.
 	}
 	else if (status != errSecSuccess) {
-		NSLog(@"There was a problem deleting an item from the keychain (%ld)!", status);
+		NSLog(@"There was a problem deleting an item from the keychain (%d)!", (int)status);
 	}
 }
 
@@ -80,7 +80,7 @@
 		#endif
 
 		if (status != errSecSuccess) {
-			NSLog(@"Failed to set a keychain value (%ld)!", status);
+			NSLog(@"Failed to set a keychain value (%d)!", (int)status);
 		}
 	}
 	else {
@@ -137,7 +137,7 @@
 		}
 	}
 	else {
-		NSLog(@"There was a problem retrieving a keychain value (%ld)!", status);
+		NSLog(@"There was a problem retrieving a keychain value (%d)!", (int)status);
 	}
 
 	return value;

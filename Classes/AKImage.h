@@ -56,4 +56,7 @@
 // Returns a resized image.
 + (UIImage *)resizedImageWithImage:(UIImage *)image size:(CGSize)size;
 
+// Replaces all pixels with the given color, preserving the alpha channel.
++ (UIImage *)tintImage:(UIImage *)image color:(UIColor *)color;
+
 @end

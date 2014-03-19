@@ -161,7 +161,7 @@
 
 	CC_MD5_CTX ctx;
 	CC_MD5_Init(&ctx);
-	CC_MD5_Update(&ctx, data.bytes, data.length);
+	CC_MD5_Update(&ctx, data.bytes, (CC_LONG)data.length);
 	CC_MD5_Final(hashBytes, &ctx);
 
 	return [NSData dataWithBytes:hashBytes length:CC_MD5_DIGEST_LENGTH];
@@ -186,7 +186,7 @@
 			NSData *data = [handle readDataOfLength:8192];
 
 			if (data != nil && data.length > 0) {
-				CC_MD5_Update(&ctx, data.bytes, data.length);
+				CC_MD5_Update(&ctx, data.bytes, (CC_LONG)data.length);
 			}
 			else {
 				break;
@@ -209,7 +209,7 @@
 
 	CC_SHA1_CTX ctx;
 	CC_SHA1_Init(&ctx);
-	CC_SHA1_Update(&ctx, data.bytes, data.length);
+	CC_SHA1_Update(&ctx, data.bytes, (CC_LONG)data.length);
 	CC_SHA1_Final(hashBytes, &ctx);
 
 	return [NSData dataWithBytes:hashBytes length:CC_SHA1_DIGEST_LENGTH];
@@ -238,7 +238,7 @@
 
 	CC_SHA256_CTX ctx;
 	CC_SHA256_Init(&ctx);
-	CC_SHA256_Update(&ctx, data.bytes, data.length);
+	CC_SHA256_Update(&ctx, data.bytes, (CC_LONG)data.length);
 	CC_SHA256_Final(hashBytes, &ctx);
 
 	return [NSData dataWithBytes:hashBytes length:CC_SHA256_DIGEST_LENGTH];

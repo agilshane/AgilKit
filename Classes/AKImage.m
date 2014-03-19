@@ -178,9 +178,24 @@
 
 + (UIImage *)resizedImageWithImage:(UIImage *)image size:(CGSize)size {
 	if (image != nil) {
-		UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+		UIGraphicsBeginImageContextWithOptions(size, NO, image.scale);
 		CGContextSetInterpolationQuality(UIGraphicsGetCurrentContext(), kCGInterpolationHigh);
 		[image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+		image = UIGraphicsGetImageFromCurrentImageContext();
+		UIGraphicsEndImageContext();
+	}
+
+	return image;
+}
+
+
++ (UIImage *)tintImage:(UIImage *)image color:(UIColor *)color {
+	if (image != nil && color != nil) {
+		UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
+		[color setFill];
+		CGContextFillRect(UIGraphicsGetCurrentContext(),
+			CGRectMake(0, 0, image.size.width, image.size.height));
+		[image drawAtPoint:CGPointZero blendMode:kCGBlendModeDestinationIn alpha:1];
 		image = UIGraphicsGetImageFromCurrentImageContext();
 		UIGraphicsEndImageContext();
 	}

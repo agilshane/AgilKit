@@ -334,7 +334,8 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 	else {
 		if (m_responseBody == nil) {
 			if (m_totalBytesExpected > 0) {
-				m_responseBody = [[NSMutableData alloc] initWithCapacity:m_totalBytesExpected];
+				m_responseBody = [[NSMutableData alloc]
+					initWithCapacity:(NSUInteger)m_totalBytesExpected];
 				[m_responseBody appendData:data];
 			}
 			else {
@@ -365,7 +366,7 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 - (void)implDidReceiveResponse:(NSURLResponse *)response {
 	if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
-		m_statusCode = r.statusCode;
+		m_statusCode = (int)r.statusCode;
 
 		#if !__has_feature(objc_arc)
 			[m_responseHeaders release];
@@ -489,7 +490,7 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 		}
 
 		if (body != nil) {
-			[req setValue:[NSString stringWithFormat:@"%d", body.length]
+			[req setValue:[NSString stringWithFormat:@"%lu", (unsigned long)body.length]
 				forHTTPHeaderField:@"Content-Length"];
 			[req setHTTPBody:body];
 		}

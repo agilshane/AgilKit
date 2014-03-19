@@ -95,7 +95,7 @@
 	NSUInteger start = NSMaxRange(range0);
 	NSMutableData *md = [NSMutableData dataWithCapacity:range1.location - start];
 
-	for (int i = start; i < range1.location; i++) {
+	for (NSUInteger i = start; i < range1.location; i++) {
 		unichar ch = [xml characterAtIndex:i];
 
 		if (ch != ' ' && ch != '\n' && ch != '\r' && ch != '\t') {
