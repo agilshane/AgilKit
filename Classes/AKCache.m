@@ -25,9 +25,82 @@
 #import "AKCache.h"
 #import "AKCrypto.h"
 #import "AKHex.h"
+#import "AKNetRequest.h"
 
 
-static int m_maxBytes = 10000000;
+static NSMutableDictionary *m_fileInfos = nil;
+static unsigned long long m_maxBytes = 10 * 1024 * 1024;
+static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
+
+
+//
+// AKCacheFileInfo
+//
+
+@interface AKCacheFileInfo : NSObject {
+	@private NSString *m_basePath;
+	@private NSTimeInterval m_expiry;
+	@private BOOL m_keepIfExpired;
+}
+
+@property (nonatomic, readonly) NSString *basePath;
+@property (nonatomic, readonly) NSTimeInterval expiry;
+@property (nonatomic, readonly) BOOL keepIfExpired;
+
+- (id)initWithBasePath:(NSString *)basePath;
+
+@end
+
+@implementation AKCacheFileInfo
+
+@synthesize basePath = m_basePath;
+@synthesize expiry = m_expiry;
+@synthesize keepIfExpired = m_keepIfExpired;
+
+- (void)dealloc {
+	#if !__has_feature(objc_arc)
+		[m_basePath release];
+		[super dealloc];
+	#endif
+}
+
+- (id)initWithBasePath:(NSString *)basePath {
+	if (basePath == nil || basePath.length == 0) {
+		#if !__has_feature(objc_arc)
+			[self release];
+		#endif
+
+		return nil;
+	}
+
+	if (self = [super init]) {
+		#if !__has_feature(objc_arc)
+			m_basePath = [basePath retain];
+		#else
+			m_basePath = basePath;
+		#endif
+
+		NSString *infoPath = [basePath stringByAppendingPathComponent:@"file.info"];
+
+		NSString *info = [NSString stringWithContentsOfFile:infoPath
+			encoding:NSUTF8StringEncoding error:nil];
+
+		if (info == nil || info.length < 3) {
+			#if !__has_feature(objc_arc)
+				[self release];
+			#endif
+
+			return nil;
+		}
+
+		m_keepIfExpired = ([info characterAtIndex:0] != NO);
+		m_expiry = [info substringFromIndex:2].longLongValue;
+	}
+
+	return self;
+}
+
+@end
 
 
 //
@@ -75,7 +148,17 @@ static int m_maxBytes = 10000000;
 //
 
 
-@interface AKCache ()
+@interface AKCache () <AKNetRequestDelegate> {
+	@private NSData *m_data;
+	@private __weak id <AKCacheDelegate> m_delegate;
+	@private UIImage *m_image;
+	@private BOOL m_keepIfExpired;
+	@private AKNetRequest *m_netRequestData;
+	@private AKNetRequest *m_netRequestImage;
+	@private BOOL m_retina;
+	@private NSTimeInterval m_timeToLive;
+	@private NSString *m_url;
+}
 
 + (NSString *)basePathForURL:(NSString *)url;
 + (NSString *)rootPath;
@@ -209,6 +292,7 @@ static int m_maxBytes = 10000000;
 	NSString *basePath = [self basePathForURL:url];
 
 	if (basePath != nil) {
+		[m_fileInfos removeObjectForKey:basePath];
 		[[NSFileManager defaultManager] removeItemAtPath:basePath error:nil];
 		return;
 	}
@@ -306,6 +390,22 @@ static int m_maxBytes = 10000000;
 	}
 
 	return nil;
+}
+
+
++ (void)initialize {
+	m_fileInfos = [[NSMutableDictionary alloc] init];
+
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+
+	[nc addObserver:self selector:@selector(onAppNotification)
+		name:UIApplicationDidBecomeActiveNotification object:nil];
+
+	[nc addObserver:self selector:@selector(onAppNotification)
+		name:UIApplicationWillResignActiveNotification object:nil];
+
+	[nc addObserver:self selector:@selector(onLowMemory)
+		name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 }
 
 
@@ -535,7 +635,14 @@ static int m_maxBytes = 10000000;
 
 
 + (void)onAppNotification {
-	[self trim];
+	if (m_policy == AKCacheTrimPolicyBecomeOrResignActive) {
+		[self trim];
+	}
+}
+
+
++ (void)onLowMemory {
+	[m_fileInfos removeAllObjects];
 }
 
 
@@ -565,21 +672,13 @@ static int m_maxBytes = 10000000;
 }
 
 
-+ (void)setMaxBytes:(int)maxBytes {
++ (void)setMaxBytes:(unsigned long long)maxBytes {
 	m_maxBytes = maxBytes;
 }
 
 
 + (void)setTrimPolicy:(AKCacheTrimPolicy)policy {
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	[nc removeObserver:self];
-
-	if (policy == AKCacheTrimPolicyBecomeOrResignActive) {
-		[nc addObserver:self selector:@selector(onAppNotification)
-			name:UIApplicationDidBecomeActiveNotification object:nil];
-		[nc addObserver:self selector:@selector(onAppNotification)
-			name:UIApplicationWillResignActiveNotification object:nil];
-	}
+	m_policy = policy;
 }
 
 
@@ -643,26 +742,27 @@ static int m_maxBytes = 10000000;
 	NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
 
 	for (AKCacheItem *item in items) {
-		NSString *path = [item.basePath stringByAppendingPathComponent:@"file.info"];
-		NSString *info = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding
-			error:nil];
+		AKCacheFileInfo *fileInfo = m_fileInfos[item.basePath];
 
-		if (info == nil || info.length < 3) {
-			continue;
+		if (fileInfo == nil) {
+			fileInfo = [[AKCacheFileInfo alloc] initWithBasePath:item.basePath];
+
+			if (fileInfo != nil) {
+				m_fileInfos[item.basePath] = fileInfo;
+
+				#if !__has_feature(objc_arc)
+					[fileInfo release];
+				#endif
+			}
 		}
 
-		BOOL keep = ([info characterAtIndex:0] != NO);
-
-		if (!keep) {
-			NSTimeInterval expiry = [info substringFromIndex:2].longLongValue;
-
-			if (expiry < now) {
-				[expiredItemsToNuke addObject:item];
-			}
+		if (fileInfo != nil && !fileInfo.keepIfExpired && fileInfo.expiry < now) {
+			[expiredItemsToNuke addObject:item];
 		}
 	}
 
 	for (AKCacheItem *item in expiredItemsToNuke) {
+		[m_fileInfos removeObjectForKey:item.basePath];
 		[fm removeItemAtPath:item.basePath error:nil];
 		[items removeObject:item];
 		totalSize -= item.size;
@@ -677,6 +777,7 @@ static int m_maxBytes = 10000000;
 			break;
 		}
 
+		[m_fileInfos removeObjectForKey:item.basePath];
 		[fm removeItemAtPath:item.basePath error:nil];
 		totalSize -= item.size;
 	}
@@ -693,6 +794,13 @@ static int m_maxBytes = 10000000;
 		NSString *s = [NSString stringWithFormat:@"%d|%qi", keepIfExpired,
 			(long long)([NSDate timeIntervalSinceReferenceDate] + timeToLive)];
 		[s writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:nil];
+
+		AKCacheFileInfo *fileInfo = [[AKCacheFileInfo alloc] initWithBasePath:basePath];
+		m_fileInfos[basePath] = fileInfo;
+
+		#if !__has_feature(objc_arc)
+			[fileInfo release];
+		#endif
 	}
 }
 

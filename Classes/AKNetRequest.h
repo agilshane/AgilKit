@@ -33,7 +33,28 @@ typedef enum {
 
 @class AKNetRequest;
 
+//
+// AKNetRequestAuthenticationChallengeDelegate
+//
+
+@protocol AKNetRequestAuthenticationChallengeDelegate
+
+- (void)
+	netRequest:(AKNetRequest *)request
+	connection:(NSURLConnection *)connection
+	willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+
+@end
+
+//
+// AKNetRequestDelegate
+//
+
 @protocol AKNetRequestDelegate
+
+@required
+
+- (void)netRequestDidFinish:(AKNetRequest *)request error:(NSError *)error;
 
 @optional
 
@@ -43,11 +64,11 @@ typedef enum {
 	totalBytesDownloaded:(long long)totalBytesDownloaded
 	totalBytesExpected:(long long)totalBytesExpected;
 
-@required
-
-- (void)netRequestDidFinish:(AKNetRequest *)request error:(NSError *)error;
-
 @end
+
+//
+// AKNetRequest
+//
 
 @interface AKNetRequest : NSObject {
 	@private __weak id <AKNetRequestDelegate> m_delegate;
@@ -123,6 +144,8 @@ typedef enum {
 	body:(NSData *)body
 	method:(AKNetRequestMethod)method
 	writeResponseToFile:(BOOL)writeResponseToFile;
+
++ (void)setAuthenticationChallengeDelegate:(id <AKNetRequestAuthenticationChallengeDelegate>)delegate;
 
 + (void)setTrustServerRegardlessForDebugging:(BOOL)trust;
 

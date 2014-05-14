@@ -23,7 +23,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AKNetRequest.h"
 
 #define kAKCacheTimeToLiveOneYear 31536000.0
 
@@ -40,17 +39,7 @@ typedef enum {
 
 @end
 
-@interface AKCache : NSObject <AKNetRequestDelegate> {
-	@private NSData *m_data;
-	@private __weak id <AKCacheDelegate> m_delegate;
-	@private UIImage *m_image;
-	@private BOOL m_keepIfExpired;
-	@private AKNetRequest *m_netRequestData;
-	@private AKNetRequest *m_netRequestImage;
-	@private BOOL m_retina;
-	@private NSTimeInterval m_timeToLive;
-	@private NSString *m_url;
-}
+@interface AKCache : NSObject
 
 @property (nonatomic, readonly) NSData *data;
 @property (nonatomic, readonly) UIImage *image;
@@ -95,7 +84,7 @@ typedef enum {
 	timeToLive:(NSTimeInterval)timeToLive
 	keepIfExpired:(BOOL)keepIfExpired;
 
-+ (void)setMaxBytes:(int)maxBytes;
++ (void)setMaxBytes:(unsigned long long)maxBytes;
 + (void)setTrimPolicy:(AKCacheTrimPolicy)policy;
 + (void)trim;
 

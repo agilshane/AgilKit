@@ -26,7 +26,8 @@
 #import "AKNetActivityIndicator.h"
 
 
-static NSString *m_basePath;
+static __weak id <AKNetRequestAuthenticationChallengeDelegate> m_authChallengeDelegate = nil;
+static NSString *m_basePath = nil;
 static int m_ignoreCount = 0;
 static BOOL m_trustServerRegardlessForDebugging = NO;
 
@@ -95,7 +96,13 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 	connection:(NSURLConnection *)connection
 	willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
-	if (m_trustServerRegardlessForDebugging && [challenge.protectionSpace.authenticationMethod
+	if (m_authChallengeDelegate != nil) {
+		[m_authChallengeDelegate
+			netRequest:(AKNetRequest *)m_delegate
+			connection:connection
+			willSendRequestForAuthenticationChallenge:challenge];
+	}
+	else if (m_trustServerRegardlessForDebugging && [challenge.protectionSpace.authenticationMethod
 		isEqualToString:NSURLAuthenticationMethodServerTrust])
 	{
 		[challenge.sender
@@ -553,6 +560,11 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 	}
 
 	return self;
+}
+
+
++ (void)setAuthenticationChallengeDelegate:(id <AKNetRequestAuthenticationChallengeDelegate>)delegate {
+	m_authChallengeDelegate = delegate;
 }
 
 
