@@ -28,6 +28,7 @@
 #import "AKNetRequest.h"
 
 
+static BOOL m_didAddToCacheSinceLastTrim = NO;
 static NSMutableDictionary *m_fileInfos = nil;
 static unsigned long long m_maxBytes = 10 * 1024 * 1024;
 static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
@@ -683,6 +684,10 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 
 
 + (void)trim {
+	if (!m_didAddToCacheSinceLastTrim) {
+		return;
+	}
+
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSMutableArray *items = [NSMutableArray array];
 	NSString *rootPath = [self rootPath];
@@ -781,6 +786,8 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 		[fm removeItemAtPath:item.basePath error:nil];
 		totalSize -= item.size;
 	}
+
+	m_didAddToCacheSinceLastTrim = NO;
 }
 
 
@@ -801,6 +808,8 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 		#if !__has_feature(objc_arc)
 			[fileInfo release];
 		#endif
+
+		m_didAddToCacheSinceLastTrim = YES;
 	}
 }
 
