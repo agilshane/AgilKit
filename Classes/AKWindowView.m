@@ -25,7 +25,11 @@
 #import "AKWindowView.h"
 
 
-@interface AKWindowView ()
+@interface AKWindowView () {
+	@private UIView *m_contentView;
+	@private BOOL m_didFinishLaunching;
+	@private BOOL m_orientationLocked;
+}
 
 - (void)layoutWithOrientation:(UIInterfaceOrientation)orientation;
 
@@ -49,9 +53,6 @@
 
 
 - (id)initWithContentView:(UIView *)contentView {
-	UIApplication *app = [UIApplication sharedApplication];
-	m_didFinishLaunching = (app.applicationState == UIApplicationStateActive);
-
 	if (contentView == nil) {
 		#if !__has_feature(objc_arc)
 			[self release];
@@ -60,18 +61,40 @@
 		return nil;
 	}
 
-	if (self = [super initWithFrame:CGRectZero]) {
+	BOOL oldSDK = ![UIScreen instancesRespondToSelector:@selector(fixedCoordinateSpace)];
+	CGRect bounds = oldSDK ? CGRectZero : [UIScreen mainScreen].bounds;
+	UIApplication *app = [UIApplication sharedApplication];
+
+	if (self = [super initWithFrame:bounds]) {
+		m_didFinishLaunching = (app.applicationState == UIApplicationStateActive);
 		m_contentView = contentView;
 		[self addSubview:contentView];
-		[self layoutWithOrientation:app.statusBarOrientation];
 
-		NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+		if (oldSDK) {
+			[self layoutWithOrientation:app.statusBarOrientation];
 
-		[nc addObserver:self selector:@selector(onDidFinishLaunching:)
-			name:UIApplicationDidFinishLaunchingNotification object:nil];
+			NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
-		[nc addObserver:self selector:@selector(onWillChangeStatusBarOrientation:)
-			name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+			[nc addObserver:self selector:@selector(onDidFinishLaunching:)
+				name:UIApplicationDidFinishLaunchingNotification object:nil];
+
+			[nc addObserver:self selector:@selector(onWillChangeStatusBarOrientation:)
+				name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+		}
+		else {
+
+			// iOS 8 makes our job much easier.
+
+			contentView.frame = bounds;
+
+			self.autoresizingMask =
+				UIViewAutoresizingFlexibleWidth |
+				UIViewAutoresizingFlexibleHeight;
+
+			contentView.autoresizingMask =
+				UIViewAutoresizingFlexibleWidth |
+				UIViewAutoresizingFlexibleHeight;
+		}
 	}
 
 	return self;
@@ -111,14 +134,11 @@
 
 
 - (void)onDidFinishLaunching:(NSNotification *)notification {
-	[self performSelector:@selector(onDidFinishLaunching2) withObject:nil afterDelay:0];
-}
-
-
-- (void)onDidFinishLaunching2 {
-	// Let one run loop go by before declaring that we've finished launching.  Otherwise the
-	// animations will be wrong.
-	m_didFinishLaunching = YES;
+	dispatch_async(dispatch_get_main_queue(), ^{
+		// Let one run loop go by before declaring that we've finished launching.  Otherwise the
+		// animations will be wrong.
+		m_didFinishLaunching = YES;
+	});
 }
 
 
