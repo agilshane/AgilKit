@@ -30,24 +30,12 @@
 
 + (NSString *)percentEscape:(NSString *)s {
 	if (s != nil) {
-		static NSString *chars = @"!*'\"();:@&=+$,/?%#[]";
-
-		#if !__has_feature(objc_arc)
-			s = (NSString *)CFURLCreateStringByAddingPercentEscapes(
-				NULL,
-				(CFStringRef)s,
-				NULL,
-				(CFStringRef)chars,
-				kCFStringEncodingUTF8);
-			[s autorelease];
-		#else
-			s = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-				NULL,
-				(CFStringRef)s,
-				NULL,
-				(CFStringRef)chars,
-				kCFStringEncodingUTF8));
-		#endif
+		s = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+			NULL,
+			(CFStringRef)s,
+			NULL,
+			(CFStringRef)@"!*'\"();:@&=+$,/?%#[]",
+			kCFStringEncodingUTF8));
 	}
 
 	return s;

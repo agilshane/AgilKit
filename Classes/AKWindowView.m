@@ -45,19 +45,11 @@
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	#if !__has_feature(objc_arc)
-		[super dealloc];
-	#endif
 }
 
 
 - (id)initWithContentView:(UIView *)contentView {
 	if (contentView == nil) {
-		#if !__has_feature(objc_arc)
-			[self release];
-		#endif
-
 		return nil;
 	}
 

@@ -41,16 +41,10 @@
 	[ms appendString:string];
 	[ms appendString:@"</data></dict>"];
 
-	NSData *data = [ms dataUsingEncoding:NSUTF8StringEncoding];
-
-	#if !__has_feature(objc_arc)
-		[ms release];
-	#endif
-
 	NSError *error = nil;
 
 	NSDictionary *dict = [NSPropertyListSerialization
-		propertyListWithData:data
+		propertyListWithData:[ms dataUsingEncoding:NSUTF8StringEncoding]
 		options:NSPropertyListImmutable
 		format:NULL
 		error:&error];
@@ -80,11 +74,6 @@
 	}
 
 	NSString *xml = [[NSString alloc] initWithData:xmlData encoding:NSUTF8StringEncoding];
-
-	#if !__has_feature(objc_arc)
-		[xml autorelease];
-	#endif
-
 	NSRange range0 = [xml rangeOfString:@"<data>"];
 	NSRange range1 = [xml rangeOfString:@"</data>" options:NSBackwardsSearch];
 
@@ -103,13 +92,7 @@
 		}
 	}
 
-	NSString *s = [[NSString alloc] initWithData:md encoding:NSUTF8StringEncoding];
-
-	#if !__has_feature(objc_arc)
-		[s autorelease];
-	#endif
-
-	return s;
+	return [[NSString alloc] initWithData:md encoding:NSUTF8StringEncoding];
 }
 
 

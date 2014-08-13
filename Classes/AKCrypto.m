@@ -84,13 +84,7 @@
 	}
 
 	NSData *data = [self decryptData:[AKHex dataFromString:s] password:password];
-	s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-	#if !__has_feature(objc_arc)
-		[s autorelease];
-	#endif
-
-	return s;
+	return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 

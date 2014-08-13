@@ -33,10 +33,6 @@
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	#if !__has_feature(objc_arc)
-		[super dealloc];
-	#endif
 }
 
 

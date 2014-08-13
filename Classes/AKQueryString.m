@@ -43,14 +43,6 @@
 }
 
 
-- (void)dealloc {
-	#if !__has_feature(objc_arc)
-		[m_string release];
-		[super dealloc];
-	#endif
-}
-
-
 - (id)init {
 	if (self = [super init]) {
 		m_string = [[NSMutableString alloc] init];

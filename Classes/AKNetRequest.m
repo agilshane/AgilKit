@@ -69,10 +69,6 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 		NSURLConnection *cxn = m_cxn;
 		m_cxn = nil;
 		[cxn cancel];
-
-		#if !__has_feature(objc_arc)
-			[cxn release];
-		#endif
 	}
 }
 
@@ -122,19 +118,11 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 
 - (void)dealloc {
 	[self cancel];
-
-	#if !__has_feature(objc_arc)
-		[super dealloc];
-	#endif
 }
 
 
 - (id)initWithDelegate:(id <AKNetRequestImplDelegate>)delegate request:(NSURLRequest *)request {
 	if (request == nil) {
-		#if !__has_feature(objc_arc)
-			[self release];
-		#endif
-
 		return nil;
 	}
 
@@ -145,10 +133,6 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 		m_cxn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
 
 		if (m_cxn == nil) {
-			#if !__has_feature(objc_arc)
-				[self release];
-			#endif
-
 			return nil;
 		}
 	}
@@ -242,11 +226,6 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 - (void)dealloc {
 	if (m_impl != nil) {
 		[m_impl cancel];
-
-		#if !__has_feature(objc_arc)
-			[m_impl release];
-		#endif
-
 		m_impl = nil;
 	}
 
@@ -272,25 +251,11 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 	if (m_responsePath != nil) {
 		[[NSFileManager defaultManager] removeItemAtPath:m_responsePath error:nil];
 	}
-
-	#if !__has_feature(objc_arc)
-		[m_responseBody release];
-		[m_responseHeaders release];
-		[m_responsePath release];
-		[m_url release];
-		[m_userInfo release];
-		[super dealloc];
-	#endif
 }
 
 
 - (void)finishUpWithError:(NSError *)error {
 	[m_impl setDelegateToNil];
-
-	#if !__has_feature(objc_arc)
-		[m_impl autorelease];
-	#endif
-
 	m_impl = nil;
 
 	if (m_ignoreInteraction) {
@@ -374,16 +339,7 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 	if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
 		NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
 		m_statusCode = (int)r.statusCode;
-
-		#if !__has_feature(objc_arc)
-			[m_responseHeaders release];
-		#endif
-
 		m_responseHeaders = r.allHeaderFields;
-
-		#if !__has_feature(objc_arc)
-			[m_responseHeaders retain];
-		#endif
 
 		for (NSString *key in m_responseHeaders) {
 			if ([key.lowercaseString isEqualToString:@"content-length"]) {
@@ -400,10 +356,6 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 	NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
 		NSUserDomainMask, YES) objectAtIndex:0];
 	m_basePath = [path stringByAppendingPathComponent:@"AKNetRequest"];
-
-	#if !__has_feature(objc_arc)
-		[m_basePath retain];
-	#endif
 }
 
 
@@ -452,30 +404,18 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 	writeResponseToFile:(BOOL)writeResponseToFile
 {
 	if (url == nil || url.length == 0) {
-		#if !__has_feature(objc_arc)
-			[self release];
-		#endif
-
 		return nil;
 	}
 
 	NSURL *nsurl = [NSURL URLWithString:url];
 
 	if (nsurl == nil) {
-		#if !__has_feature(objc_arc)
-			[self release];
-		#endif
-
 		return nil;
 	}
 
 	if (self = [super init]) {
 		m_delegate = delegate;
 		m_url = url;
-
-		#if !__has_feature(objc_arc)
-			[m_url retain];
-		#endif
 
 		NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:nsurl];
 
@@ -510,10 +450,6 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 		m_impl = [[AKNetRequestImpl alloc] initWithDelegate:self request:req];
 
 		if (m_impl == nil) {
-			#if !__has_feature(objc_arc)
-				[self release];
-			#endif
-
 			return nil;
 		}
 
@@ -529,11 +465,6 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 
 				if (![fm fileExistsAtPath:responsePath]) {
 					m_responsePath = responsePath;
-
-					#if !__has_feature(objc_arc)
-						[m_responsePath retain];
-					#endif
-
 					[fm createDirectoryAtPath:m_basePath withIntermediateDirectories:YES
 						attributes:nil error:nil];
 					[fm createFileAtPath:m_responsePath contents:nil attributes:nil];

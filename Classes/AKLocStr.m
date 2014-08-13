@@ -41,13 +41,7 @@ NSString *AKLocStr(NSString *key, ...) {
 		else {
 			va_list list;
 			va_start(list, key);
-
 			s = [[NSString alloc] initWithFormat:s arguments:list];
-
-			#if !__has_feature(objc_arc)
-				[s autorelease];
-			#endif
-
 			va_end(list);
 			return s;
 		}
@@ -75,13 +69,7 @@ NSError *AKLocStrError(NSString *key, ...) {
 		else {
 			va_list list;
 			va_start(list, key);
-
 			s = [[NSString alloc] initWithFormat:s arguments:list];
-
-			#if !__has_feature(objc_arc)
-				[s autorelease];
-			#endif
-
 			va_end(list);
 			locStr = s;
 		}

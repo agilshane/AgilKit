@@ -58,39 +58,19 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 @synthesize expiry = m_expiry;
 @synthesize keepIfExpired = m_keepIfExpired;
 
-- (void)dealloc {
-	#if !__has_feature(objc_arc)
-		[m_basePath release];
-		[super dealloc];
-	#endif
-}
-
 - (id)initWithBasePath:(NSString *)basePath {
 	if (basePath == nil || basePath.length == 0) {
-		#if !__has_feature(objc_arc)
-			[self release];
-		#endif
-
 		return nil;
 	}
 
 	if (self = [super init]) {
-		#if !__has_feature(objc_arc)
-			m_basePath = [basePath retain];
-		#else
-			m_basePath = basePath;
-		#endif
-
+		m_basePath = basePath;
 		NSString *infoPath = [basePath stringByAppendingPathComponent:@"file.info"];
 
 		NSString *info = [NSString stringWithContentsOfFile:infoPath
 			encoding:NSUTF8StringEncoding error:nil];
 
 		if (info == nil || info.length < 3) {
-			#if !__has_feature(objc_arc)
-				[self release];
-			#endif
-
 			return nil;
 		}
 
@@ -132,14 +112,6 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 @synthesize keepIfExpired = m_keepIfExpired;
 @synthesize modified = m_modified;
 @synthesize size = m_size;
-
-- (void)dealloc {
-	#if !__has_feature(objc_arc)
-		[m_basePath release];
-		[m_modified release];
-		[super dealloc];
-	#endif
-}
 
 @end
 
@@ -277,18 +249,6 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 }
 
 
-- (void)dealloc {
-	#if !__has_feature(objc_arc)
-		[m_data release];
-		[m_image release];
-		[m_netRequestData release];
-		[m_netRequestImage release];
-		[m_url release];
-		[super dealloc];
-	#endif
-}
-
-
 + (void)deleteFileWithURL:(NSString *)url {
 	NSString *basePath = [self basePathForURL:url];
 
@@ -344,22 +304,11 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 
 	if (image != nil) {
 		if (image.scale == 2.0) {
-			#if !__has_feature(objc_arc)
-				[image autorelease];
-			#endif
-
 			return image;
 		}
 
-		UIImage *image2 = [[UIImage alloc] initWithCGImage:image.CGImage
+		return [[UIImage alloc] initWithCGImage:image.CGImage
 			scale:2 orientation:image.imageOrientation];
-
-		#if !__has_feature(objc_arc)
-			[image release];
-			[image2 autorelease];
-		#endif
-
-		return image2;
 	}
 
 	image = [[UIImage alloc] initWithContentsOfFile:
@@ -372,22 +321,11 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 
 	if (image != nil) {
 		if (image.scale == 1.0) {
-			#if !__has_feature(objc_arc)
-				[image autorelease];
-			#endif
-
 			return image;
 		}
 
-		UIImage *image2 = [[UIImage alloc] initWithCGImage:image.CGImage
+		return [[UIImage alloc] initWithCGImage:image.CGImage
 			scale:1 orientation:image.imageOrientation];
-
-		#if !__has_feature(objc_arc)
-			[image release];
-			[image2 autorelease];
-		#endif
-
-		return image2;
 	}
 
 	return nil;
@@ -421,22 +359,12 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 	m_timeToLive = timeToLive;
 
 	if (url == nil || url.length == 0) {
-		#if !__has_feature(objc_arc)
-			[self release];
-		#endif
-
 		return nil;
 	}
 
 	if (self = [super init]) {
 		m_delegate = delegate;
-
-		#if !__has_feature(objc_arc)
-			m_url = [url retain];
-		#else
-			m_url = url;
-		#endif
-
+		m_url = url;
 		m_netRequestData = [[AKNetRequest alloc] initWithDelegate:self url:url];
 	}
 
@@ -456,22 +384,12 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 	m_timeToLive = timeToLive;
 
 	if (url == nil || url.length == 0) {
-		#if !__has_feature(objc_arc)
-			[self release];
-		#endif
-
 		return nil;
 	}
 
 	if (self = [super init]) {
 		m_delegate = delegate;
-
-		#if !__has_feature(objc_arc)
-			m_url = [url retain];
-		#else
-			m_url = url;
-		#endif
-
+		m_url = url;
 		m_netRequestImage = [[AKNetRequest alloc] initWithDelegate:self url:url];
 	}
 
@@ -482,17 +400,9 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 - (void)netRequestDidFinish:(AKNetRequest *)request error:(NSError *)error {
 	if (error != nil) {
 		if (request == m_netRequestData) {
-			#if !__has_feature(objc_arc)
-				[m_netRequestData autorelease];
-			#endif
-
 			m_netRequestData = nil;
 		}
 		else if (request == m_netRequestImage) {
-			#if !__has_feature(objc_arc)
-				[m_netRequestImage autorelease];
-			#endif
-
 			m_netRequestImage = nil;
 		}
 
@@ -508,10 +418,6 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 	}
 
 	if (request == m_netRequestData) {
-		#if !__has_feature(objc_arc)
-			[m_netRequestData autorelease];
-		#endif
-
 		m_netRequestData = nil;
 		NSData *data = request.responseBody;
 
@@ -530,19 +436,10 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 				keepIfExpired:m_keepIfExpired];
 		}
 
-		#if !__has_feature(objc_arc)
-			m_data = [data retain];
-		#else
-			m_data = data;
-		#endif
-
+		m_data = data;
 		[m_delegate cacheDidFinish:self error:nil];
 	}
 	else if (request == m_netRequestImage) {
-		#if !__has_feature(objc_arc)
-			[m_netRequestImage autorelease];
-		#endif
-
 		m_netRequestImage = nil;
 		NSData *data = request.responseBody;
 
@@ -619,14 +516,8 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 		CGFloat scale = m_retina ? 2 : 1;
 
 		if (image != nil && image.scale != scale) {
-			UIImage *image2 = [[UIImage alloc] initWithCGImage:image.CGImage
+			image = [[UIImage alloc] initWithCGImage:image.CGImage
 				scale:scale orientation:image.imageOrientation];
-
-			#if !__has_feature(objc_arc)
-				[image release];
-			#endif
-
-			image = image2;
 		}
 
 		m_image = image;
@@ -658,11 +549,7 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 		[fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 
 		if ([fm fileExistsAtPath:path]) {
-			#if !__has_feature(objc_arc)
-				rootPath = [path retain];
-			#else
-				rootPath = path;
-			#endif
+			rootPath = path;
 		}
 		else {
 			NSLog(@"Could not create the root path!");
@@ -736,10 +623,6 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 			totalSize += item.size;
 
 			[items addObject:item];
-
-			#if !__has_feature(objc_arc)
-				[item release];
-			#endif
 		}
 	}
 
@@ -754,10 +637,6 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 
 			if (fileInfo != nil) {
 				m_fileInfos[item.basePath] = fileInfo;
-
-				#if !__has_feature(objc_arc)
-					[fileInfo release];
-				#endif
 			}
 		}
 
@@ -801,14 +680,7 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 		NSString *s = [NSString stringWithFormat:@"%d|%qi", keepIfExpired,
 			(long long)([NSDate timeIntervalSinceReferenceDate] + timeToLive)];
 		[s writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:nil];
-
-		AKCacheFileInfo *fileInfo = [[AKCacheFileInfo alloc] initWithBasePath:basePath];
-		m_fileInfos[basePath] = fileInfo;
-
-		#if !__has_feature(objc_arc)
-			[fileInfo release];
-		#endif
-
+		m_fileInfos[basePath] = [[AKCacheFileInfo alloc] initWithBasePath:basePath];
 		m_didAddToCacheSinceLastTrim = YES;
 	}
 }

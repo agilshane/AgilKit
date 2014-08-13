@@ -70,10 +70,6 @@
 			userInfo:nil
 			repeats:YES];
 
-		#if !__has_feature(objc_arc)
-			[m_timer retain];
-		#endif
-
 		[[NSRunLoop currentRunLoop] addTimer:m_timer forMode:commonModes ?
 			NSRunLoopCommonModes : NSDefaultRunLoopMode];
 	}
@@ -85,11 +81,6 @@
 - (void)invalidate {
 	m_delegate = nil;
 	[m_timer invalidate];
-
-	#if !__has_feature(objc_arc)
-		[m_timer release];
-	#endif
-
 	m_timer = nil;
 }
 
@@ -120,16 +111,7 @@
 - (void)dealloc {
 	m_delegate = nil;
 	[m_timerPrivate invalidate];
-
-	#if !__has_feature(objc_arc)
-		[m_timerPrivate release];
-	#endif
-
 	m_timerPrivate = nil;
-
-	#if !__has_feature(objc_arc)
-		[super dealloc];
-	#endif
 }
 
 
