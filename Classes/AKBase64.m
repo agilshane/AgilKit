@@ -28,13 +28,17 @@
 @implementation AKBase64
 
 
-//
-// Uses property list serialization to do the base64 work for us.
-//
 + (NSData *)dataFromString:(NSString *)string {
 	if (string == nil) {
 		return nil;
 	}
+
+	if ([NSData instancesRespondToSelector:@selector(initWithBase64EncodedString:options:)]) {
+		return [[NSData alloc] initWithBase64EncodedString:string
+			options:NSDataBase64DecodingIgnoreUnknownCharacters];
+	}
+
+	// Use property list serialization to do the base64 work for us.
 
 	NSMutableString *ms = [[NSMutableString alloc] initWithCapacity:string.length + 40];
 	[ms appendString:@"<dict><key>a</key><data>"];
@@ -53,13 +57,16 @@
 }
 
 
-//
-// Uses property list serialization to do the base64 work for us.
-//
 + (NSString *)stringFromData:(NSData *)data {
 	if (data == nil) {
 		return nil;
 	}
+
+	if ([data respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
+		return [data base64EncodedStringWithOptions:0];
+	}
+
+	// Use property list serialization to do the base64 work for us.
 
 	NSError *error = nil;
 
