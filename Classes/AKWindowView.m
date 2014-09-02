@@ -48,6 +48,11 @@
 }
 
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	return [m_contentView hitTest:point withEvent:event];
+}
+
+
 - (id)initWithContentView:(UIView *)contentView {
 	if (contentView == nil) {
 		return nil;
