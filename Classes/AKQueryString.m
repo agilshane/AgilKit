@@ -26,6 +26,13 @@
 #import "AKStringEscape.h"
 
 
+@interface AKQueryString () {
+	@private NSMutableString *m_string;
+}
+
+@end
+
+
 @implementation AKQueryString
 
 

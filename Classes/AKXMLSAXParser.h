@@ -44,11 +44,7 @@
 
 @end
 
-@interface AKXMLSAXParser : NSObject <NSXMLParserDelegate> {
-	@private NSMutableString *m_currPath;
-	@private NSMutableString *m_currText;
-	@private __weak id <AKXMLSAXParserDelegate> m_delegate;
-}
+@interface AKXMLSAXParser : NSObject <NSXMLParserDelegate>
 
 - (id)initWithDelegate:(id <AKXMLSAXParserDelegate>)delegate;
 - (void)parseData:(NSData *)data;

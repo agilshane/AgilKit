@@ -25,6 +25,15 @@
 #import "AKXMLSAXParser.h"
 
 
+@interface AKXMLSAXParser () {
+	@private NSMutableString *m_currPath;
+	@private NSMutableString *m_currText;
+	@private __weak id <AKXMLSAXParserDelegate> m_delegate;
+}
+
+@end
+
+
 @implementation AKXMLSAXParser
 
 

@@ -25,7 +25,11 @@
 #import "AKMultipartFormData.h"
 
 
-@interface AKMultipartFormData ()
+@interface AKMultipartFormData () {
+	@private NSString *m_boundary;
+	@private NSMutableData *m_data;
+	@private BOOL m_frozen;
+}
 
 - (void)beginDataIfNeeded;
 

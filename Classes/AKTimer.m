@@ -99,6 +99,7 @@
 
 
 @interface AKTimer () <AKTimerPrivateDelegate> {
+	@private __weak id <AKTimerDelegate> m_delegate;
 	@private AKTimerPrivate *m_timerPrivate;
 }
 

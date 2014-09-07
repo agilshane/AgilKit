@@ -161,7 +161,17 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 
 
 @interface AKNetRequest () <AKNetRequestImplDelegate> {
+	@private __weak id <AKNetRequestDelegate> m_delegate;
+	@private BOOL m_ignoreInteraction;
 	@private AKNetRequestImpl *m_impl;
+	@private NSMutableData *m_responseBody;
+	@private NSDictionary *m_responseHeaders;
+	@private NSString *m_responsePath;
+	@private BOOL m_showNetActivityIndicator;
+	@private int m_statusCode;
+	@private long long m_totalBytesExpected;
+	@private NSString *m_url;
+	@private NSDictionary *m_userInfo;
 }
 
 - (void)cleanUpTempFiles;

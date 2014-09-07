@@ -39,9 +39,7 @@
 
 @end
 
-@interface AKTimer : NSObject {
-	@private __weak id <AKTimerDelegate> m_delegate;
-}
+@interface AKTimer : NSObject
 
 - (id)
 	initWithDelegate:(id <AKTimerDelegate>)delegate

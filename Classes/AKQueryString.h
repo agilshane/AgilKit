@@ -24,9 +24,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AKQueryString : NSObject {
-	@private NSMutableString *m_string;
-}
+@interface AKQueryString : NSObject
 
 @property (nonatomic, readonly) NSString *string;
 

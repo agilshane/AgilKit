@@ -25,6 +25,17 @@
 #import "AKXMLDOMParser.h"
 
 
+@interface AKXMLDOMParser () {
+	@private NSMutableString *m_currPath;
+	@private NSMutableString *m_currText;
+	@private NSMutableDictionary *m_dictPathToAttributeDict;
+	@private NSMutableDictionary *m_dictPathToValue;
+	@private NSError *m_error;
+}
+
+@end
+
+
 @implementation AKXMLDOMParser
 
 

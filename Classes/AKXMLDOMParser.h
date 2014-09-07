@@ -24,13 +24,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AKXMLDOMParser : NSObject <NSXMLParserDelegate> {
-	@private NSMutableString *m_currPath;
-	@private NSMutableString *m_currText;
-	@private NSMutableDictionary *m_dictPathToAttributeDict;
-	@private NSMutableDictionary *m_dictPathToValue;
-	@private NSError *m_error;
-}
+@interface AKXMLDOMParser : NSObject <NSXMLParserDelegate>
 
 - (id)initWithData:(NSData *)data error:(NSError **)error;
 - (NSString *)valueAtPath:(NSString *)path;

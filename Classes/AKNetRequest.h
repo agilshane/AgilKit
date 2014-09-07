@@ -70,18 +70,7 @@ typedef enum {
 // AKNetRequest
 //
 
-@interface AKNetRequest : NSObject {
-	@private __weak id <AKNetRequestDelegate> m_delegate;
-	@private BOOL m_ignoreInteraction;
-	@private NSMutableData *m_responseBody;
-	@private NSDictionary *m_responseHeaders;
-	@private NSString *m_responsePath;
-	@private BOOL m_showNetActivityIndicator;
-	@private int m_statusCode;
-	@private long long m_totalBytesExpected;
-	@private NSString *m_url;
-	@private NSDictionary *m_userInfo;
-}
+@interface AKNetRequest : NSObject
 
 @property (nonatomic, readonly) NSData *responseBody;
 @property (nonatomic, readonly) NSDictionary *responseHeaders;

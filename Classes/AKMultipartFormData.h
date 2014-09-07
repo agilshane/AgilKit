@@ -24,11 +24,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AKMultipartFormData : NSObject {
-	@private NSString *m_boundary;
-	@private NSMutableData *m_data;
-	@private BOOL m_frozen;
-}
+@interface AKMultipartFormData : NSObject
 
 @property (nonatomic, readonly) NSString *boundary;
 @property (nonatomic, readonly) NSData *data;
