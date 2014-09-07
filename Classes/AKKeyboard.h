@@ -26,7 +26,7 @@
 
 @class AKKeyboard;
 
-@protocol AKKeyboardDelegate
+@protocol AKKeyboardDelegate <NSObject>
 
 - (void)keyboard:(AKKeyboard *)keyboard heightDidChangeWithDuration:(NSTimeInterval)duration;
 

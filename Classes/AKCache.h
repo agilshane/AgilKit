@@ -33,7 +33,7 @@ typedef enum {
 
 @class AKCache;
 
-@protocol AKCacheDelegate
+@protocol AKCacheDelegate <NSObject>
 
 - (void)cacheDidFinish:(AKCache *)cache error:(NSError *)error;
 

@@ -26,7 +26,7 @@
 
 @class AKXMLSAXParser;
 
-@protocol AKXMLSAXParserDelegate
+@protocol AKXMLSAXParserDelegate <NSObject>
 
 - (void)
 	xmlsaxParser:(AKXMLSAXParser *)parser

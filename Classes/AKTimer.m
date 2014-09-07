@@ -32,7 +32,7 @@
 
 @class AKTimerPrivate;
 
-@protocol AKTimerPrivateDelegate
+@protocol AKTimerPrivateDelegate <NSObject>
 
 - (void)timerPrivateDidFire:(AKTimerPrivate *)timerPrivate;
 

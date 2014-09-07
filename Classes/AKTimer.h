@@ -33,7 +33,7 @@
 
 @class AKTimer;
 
-@protocol AKTimerDelegate
+@protocol AKTimerDelegate <NSObject>
 
 - (void)timerDidFire:(AKTimer *)timer;
 

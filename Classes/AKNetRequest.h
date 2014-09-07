@@ -37,7 +37,7 @@ typedef enum {
 // AKNetRequestAuthenticationChallengeDelegate
 //
 
-@protocol AKNetRequestAuthenticationChallengeDelegate
+@protocol AKNetRequestAuthenticationChallengeDelegate <NSObject>
 
 - (void)
 	netRequest:(AKNetRequest *)request
@@ -50,7 +50,7 @@ typedef enum {
 // AKNetRequestDelegate
 //
 
-@protocol AKNetRequestDelegate
+@protocol AKNetRequestDelegate <NSObject>
 
 @required
 

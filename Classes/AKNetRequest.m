@@ -37,7 +37,7 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 //
 
 
-@protocol AKNetRequestImplDelegate
+@protocol AKNetRequestImplDelegate <NSObject>
 
 - (void)implDidFailWithError:(NSError *)error;
 - (void)implDidFinishLoading;
