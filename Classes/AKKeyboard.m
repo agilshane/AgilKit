@@ -25,6 +25,14 @@
 #import "AKKeyboard.h"
 
 
+@interface AKKeyboard () {
+	@private __weak id <AKKeyboardDelegate> m_delegate;
+	@private CGFloat m_height;
+}
+
+@end
+
+
 @implementation AKKeyboard
 
 
@@ -132,24 +140,30 @@
 
 
 - (void)
-	updateInsetsOfScrollView:(UIScrollView *)scrollView
+	updateBottomInsetsOfScrollView:(UIScrollView *)scrollView
 	orientation:(UIInterfaceOrientation)orientation
 {
 	if (scrollView == nil || scrollView.window == nil) {
 		return;
 	}
 
-	UIEdgeInsets insets = UIEdgeInsetsZero;
+	CGFloat bottom = 0;
 
 	if (m_height > 0.0) {
 		CGRect rect = [AKKeyboard fullScreenFrameOfView:scrollView orientation:orientation];
 		CGFloat windowHeight = UIInterfaceOrientationIsPortrait(orientation) ?
 			scrollView.window.bounds.size.height : scrollView.window.bounds.size.width;
-		insets = UIEdgeInsetsMake(0, 0, CGRectGetMaxY(rect) - windowHeight + m_height, 0);
+		bottom = CGRectGetMaxY(rect) - windowHeight + m_height;
 	}
 
-	scrollView.contentInset = insets;
-	scrollView.scrollIndicatorInsets = insets;
+	UIEdgeInsets contentInset = scrollView.contentInset;
+	UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
+
+	contentInset.bottom = bottom;
+	scrollIndicatorInsets.bottom = bottom;
+
+	scrollView.contentInset = contentInset;
+	scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
 }
 
 

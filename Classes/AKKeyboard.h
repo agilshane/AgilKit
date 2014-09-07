@@ -32,10 +32,7 @@
 
 @end
 
-@interface AKKeyboard : NSObject {
-	@private __weak id <AKKeyboardDelegate> m_delegate;
-	@private CGFloat m_height;
-}
+@interface AKKeyboard : NSObject
 
 // The current height of the keyboard.  The value is 0.0 if hidden.
 @property (nonatomic, readonly) CGFloat height;
@@ -49,9 +46,9 @@
 
 - (id)initWithDelegate:(id <AKKeyboardDelegate>)delegate;
 
-// Updates the given scroll view's insets based on the current state of the keyboard.
+// Updates the given scroll view's bottom insets based on the current state of the keyboard.
 - (void)
-	updateInsetsOfScrollView:(UIScrollView *)scrollView
+	updateBottomInsetsOfScrollView:(UIScrollView *)scrollView
 	orientation:(UIInterfaceOrientation)orientation;
 
 @end
