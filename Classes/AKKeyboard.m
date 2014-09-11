@@ -52,7 +52,9 @@
 	CGRect frame = [view convertRect:view.bounds toView:nil];
 	CGSize windowSize = view.window.bounds.size;
 
-	if (orientation == UIInterfaceOrientationPortrait) {
+	if (orientation == UIInterfaceOrientationPortrait ||
+		[UIScreen instancesRespondToSelector:@selector(fixedCoordinateSpace)])
+	{
 		// The easy case.
 	}
 	else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
@@ -89,8 +91,13 @@
 		return 0;
 	}
 
-	CGFloat windowHeight = UIInterfaceOrientationIsPortrait(orientation) ?
-		view.window.bounds.size.height : view.window.bounds.size.width;
+	CGFloat windowHeight =
+		[UIScreen instancesRespondToSelector:@selector(fixedCoordinateSpace)] ?
+			view.window.bounds.size.height :
+		UIInterfaceOrientationIsPortrait(orientation) ?
+			view.window.bounds.size.height :
+		view.window.bounds.size.width;
+
 	CGFloat keyboardOrigin = windowHeight - m_height;
 	CGRect frame = [AKKeyboard fullScreenFrameOfView:view orientation:orientation];
 	CGFloat height = frame.size.height - (CGRectGetMaxY(frame) - keyboardOrigin);
