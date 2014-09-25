@@ -54,14 +54,12 @@ typedef enum {
 + (void)
 	addJPEGData:(NSData *)data
 	url:(NSString *)url
-	retina:(BOOL)retina
 	timeToLive:(NSTimeInterval)timeToLive
 	keepIfExpired:(BOOL)keepIfExpired;
 
 + (void)
 	addPNGData:(NSData *)data
 	url:(NSString *)url
-	retina:(BOOL)retina
 	timeToLive:(NSTimeInterval)timeToLive
 	keepIfExpired:(BOOL)keepIfExpired;
 
@@ -80,7 +78,6 @@ typedef enum {
 - (id)
 	initImageRequestWithDelegate:(id <AKCacheDelegate>)delegate
 	url:(NSString *)url
-	retina:(BOOL)retina
 	timeToLive:(NSTimeInterval)timeToLive
 	keepIfExpired:(BOOL)keepIfExpired;
 

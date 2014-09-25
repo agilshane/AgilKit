@@ -26,9 +26,6 @@
 
 @interface AKImage : NSObject
 
-// Works like [AKImage imageNamed:] but doesn't autorelease.
-+ (UIImage *)createImageNamed:(NSString *)imageName;
-
 // Returns a cropped image.
 + (UIImage *)croppedImageWithImage:(UIImage *)image rect:(CGRect)rect;
 

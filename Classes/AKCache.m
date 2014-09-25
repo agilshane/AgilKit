@@ -128,7 +128,6 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 	@private BOOL m_keepIfExpired;
 	@private AKNetRequest *m_netRequestData;
 	@private AKNetRequest *m_netRequestImage;
-	@private BOOL m_retina;
 	@private NSTimeInterval m_timeToLive;
 	@private NSString *m_url;
 }
@@ -175,14 +174,14 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 + (void)
 	addJPEGData:(NSData *)data
 	url:(NSString *)url
-	retina:(BOOL)retina
 	timeToLive:(NSTimeInterval)timeToLive
 	keepIfExpired:(BOOL)keepIfExpired
 {
 	NSString *basePath = [self basePathForURL:url];
-	NSString *path = retina ?
-		[basePath stringByAppendingPathComponent:@"file@2x.jpg"] :
-		[basePath stringByAppendingPathComponent:@"file.jpg"];
+	NSString *filename =
+		[UIScreen mainScreen].scale == 3.0 ? @"file@3x.jpg" :
+		[UIScreen mainScreen].scale == 2.0 ? @"file@2x.jpg" : @"file.jpg";
+	NSString *path = [basePath stringByAppendingPathComponent:filename];
 
 	if (path == nil || data == nil) {
 		return;
@@ -198,14 +197,14 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 + (void)
 	addPNGData:(NSData *)data
 	url:(NSString *)url
-	retina:(BOOL)retina
 	timeToLive:(NSTimeInterval)timeToLive
 	keepIfExpired:(BOOL)keepIfExpired
 {
 	NSString *basePath = [self basePathForURL:url];
-	NSString *path = retina ?
-		[basePath stringByAppendingPathComponent:@"file@2x.png"] :
-		[basePath stringByAppendingPathComponent:@"file.png"];
+	NSString *filename =
+		[UIScreen mainScreen].scale == 3.0 ? @"file@3x.png" :
+		[UIScreen mainScreen].scale == 2.0 ? @"file@2x.png" : @"file.png";
+	NSString *path = [basePath stringByAppendingPathComponent:filename];
 
 	if (path == nil || data == nil) {
 		return;
@@ -294,41 +293,43 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 		return nil;
 	}
 
-	UIImage *image = [[UIImage alloc] initWithContentsOfFile:
-		[basePath stringByAppendingPathComponent:@"file@2x.jpg"]];
+	UIImage *image = nil;
+	CGFloat screenScale = [UIScreen mainScreen].scale;
 
-	if (image == nil) {
+	if (screenScale == 3.0) {
 		image = [[UIImage alloc] initWithContentsOfFile:
-			[basePath stringByAppendingPathComponent:@"file@2x.png"]];
-	}
+			[basePath stringByAppendingPathComponent:@"file@3x.jpg"]];
 
-	if (image != nil) {
-		if (image.scale == 2.0) {
-			return image;
+		if (image == nil) {
+			image = [[UIImage alloc] initWithContentsOfFile:
+				[basePath stringByAppendingPathComponent:@"file@3x.png"]];
 		}
-
-		return [[UIImage alloc] initWithCGImage:image.CGImage
-			scale:2 orientation:image.imageOrientation];
 	}
-
-	image = [[UIImage alloc] initWithContentsOfFile:
-		[basePath stringByAppendingPathComponent:@"file.jpg"]];
-
-	if (image == nil) {
+	else if (screenScale == 2.0) {
 		image = [[UIImage alloc] initWithContentsOfFile:
-			[basePath stringByAppendingPathComponent:@"file.png"]];
-	}
+			[basePath stringByAppendingPathComponent:@"file@2x.jpg"]];
 
-	if (image != nil) {
-		if (image.scale == 1.0) {
-			return image;
+		if (image == nil) {
+			image = [[UIImage alloc] initWithContentsOfFile:
+				[basePath stringByAppendingPathComponent:@"file@2x.png"]];
 		}
+	}
+	else {
+		image = [[UIImage alloc] initWithContentsOfFile:
+			[basePath stringByAppendingPathComponent:@"file.jpg"]];
 
-		return [[UIImage alloc] initWithCGImage:image.CGImage
-			scale:1 orientation:image.imageOrientation];
+		if (image == nil) {
+			image = [[UIImage alloc] initWithContentsOfFile:
+				[basePath stringByAppendingPathComponent:@"file.png"]];
+		}
 	}
 
-	return nil;
+	if (image != nil && image.scale != screenScale) {
+		image = [[UIImage alloc] initWithCGImage:image.CGImage
+			scale:screenScale orientation:image.imageOrientation];
+	}
+
+	return image;
 }
 
 
@@ -355,7 +356,6 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 	keepIfExpired:(BOOL)keepIfExpired
 {
 	m_keepIfExpired = keepIfExpired;
-	m_retina = NO;
 	m_timeToLive = timeToLive;
 
 	if (url == nil || url.length == 0) {
@@ -375,12 +375,10 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 - (id)
 	initImageRequestWithDelegate:(id <AKCacheDelegate>)delegate
 	url:(NSString *)url
-	retina:(BOOL)retina
 	timeToLive:(NSTimeInterval)timeToLive
 	keepIfExpired:(BOOL)keepIfExpired
 {
 	m_keepIfExpired = keepIfExpired;
-	m_retina = retina;
 	m_timeToLive = timeToLive;
 
 	if (url == nil || url.length == 0) {
@@ -483,10 +481,20 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 			}
 		}
 
+		CGFloat screenScale = [UIScreen mainScreen].scale;
+
 		if (isJPEG || isPNG) {
 			NSString *path = basePath;
 
-			if (m_retina) {
+			if (screenScale == 3.0) {
+				if (isJPEG) {
+					path = [path stringByAppendingPathComponent:@"file@3x.jpg"];
+				}
+				else {
+					path = [path stringByAppendingPathComponent:@"file@3x.png"];
+				}
+			}
+			else if (screenScale == 2.0) {
 				if (isJPEG) {
 					path = [path stringByAppendingPathComponent:@"file@2x.jpg"];
 				}
@@ -513,11 +521,10 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 		}
 
 		UIImage *image = [[UIImage alloc] initWithData:data];
-		CGFloat scale = m_retina ? 2 : 1;
 
-		if (image != nil && image.scale != scale) {
+		if (image != nil && image.scale != screenScale) {
 			image = [[UIImage alloc] initWithCGImage:image.CGImage
-				scale:scale orientation:image.imageOrientation];
+				scale:screenScale orientation:image.imageOrientation];
 		}
 
 		m_image = image;
@@ -587,24 +594,34 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 	for (NSString *name in [fm contentsOfDirectoryAtPath:rootPath error:nil]) {
 		NSString *basePath = [rootPath stringByAppendingPathComponent:name];
 
-		NSString *path = [basePath stringByAppendingPathComponent:@"file@2x.jpg"];
+		NSString *path = [basePath stringByAppendingPathComponent:@"file@3x.jpg"];
 		NSDictionary *attributes = [fm attributesOfItemAtPath:path error:nil];
 
 		if (attributes == nil) {
-			path = [basePath stringByAppendingPathComponent:@"file@2x.png"];
+			path = [basePath stringByAppendingPathComponent:@"file@3x.png"];
 			attributes = [fm attributesOfItemAtPath:path error:nil];
 
 			if (attributes == nil) {
-				path = [basePath stringByAppendingPathComponent:@"file.jpg"];
+				path = [basePath stringByAppendingPathComponent:@"file@2x.jpg"];
 				attributes = [fm attributesOfItemAtPath:path error:nil];
 
 				if (attributes == nil) {
-					path = [basePath stringByAppendingPathComponent:@"file.png"];
+					path = [basePath stringByAppendingPathComponent:@"file@2x.png"];
 					attributes = [fm attributesOfItemAtPath:path error:nil];
 
 					if (attributes == nil) {
-						path = [basePath stringByAppendingPathComponent:@"file.bin"];
+						path = [basePath stringByAppendingPathComponent:@"file.jpg"];
 						attributes = [fm attributesOfItemAtPath:path error:nil];
+
+						if (attributes == nil) {
+							path = [basePath stringByAppendingPathComponent:@"file.png"];
+							attributes = [fm attributesOfItemAtPath:path error:nil];
+
+							if (attributes == nil) {
+								path = [basePath stringByAppendingPathComponent:@"file.bin"];
+								attributes = [fm attributesOfItemAtPath:path error:nil];
+							}
+						}
 					}
 				}
 			}

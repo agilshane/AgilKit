@@ -29,45 +29,6 @@
 @implementation AKImage
 
 
-+ (UIImage *)createImageNamed:(NSString *)imageName {
-	if (imageName == nil || imageName.length == 0) {
-		return nil;
-	}
-
-	NSString *ext = imageName.pathExtension;
-
-	if (ext == nil || ext.length == 0) {
-		return nil;
-	}
-
-	NSString *name = [imageName substringToIndex:imageName.length - ext.length - 1];
-
-	if ([UIScreen mainScreen].scale == 1.0) {
-		if ([name hasSuffix:@"@2x"]) {
-			name = [name substringToIndex:name.length - 3];
-		}
-	}
-	else if ([name hasSuffix:@"@2x"]) {
-		NSString *s = [[NSBundle mainBundle] pathForResource:name ofType:ext];
-
-		if (s == nil) {
-			name = [name substringToIndex:name.length - 3];
-		}
-	}
-	else {
-		name = [name stringByAppendingString:@"@2x"];
-		NSString *s = [[NSBundle mainBundle] pathForResource:name ofType:ext];
-
-		if (s == nil) {
-			name = [name substringToIndex:name.length - 3];
-		}
-	}
-
-	NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
-	return [[UIImage alloc] initWithContentsOfFile:path];
-}
-
-
 + (UIImage *)croppedImageWithImage:(UIImage *)image rect:(CGRect)rect {
 	if (image != nil) {
 		if (image.imageOrientation == UIImageOrientationDown) {
@@ -123,7 +84,41 @@
 
 
 + (UIImage *)imageNamed:(NSString *)imageName {
-	return [self createImageNamed:imageName];
+	NSString *ext = imageName.pathExtension;
+
+	if (ext == nil || ext.length == 0) {
+		return nil;
+	}
+
+	NSBundle *bundle = [NSBundle mainBundle];
+	NSString *name = [imageName substringToIndex:imageName.length - ext.length - 1];
+	NSString *path = nil;
+
+	if ([name hasSuffix:@"@2x"] || [name hasSuffix:@"@3x"]) {
+		name = [name substringToIndex:name.length - 3];
+	}
+
+	if ([UIScreen mainScreen].scale == 3.0) {
+		path = [bundle pathForResource:[name stringByAppendingString:@"@3x"] ofType:ext];
+
+		if (path == nil) {
+			path = [bundle pathForResource:[name stringByAppendingString:@"@2x"] ofType:ext];
+		}
+	}
+	else if ([UIScreen mainScreen].scale == 2.0) {
+		path = [bundle pathForResource:[name stringByAppendingString:@"@2x"] ofType:ext];
+	}
+
+	if (path == nil) {
+		path = [bundle pathForResource:name ofType:ext];
+
+		if (path == nil) {
+			// This is the only option with asset catalogs.
+			return [UIImage imageNamed:imageName];
+		}
+	}
+
+	return [[UIImage alloc] initWithContentsOfFile:path];
 }
 
 
