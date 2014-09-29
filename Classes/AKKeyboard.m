@@ -25,6 +25,9 @@
 #import "AKKeyboard.h"
 
 
+static BOOL m_modern = NO;
+
+
 @interface AKKeyboard () {
 	@private __weak id <AKKeyboardDelegate> m_delegate;
 	@private CGFloat m_height;
@@ -52,9 +55,7 @@
 	CGRect frame = [view convertRect:view.bounds toView:nil];
 	CGSize windowSize = view.window.bounds.size;
 
-	if (orientation == UIInterfaceOrientationPortrait ||
-		[UIScreen instancesRespondToSelector:@selector(fixedCoordinateSpace)])
-	{
+	if (orientation == UIInterfaceOrientationPortrait || m_modern) {
 		// The easy case.
 	}
 	else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
@@ -91,17 +92,17 @@
 		return 0;
 	}
 
-	CGFloat windowHeight =
-		[UIScreen instancesRespondToSelector:@selector(fixedCoordinateSpace)] ?
-			view.window.bounds.size.height :
-		UIInterfaceOrientationIsPortrait(orientation) ?
-			view.window.bounds.size.height :
-		view.window.bounds.size.width;
-
+	CGFloat windowHeight = m_modern || UIInterfaceOrientationIsPortrait(orientation) ?
+		view.window.bounds.size.height : view.window.bounds.size.width;
 	CGFloat keyboardOrigin = windowHeight - m_height;
 	CGRect frame = [AKKeyboard fullScreenFrameOfView:view orientation:orientation];
 	CGFloat height = frame.size.height - (CGRectGetMaxY(frame) - keyboardOrigin);
 	return MIN(height, frame.size.height);
+}
+
+
++ (void)initialize {
+	m_modern = [UIScreen instancesRespondToSelector:@selector(fixedCoordinateSpace)];
 }
 
 
@@ -158,7 +159,7 @@
 
 	if (m_height > 0.0) {
 		CGRect rect = [AKKeyboard fullScreenFrameOfView:scrollView orientation:orientation];
-		CGFloat windowHeight = UIInterfaceOrientationIsPortrait(orientation) ?
+		CGFloat windowHeight = m_modern || UIInterfaceOrientationIsPortrait(orientation) ?
 			scrollView.window.bounds.size.height : scrollView.window.bounds.size.width;
 		bottom = CGRectGetMaxY(rect) - windowHeight + m_height;
 	}
