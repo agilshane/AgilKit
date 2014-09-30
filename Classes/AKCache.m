@@ -48,7 +48,7 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 @property (nonatomic, readonly) NSTimeInterval expiry;
 @property (nonatomic, readonly) BOOL keepIfExpired;
 
-- (id)initWithBasePath:(NSString *)basePath;
+- (instancetype)initWithBasePath:(NSString *)basePath;
 
 @end
 
@@ -58,7 +58,7 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 @synthesize expiry = m_expiry;
 @synthesize keepIfExpired = m_keepIfExpired;
 
-- (id)initWithBasePath:(NSString *)basePath {
+- (instancetype)initWithBasePath:(NSString *)basePath {
 	if (basePath == nil || basePath.length == 0) {
 		return nil;
 	}
@@ -349,7 +349,7 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 }
 
 
-- (id)
+- (instancetype)
 	initDataRequestWithDelegate:(id <AKCacheDelegate>)delegate
 	url:(NSString *)url
 	timeToLive:(NSTimeInterval)timeToLive
@@ -372,7 +372,7 @@ static AKCacheTrimPolicy m_policy = AKCacheTrimPolicyBecomeOrResignActive;
 }
 
 
-- (id)
+- (instancetype)
 	initImageRequestWithDelegate:(id <AKCacheDelegate>)delegate
 	url:(NSString *)url
 	timeToLive:(NSTimeInterval)timeToLive

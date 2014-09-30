@@ -50,7 +50,7 @@
 }
 
 
-- (id)init {
+- (instancetype)init {
 	if (self = [super init]) {
 		m_string = [[NSMutableString alloc] init];
 	}

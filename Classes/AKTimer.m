@@ -43,7 +43,7 @@
 	@private NSTimer *m_timer;
 }
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKTimerPrivateDelegate>)delegate
 	timeInterval:(NSTimeInterval)timeInterval
 	commonModes:(BOOL)commonModes;
@@ -56,7 +56,7 @@
 @implementation AKTimerPrivate
 
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKTimerPrivateDelegate>)delegate
 	timeInterval:(NSTimeInterval)timeInterval
 	commonModes:(BOOL)commonModes
@@ -116,7 +116,7 @@
 }
 
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKTimerDelegate>)delegate
 	timeInterval:(NSTimeInterval)timeInterval
 {
@@ -124,7 +124,7 @@
 }
 
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKTimerDelegate>)delegate
 	timeInterval:(NSTimeInterval)timeInterval
 	commonModes:(BOOL)commonModes

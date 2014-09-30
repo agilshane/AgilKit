@@ -53,7 +53,7 @@
 }
 
 
-- (id)initWithContentView:(UIView *)contentView {
+- (instancetype)initWithContentView:(UIView *)contentView {
 	if (contentView == nil) {
 		return nil;
 	}

@@ -69,13 +69,13 @@ typedef enum {
 + (BOOL)fileExpiredWithURL:(NSString *)url;
 + (UIImage *)imageWithURL:(NSString *)url;
 
-- (id)
+- (instancetype)
 	initDataRequestWithDelegate:(id <AKCacheDelegate>)delegate
 	url:(NSString *)url
 	timeToLive:(NSTimeInterval)timeToLive
 	keepIfExpired:(BOOL)keepIfExpired;
 
-- (id)
+- (instancetype)
 	initImageRequestWithDelegate:(id <AKCacheDelegate>)delegate
 	url:(NSString *)url
 	timeToLive:(NSTimeInterval)timeToLive

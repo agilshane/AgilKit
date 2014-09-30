@@ -102,7 +102,7 @@
 }
 
 
-- (id)init {
+- (instancetype)init {
 	if (self = [super init]) {
 		m_boundary = [NSString stringWithFormat:@"---------------------------%X%X",
 			arc4random(), arc4random()];

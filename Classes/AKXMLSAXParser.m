@@ -37,7 +37,7 @@
 @implementation AKXMLSAXParser
 
 
-- (id)initWithDelegate:(id <AKXMLSAXParserDelegate>)delegate {
+- (instancetype)initWithDelegate:(id <AKXMLSAXParserDelegate>)delegate {
 	if (self = [super init]) {
 		m_currPath = [[NSMutableString alloc] initWithCapacity:256];
 		m_currText = [[NSMutableString alloc] initWithCapacity:512];

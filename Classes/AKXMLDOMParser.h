@@ -26,7 +26,7 @@
 
 @interface AKXMLDOMParser : NSObject <NSXMLParserDelegate>
 
-- (id)initWithData:(NSData *)data error:(NSError **)error;
+- (instancetype)initWithData:(NSData *)data error:(NSError **)error;
 - (NSString *)valueAtPath:(NSString *)path;
 - (NSString *)valueAtPath:(NSString *)path attribute:(NSString *)attribute;
 

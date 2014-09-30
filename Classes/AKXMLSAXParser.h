@@ -46,7 +46,7 @@
 
 @interface AKXMLSAXParser : NSObject <NSXMLParserDelegate>
 
-- (id)initWithDelegate:(id <AKXMLSAXParserDelegate>)delegate;
+- (instancetype)initWithDelegate:(id <AKXMLSAXParserDelegate>)delegate;
 - (void)parseData:(NSData *)data;
 
 @end

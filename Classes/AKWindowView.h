@@ -29,6 +29,6 @@
 @property (nonatomic, readonly) UIView *contentView;
 @property (nonatomic, assign) BOOL orientationLocked;
 
-- (id)initWithContentView:(UIView *)contentView;
+- (instancetype)initWithContentView:(UIView *)contentView;
 
 @end

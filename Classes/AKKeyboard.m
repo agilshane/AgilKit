@@ -106,7 +106,7 @@ static BOOL m_modern = NO;
 }
 
 
-- (id)initWithDelegate:(id <AKKeyboardDelegate>)delegate {
+- (instancetype)initWithDelegate:(id <AKKeyboardDelegate>)delegate {
 	if (self = [super init]) {
 		m_delegate = delegate;
 		NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];

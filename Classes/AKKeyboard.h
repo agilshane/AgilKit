@@ -44,7 +44,7 @@
 // If the current keyboard height is 0.0, the view's height is returned.
 - (CGFloat)heightOfView:(UIView *)view orientation:(UIInterfaceOrientation)orientation;
 
-- (id)initWithDelegate:(id <AKKeyboardDelegate>)delegate;
+- (instancetype)initWithDelegate:(id <AKKeyboardDelegate>)delegate;
 
 // Updates the given scroll view's bottom insets based on the current state of the keyboard.
 - (void)

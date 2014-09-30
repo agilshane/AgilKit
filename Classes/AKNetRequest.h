@@ -88,7 +88,7 @@ typedef enum {
 //    method:AKNetRequestMethodGet
 //    writeResponseToFile:NO
 //
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKNetRequestDelegate>)delegate
 	url:(NSString *)url;
 
@@ -99,7 +99,7 @@ typedef enum {
 //    method:AKNetRequestMethodGet
 //    writeResponseToFile:NO
 //
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKNetRequestDelegate>)delegate
 	url:(NSString *)url
 	ignoreInteraction:(BOOL)ignoreInteraction
@@ -124,7 +124,7 @@ typedef enum {
 // The path of the file can be discovered by inspecting the responsePath property.  Once the
 // request has finished, the caller should either move or copy the file to another location.
 //
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKNetRequestDelegate>)delegate
 	url:(NSString *)url
 	ignoreInteraction:(BOOL)ignoreInteraction

@@ -41,11 +41,11 @@
 
 @interface AKTimer : NSObject
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKTimerDelegate>)delegate
 	timeInterval:(NSTimeInterval)timeInterval;
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKTimerDelegate>)delegate
 	timeInterval:(NSTimeInterval)timeInterval
 	commonModes:(BOOL)commonModes;

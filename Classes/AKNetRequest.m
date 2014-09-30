@@ -52,7 +52,9 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 }
 
 - (void)cancel;
-- (id)initWithDelegate:(id <AKNetRequestImplDelegate>)delegate request:(NSURLRequest *)request;
+- (instancetype)
+	initWithDelegate:(id <AKNetRequestImplDelegate>)delegate
+	request:(NSURLRequest *)request;
 - (void)setDelegateToNil;
 - (void)start;
 
@@ -121,7 +123,10 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 }
 
 
-- (id)initWithDelegate:(id <AKNetRequestImplDelegate>)delegate request:(NSURLRequest *)request {
+- (instancetype)
+	initWithDelegate:(id <AKNetRequestImplDelegate>)delegate
+	request:(NSURLRequest *)request
+{
 	if (request == nil) {
 		return nil;
 	}
@@ -369,7 +374,7 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 }
 
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKNetRequestDelegate>)delegate
 	url:(NSString *)url
 {
@@ -385,7 +390,7 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 }
 
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKNetRequestDelegate>)delegate
 	url:(NSString *)url
 	ignoreInteraction:(BOOL)ignoreInteraction
@@ -403,7 +408,7 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 }
 
 
-- (id)
+- (instancetype)
 	initWithDelegate:(id <AKNetRequestDelegate>)delegate
 	url:(NSString *)url
 	ignoreInteraction:(BOOL)ignoreInteraction

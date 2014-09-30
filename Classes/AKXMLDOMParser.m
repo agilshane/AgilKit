@@ -39,7 +39,7 @@
 @implementation AKXMLDOMParser
 
 
-- (id)initWithData:(NSData *)data error:(NSError **)error {
+- (instancetype)initWithData:(NSData *)data error:(NSError **)error {
 	if (error != nil) {
 		*error = nil;
 	}
