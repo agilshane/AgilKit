@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 3/29/13.
-//  Copyright (c) 2013 Agilstream, LLC.
+//  Copyright (c) 2013-2014 Agilstream, LLC.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -40,14 +40,19 @@ static int m_count = 0;
 	}
 
 	if (m_count == 0) {
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+		#if !TARGET_APP_EXTENSION
+			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+		#endif
 	}
 }
 
 
 + (void)show {
 	m_count++;
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+	#if !TARGET_APP_EXTENSION
+		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	#endif
 }
 
 

@@ -79,6 +79,7 @@
 		347B5E9D17035A8D0006F928 /* AKWindowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowView.m; sourceTree = "<group>"; };
 		347B5E9F17035B970006F928 /* AKHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHex.h; sourceTree = "<group>"; };
 		347B5EA017035B970006F928 /* AKHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHex.m; sourceTree = "<group>"; };
+		347B60B219E9EE3D000EB836 /* Version.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Version.txt; sourceTree = "<group>"; };
 		349CE38317035E480051A81C /* AKNetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNetRequest.h; sourceTree = "<group>"; };
 		349CE38417035E480051A81C /* AKNetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNetRequest.m; sourceTree = "<group>"; };
 		349CE386170371D90051A81C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -128,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				347B5E98170357980006F928 /* AgilKit-Prefix.pch */,
+				347B60B219E9EE3D000EB836 /* Version.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

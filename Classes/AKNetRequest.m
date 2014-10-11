@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 3/27/13.
-//  Copyright (c) 2013 Agilstream, LLC.
+//  Copyright (c) 2013-2014 Agilstream, LLC.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -254,7 +254,9 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 		}
 
 		if (m_ignoreCount == 0) {
-			[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+			#if !TARGET_APP_EXTENSION
+				[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+			#endif
 		}
 	}
 
@@ -283,7 +285,9 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 		}
 
 		if (m_ignoreCount == 0) {
-			[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+			#if !TARGET_APP_EXTENSION
+				[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+			#endif
 		}
 	}
 
@@ -493,7 +497,9 @@ static BOOL m_trustServerRegardlessForDebugging = NO;
 			m_ignoreCount++;
 
 			if (m_ignoreCount == 1) {
-				[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+				#if !TARGET_APP_EXTENSION
+					[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+				#endif
 			}
 		}
 
