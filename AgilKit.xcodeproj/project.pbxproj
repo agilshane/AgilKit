@@ -7,33 +7,74 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		341462961703A2DF00DC9BBB /* AKCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 341462951703A2DF00DC9BBB /* AKCache.m */; };
-		341BA07C17039934009CACDD /* AKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 341BA07B17039934009CACDD /* AKCrypto.m */; };
-		341DF768170DE1A800834B2F /* AKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 341DF767170DE1A800834B2F /* AKBase64.m */; };
-		343469281704B8DC0077D298 /* AKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 343469271704B8DC0077D298 /* AKKeychain.m */; };
-		3434692B1704BBEF0077D298 /* AKStringEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 3434692A1704BBEF0077D298 /* AKStringEscape.m */; };
-		3434692E1704C5400077D298 /* AKKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3434692D1704C5400077D298 /* AKKeyboard.m */; };
-		343469311704CE2D0077D298 /* AKXMLDOMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 343469301704CE2D0077D298 /* AKXMLDOMParser.m */; };
-		343469341704D6750077D298 /* AKXMLSAXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 343469331704D6750077D298 /* AKXMLSAXParser.m */; };
-		3434693B1704D88B0077D298 /* AKQueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3434693A1704D88B0077D298 /* AKQueryString.m */; };
-		3434693E1704D94A0077D298 /* AKMultipartFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3434693D1704D9490077D298 /* AKMultipartFormData.m */; };
-		3444EB8B173D441F00D2332C /* AKTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3444EB8A173D441F00D2332C /* AKTimer.m */; };
-		344788881705DFB5005658F4 /* AKNetActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 344788871705DFB5005658F4 /* AKNetActivityIndicator.m */; };
-		3451F9AA170356410046B9A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3451F9A9170356410046B9A9 /* Foundation.framework */; };
-		345FDE851705F808002C8B23 /* AKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 345FDE841705F808002C8B23 /* AKColor.m */; };
-		345FDE881705FB5D002C8B23 /* AKImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 345FDE871705FB5D002C8B23 /* AKImage.m */; };
-		347B5E97170357110006F928 /* AKLocStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 347B5E96170357110006F928 /* AKLocStr.m */; };
-		347B5E9E17035A8D0006F928 /* AKWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 347B5E9D17035A8D0006F928 /* AKWindowView.m */; };
-		347B5EA117035B970006F928 /* AKHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 347B5EA017035B970006F928 /* AKHex.m */; };
-		349CE38517035E480051A81C /* AKNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 349CE38417035E480051A81C /* AKNetRequest.m */; };
-		349CE387170371D90051A81C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 349CE386170371D90051A81C /* UIKit.framework */; };
+		3409BCF11A028AB600518B8E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3409BCF01A028AB600518B8E /* Foundation.framework */; };
+		3409BCF31A028ABF00518B8E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3409BCF21A028ABE00518B8E /* UIKit.framework */; };
+		342F7EF01B0285E0001ABF27 /* AKDisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 342F7EEF1B0285E0001ABF27 /* AKDisplayLink.m */; };
+		3439972D1B27B5570078FD94 /* AGKXMLSAXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3439972C1B27B5570078FD94 /* AGKXMLSAXParser.swift */; };
+		34582DC91B24C1EA005D6AC9 /* AGKCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DBE1B24C1EA005D6AC9 /* AGKCache.swift */; };
+		34582DCA1B24C1EA005D6AC9 /* AGKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DBF1B24C1EA005D6AC9 /* AGKColor.swift */; };
+		34582DCB1B24C1EA005D6AC9 /* AGKCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC01B24C1EA005D6AC9 /* AGKCrypto.swift */; };
+		34582DCC1B24C1EA005D6AC9 /* AGKHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC11B24C1EA005D6AC9 /* AGKHex.swift */; };
+		34582DCD1B24C1EA005D6AC9 /* AGKImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC21B24C1EA005D6AC9 /* AGKImage.swift */; };
+		34582DCE1B24C1EA005D6AC9 /* AGKKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC31B24C1EA005D6AC9 /* AGKKeyboard.swift */; };
+		34582DCF1B24C1EA005D6AC9 /* AGKLocStr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */; };
+		34582DD01B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */; };
+		34582DD11B24C1EA005D6AC9 /* AGKNetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */; };
+		34582DD21B24C1EA005D6AC9 /* AGKStringEscape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC71B24C1EA005D6AC9 /* AGKStringEscape.swift */; };
+		34582DD31B24C1EA005D6AC9 /* AGKTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */; };
+		34582DD51B24C2FB005D6AC9 /* AGKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DBF1B24C1EA005D6AC9 /* AGKColor.swift */; };
+		34582DD61B24C309005D6AC9 /* AGKHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC11B24C1EA005D6AC9 /* AGKHex.swift */; };
+		34582DD71B24C316005D6AC9 /* AGKStringEscape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC71B24C1EA005D6AC9 /* AGKStringEscape.swift */; };
+		34582DD81B24C388005D6AC9 /* AGKCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC01B24C1EA005D6AC9 /* AGKCrypto.swift */; };
+		3486EE5F1B24C09300ACA46E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3486EE5E1B24C09300ACA46E /* AppDelegate.swift */; };
+		3486EE751B24C09300ACA46E /* AgilKitSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3486EE741B24C09300ACA46E /* AgilKitSwiftTests.swift */; };
+		34BEC3221A028992004F6DF5 /* AKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC2FF1A028992004F6DF5 /* AKBase64.m */; };
+		34BEC3231A028992004F6DF5 /* AKCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3011A028992004F6DF5 /* AKCache.m */; };
+		34BEC3241A028992004F6DF5 /* AKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3031A028992004F6DF5 /* AKColor.m */; };
+		34BEC3251A028992004F6DF5 /* AKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3051A028992004F6DF5 /* AKCrypto.m */; };
+		34BEC3261A028992004F6DF5 /* AKHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3071A028992004F6DF5 /* AKHex.m */; };
+		34BEC3271A028992004F6DF5 /* AKImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3091A028992004F6DF5 /* AKImage.m */; };
+		34BEC3281A028992004F6DF5 /* AKKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC30B1A028992004F6DF5 /* AKKeyboard.m */; };
+		34BEC3291A028992004F6DF5 /* AKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC30D1A028992004F6DF5 /* AKKeychain.m */; };
+		34BEC32A1A028992004F6DF5 /* AKLocStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC30F1A028992004F6DF5 /* AKLocStr.m */; };
+		34BEC32B1A028992004F6DF5 /* AKMultipartFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3111A028992004F6DF5 /* AKMultipartFormData.m */; };
+		34BEC32C1A028992004F6DF5 /* AKNetActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3131A028992004F6DF5 /* AKNetActivityIndicator.m */; };
+		34BEC32D1A028992004F6DF5 /* AKNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3151A028992004F6DF5 /* AKNetRequest.m */; };
+		34BEC32E1A028992004F6DF5 /* AKQueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3171A028992004F6DF5 /* AKQueryString.m */; };
+		34BEC32F1A028992004F6DF5 /* AKStringEscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3191A028992004F6DF5 /* AKStringEscape.m */; };
+		34BEC3301A028992004F6DF5 /* AKTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC31B1A028992004F6DF5 /* AKTimer.m */; };
+		34BEC3311A028992004F6DF5 /* AKWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC31D1A028992004F6DF5 /* AKWindowView.m */; };
+		34BEC3321A028992004F6DF5 /* AKXMLDOMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC31F1A028992004F6DF5 /* AKXMLDOMParser.m */; };
+		34BEC3331A028992004F6DF5 /* AKXMLSAXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3211A028992004F6DF5 /* AKXMLSAXParser.m */; };
+		34C565DB1B26455D00FC7ED5 /* AKImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C565DA1B26455D00FC7ED5 /* AKImageEffects.m */; };
+		34C9118A1A325B280032D777 /* AgilKitObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C911891A325B280032D777 /* AgilKitObjCTests.m */; };
+		34C9118B1A325B280032D777 /* libAgilKitObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BEC2C41A02882B004F6DF5 /* libAgilKitObjC.a */; };
+		34E2563D1B32631A00540BD4 /* AGKWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2563C1B32631A00540BD4 /* AGKWindowView.swift */; };
+		34E6F2751B27BD180062B33F /* AGKXMLSAXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3439972C1B27B5570078FD94 /* AGKXMLSAXParser.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3486EE6F1B24C09300ACA46E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34BEC2BC1A02882B004F6DF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3486EE591B24C09300ACA46E;
+			remoteInfo = AgilKitSwift;
+		};
+		34C9118C1A325B280032D777 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34BEC2BC1A02882B004F6DF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 34BEC2C31A02882B004F6DF5;
+			remoteInfo = AgilKitObjC;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		3451F9A4170356410046B9A9 /* CopyFiles */ = {
+		34BEC2C21A02882B004F6DF5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
+			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
 			);
@@ -42,230 +83,618 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		341462941703A2DF00DC9BBB /* AKCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCache.h; sourceTree = "<group>"; };
-		341462951703A2DF00DC9BBB /* AKCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCache.m; sourceTree = "<group>"; };
-		341BA07A17039934009CACDD /* AKCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCrypto.h; sourceTree = "<group>"; };
-		341BA07B17039934009CACDD /* AKCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCrypto.m; sourceTree = "<group>"; };
-		341DF766170DE1A800834B2F /* AKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBase64.h; sourceTree = "<group>"; };
-		341DF767170DE1A800834B2F /* AKBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKBase64.m; sourceTree = "<group>"; };
-		343469261704B8DC0077D298 /* AKKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKKeychain.h; sourceTree = "<group>"; };
-		343469271704B8DC0077D298 /* AKKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKKeychain.m; sourceTree = "<group>"; };
-		343469291704BBEF0077D298 /* AKStringEscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKStringEscape.h; sourceTree = "<group>"; };
-		3434692A1704BBEF0077D298 /* AKStringEscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKStringEscape.m; sourceTree = "<group>"; };
-		3434692C1704C5400077D298 /* AKKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKKeyboard.h; sourceTree = "<group>"; };
-		3434692D1704C5400077D298 /* AKKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKKeyboard.m; sourceTree = "<group>"; };
-		3434692F1704CE2D0077D298 /* AKXMLDOMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKXMLDOMParser.h; sourceTree = "<group>"; };
-		343469301704CE2D0077D298 /* AKXMLDOMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKXMLDOMParser.m; sourceTree = "<group>"; };
-		343469321704D6750077D298 /* AKXMLSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKXMLSAXParser.h; sourceTree = "<group>"; };
-		343469331704D6750077D298 /* AKXMLSAXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKXMLSAXParser.m; sourceTree = "<group>"; };
-		343469391704D88B0077D298 /* AKQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKQueryString.h; sourceTree = "<group>"; };
-		3434693A1704D88B0077D298 /* AKQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKQueryString.m; sourceTree = "<group>"; };
-		3434693C1704D9490077D298 /* AKMultipartFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMultipartFormData.h; sourceTree = "<group>"; };
-		3434693D1704D9490077D298 /* AKMultipartFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMultipartFormData.m; sourceTree = "<group>"; };
-		3444EB89173D441F00D2332C /* AKTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTimer.h; sourceTree = "<group>"; };
-		3444EB8A173D441F00D2332C /* AKTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTimer.m; sourceTree = "<group>"; };
-		344788861705DFB5005658F4 /* AKNetActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNetActivityIndicator.h; sourceTree = "<group>"; };
-		344788871705DFB5005658F4 /* AKNetActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNetActivityIndicator.m; sourceTree = "<group>"; };
-		3451F9A6170356410046B9A9 /* libAgilKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAgilKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		3451F9A9170356410046B9A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		345FDE831705F808002C8B23 /* AKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKColor.h; sourceTree = "<group>"; };
-		345FDE841705F808002C8B23 /* AKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKColor.m; sourceTree = "<group>"; };
-		345FDE861705FB5D002C8B23 /* AKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKImage.h; sourceTree = "<group>"; };
-		345FDE871705FB5D002C8B23 /* AKImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKImage.m; sourceTree = "<group>"; };
-		347B5E95170357110006F928 /* AKLocStr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKLocStr.h; sourceTree = "<group>"; };
-		347B5E96170357110006F928 /* AKLocStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKLocStr.m; sourceTree = "<group>"; };
-		347B5E98170357980006F928 /* AgilKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AgilKit-Prefix.pch"; sourceTree = "<group>"; };
-		347B5E9C17035A8D0006F928 /* AKWindowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowView.h; sourceTree = "<group>"; };
-		347B5E9D17035A8D0006F928 /* AKWindowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowView.m; sourceTree = "<group>"; };
-		347B5E9F17035B970006F928 /* AKHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHex.h; sourceTree = "<group>"; };
-		347B5EA017035B970006F928 /* AKHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHex.m; sourceTree = "<group>"; };
-		347B60B219E9EE3D000EB836 /* Version.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Version.txt; sourceTree = "<group>"; };
-		349CE38317035E480051A81C /* AKNetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNetRequest.h; sourceTree = "<group>"; };
-		349CE38417035E480051A81C /* AKNetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNetRequest.m; sourceTree = "<group>"; };
-		349CE386170371D90051A81C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3409BCF01A028AB600518B8E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3409BCF21A028ABE00518B8E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		342F7EEE1B0285E0001ABF27 /* AKDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDisplayLink.h; sourceTree = "<group>"; };
+		342F7EEF1B0285E0001ABF27 /* AKDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDisplayLink.m; sourceTree = "<group>"; };
+		3439972C1B27B5570078FD94 /* AGKXMLSAXParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKXMLSAXParser.swift; sourceTree = "<group>"; };
+		34582DBE1B24C1EA005D6AC9 /* AGKCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKCache.swift; sourceTree = "<group>"; };
+		34582DBF1B24C1EA005D6AC9 /* AGKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKColor.swift; sourceTree = "<group>"; };
+		34582DC01B24C1EA005D6AC9 /* AGKCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKCrypto.swift; sourceTree = "<group>"; };
+		34582DC11B24C1EA005D6AC9 /* AGKHex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKHex.swift; sourceTree = "<group>"; };
+		34582DC21B24C1EA005D6AC9 /* AGKImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKImage.swift; sourceTree = "<group>"; };
+		34582DC31B24C1EA005D6AC9 /* AGKKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKKeyboard.swift; sourceTree = "<group>"; };
+		34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKLocStr.swift; sourceTree = "<group>"; };
+		34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKNetActivityIndicator.swift; sourceTree = "<group>"; };
+		34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKNetRequest.swift; sourceTree = "<group>"; };
+		34582DC71B24C1EA005D6AC9 /* AGKStringEscape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKStringEscape.swift; sourceTree = "<group>"; };
+		34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKTimer.swift; sourceTree = "<group>"; };
+		34582DD41B24C26C005D6AC9 /* AgilKitSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AgilKitSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		3486EE5A1B24C09300ACA46E /* AgilKitSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilKitSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3486EE5D1B24C09300ACA46E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3486EE5E1B24C09300ACA46E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3486EE6E1B24C09300ACA46E /* AgilKitSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgilKitSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3486EE731B24C09300ACA46E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3486EE741B24C09300ACA46E /* AgilKitSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgilKitSwiftTests.swift; sourceTree = "<group>"; };
+		34B67F851A0297D500FBF94E /* AgilKitObjC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AgilKitObjC-Prefix.pch"; sourceTree = "<group>"; };
+		34B67F871A02997300FBF94E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		34B67F881A02997300FBF94E /* Version.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Version.txt; sourceTree = "<group>"; };
+		34BEC2C41A02882B004F6DF5 /* libAgilKitObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAgilKitObjC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		34BEC2FE1A028992004F6DF5 /* AKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKBase64.h; sourceTree = "<group>"; };
+		34BEC2FF1A028992004F6DF5 /* AKBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKBase64.m; sourceTree = "<group>"; };
+		34BEC3001A028992004F6DF5 /* AKCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCache.h; sourceTree = "<group>"; };
+		34BEC3011A028992004F6DF5 /* AKCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCache.m; sourceTree = "<group>"; };
+		34BEC3021A028992004F6DF5 /* AKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKColor.h; sourceTree = "<group>"; };
+		34BEC3031A028992004F6DF5 /* AKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKColor.m; sourceTree = "<group>"; };
+		34BEC3041A028992004F6DF5 /* AKCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKCrypto.h; sourceTree = "<group>"; };
+		34BEC3051A028992004F6DF5 /* AKCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKCrypto.m; sourceTree = "<group>"; };
+		34BEC3061A028992004F6DF5 /* AKHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKHex.h; sourceTree = "<group>"; };
+		34BEC3071A028992004F6DF5 /* AKHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKHex.m; sourceTree = "<group>"; };
+		34BEC3081A028992004F6DF5 /* AKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKImage.h; sourceTree = "<group>"; };
+		34BEC3091A028992004F6DF5 /* AKImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKImage.m; sourceTree = "<group>"; };
+		34BEC30A1A028992004F6DF5 /* AKKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKKeyboard.h; sourceTree = "<group>"; };
+		34BEC30B1A028992004F6DF5 /* AKKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKKeyboard.m; sourceTree = "<group>"; };
+		34BEC30C1A028992004F6DF5 /* AKKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKKeychain.h; sourceTree = "<group>"; };
+		34BEC30D1A028992004F6DF5 /* AKKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKKeychain.m; sourceTree = "<group>"; };
+		34BEC30E1A028992004F6DF5 /* AKLocStr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKLocStr.h; sourceTree = "<group>"; };
+		34BEC30F1A028992004F6DF5 /* AKLocStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKLocStr.m; sourceTree = "<group>"; };
+		34BEC3101A028992004F6DF5 /* AKMultipartFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKMultipartFormData.h; sourceTree = "<group>"; };
+		34BEC3111A028992004F6DF5 /* AKMultipartFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKMultipartFormData.m; sourceTree = "<group>"; };
+		34BEC3121A028992004F6DF5 /* AKNetActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNetActivityIndicator.h; sourceTree = "<group>"; };
+		34BEC3131A028992004F6DF5 /* AKNetActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNetActivityIndicator.m; sourceTree = "<group>"; };
+		34BEC3141A028992004F6DF5 /* AKNetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKNetRequest.h; sourceTree = "<group>"; };
+		34BEC3151A028992004F6DF5 /* AKNetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKNetRequest.m; sourceTree = "<group>"; };
+		34BEC3161A028992004F6DF5 /* AKQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKQueryString.h; sourceTree = "<group>"; };
+		34BEC3171A028992004F6DF5 /* AKQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKQueryString.m; sourceTree = "<group>"; };
+		34BEC3181A028992004F6DF5 /* AKStringEscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKStringEscape.h; sourceTree = "<group>"; };
+		34BEC3191A028992004F6DF5 /* AKStringEscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKStringEscape.m; sourceTree = "<group>"; };
+		34BEC31A1A028992004F6DF5 /* AKTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKTimer.h; sourceTree = "<group>"; };
+		34BEC31B1A028992004F6DF5 /* AKTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKTimer.m; sourceTree = "<group>"; };
+		34BEC31C1A028992004F6DF5 /* AKWindowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKWindowView.h; sourceTree = "<group>"; };
+		34BEC31D1A028992004F6DF5 /* AKWindowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKWindowView.m; sourceTree = "<group>"; };
+		34BEC31E1A028992004F6DF5 /* AKXMLDOMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKXMLDOMParser.h; sourceTree = "<group>"; };
+		34BEC31F1A028992004F6DF5 /* AKXMLDOMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKXMLDOMParser.m; sourceTree = "<group>"; };
+		34BEC3201A028992004F6DF5 /* AKXMLSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKXMLSAXParser.h; sourceTree = "<group>"; };
+		34BEC3211A028992004F6DF5 /* AKXMLSAXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKXMLSAXParser.m; sourceTree = "<group>"; };
+		34C565D91B26455D00FC7ED5 /* AKImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKImageEffects.h; sourceTree = "<group>"; };
+		34C565DA1B26455D00FC7ED5 /* AKImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKImageEffects.m; sourceTree = "<group>"; };
+		34C911851A325B280032D777 /* AgilKitObjCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgilKitObjCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		34C911881A325B280032D777 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		34C911891A325B280032D777 /* AgilKitObjCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgilKitObjCTests.m; sourceTree = "<group>"; };
+		34E2563C1B32631A00540BD4 /* AGKWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKWindowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3451F9A3170356410046B9A9 /* Frameworks */ = {
+		3486EE571B24C09300ACA46E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3451F9AA170356410046B9A9 /* Foundation.framework in Frameworks */,
-				349CE387170371D90051A81C /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3486EE6B1B24C09300ACA46E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34BEC2C11A02882B004F6DF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3409BCF11A028AB600518B8E /* Foundation.framework in Frameworks */,
+				3409BCF31A028ABF00518B8E /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34C911821A325B280032D777 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34C9118B1A325B280032D777 /* libAgilKitObjC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3451F99D170356410046B9A9 = {
+		3409BCEF1A028A8800518B8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				347B5E94170357110006F928 /* Classes */,
-				3451F9A8170356410046B9A9 /* Frameworks */,
-				3451F9A7170356410046B9A9 /* Products */,
-				3451F9B71703569B0046B9A9 /* Supporting Files */,
-			);
-			sourceTree = "<group>";
-		};
-		3451F9A7170356410046B9A9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3451F9A6170356410046B9A9 /* libAgilKit.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3451F9A8170356410046B9A9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3451F9A9170356410046B9A9 /* Foundation.framework */,
-				349CE386170371D90051A81C /* UIKit.framework */,
+				3409BCF01A028AB600518B8E /* Foundation.framework */,
+				3409BCF21A028ABE00518B8E /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3451F9B71703569B0046B9A9 /* Supporting Files */ = {
+		34582DBD1B24C1EA005D6AC9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				347B5E98170357980006F928 /* AgilKit-Prefix.pch */,
-				347B60B219E9EE3D000EB836 /* Version.txt */,
+				34582DBE1B24C1EA005D6AC9 /* AGKCache.swift */,
+				34582DBF1B24C1EA005D6AC9 /* AGKColor.swift */,
+				34582DC01B24C1EA005D6AC9 /* AGKCrypto.swift */,
+				34582DC11B24C1EA005D6AC9 /* AGKHex.swift */,
+				34582DC21B24C1EA005D6AC9 /* AGKImage.swift */,
+				34582DC31B24C1EA005D6AC9 /* AGKKeyboard.swift */,
+				34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */,
+				34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */,
+				34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */,
+				34582DC71B24C1EA005D6AC9 /* AGKStringEscape.swift */,
+				34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */,
+				34E2563C1B32631A00540BD4 /* AGKWindowView.swift */,
+				3439972C1B27B5570078FD94 /* AGKXMLSAXParser.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		3486EE5B1B24C09300ACA46E /* AgilKitSwift */ = {
+			isa = PBXGroup;
+			children = (
+				34582DBD1B24C1EA005D6AC9 /* Classes */,
+				3486EE5C1B24C09300ACA46E /* Supporting Files */,
+			);
+			path = AgilKitSwift;
+			sourceTree = "<group>";
+		};
+		3486EE5C1B24C09300ACA46E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				34582DD41B24C26C005D6AC9 /* AgilKitSwift-Bridging-Header.h */,
+				3486EE5E1B24C09300ACA46E /* AppDelegate.swift */,
+				3486EE5D1B24C09300ACA46E /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		347B5E94170357110006F928 /* Classes */ = {
+		3486EE711B24C09300ACA46E /* AgilKitSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
-				341DF766170DE1A800834B2F /* AKBase64.h */,
-				341DF767170DE1A800834B2F /* AKBase64.m */,
-				341462941703A2DF00DC9BBB /* AKCache.h */,
-				341462951703A2DF00DC9BBB /* AKCache.m */,
-				345FDE831705F808002C8B23 /* AKColor.h */,
-				345FDE841705F808002C8B23 /* AKColor.m */,
-				341BA07A17039934009CACDD /* AKCrypto.h */,
-				341BA07B17039934009CACDD /* AKCrypto.m */,
-				347B5E9F17035B970006F928 /* AKHex.h */,
-				347B5EA017035B970006F928 /* AKHex.m */,
-				345FDE861705FB5D002C8B23 /* AKImage.h */,
-				345FDE871705FB5D002C8B23 /* AKImage.m */,
-				3434692C1704C5400077D298 /* AKKeyboard.h */,
-				3434692D1704C5400077D298 /* AKKeyboard.m */,
-				343469261704B8DC0077D298 /* AKKeychain.h */,
-				343469271704B8DC0077D298 /* AKKeychain.m */,
-				347B5E95170357110006F928 /* AKLocStr.h */,
-				347B5E96170357110006F928 /* AKLocStr.m */,
-				3434693C1704D9490077D298 /* AKMultipartFormData.h */,
-				3434693D1704D9490077D298 /* AKMultipartFormData.m */,
-				344788861705DFB5005658F4 /* AKNetActivityIndicator.h */,
-				344788871705DFB5005658F4 /* AKNetActivityIndicator.m */,
-				349CE38317035E480051A81C /* AKNetRequest.h */,
-				349CE38417035E480051A81C /* AKNetRequest.m */,
-				343469391704D88B0077D298 /* AKQueryString.h */,
-				3434693A1704D88B0077D298 /* AKQueryString.m */,
-				343469291704BBEF0077D298 /* AKStringEscape.h */,
-				3434692A1704BBEF0077D298 /* AKStringEscape.m */,
-				3444EB89173D441F00D2332C /* AKTimer.h */,
-				3444EB8A173D441F00D2332C /* AKTimer.m */,
-				347B5E9C17035A8D0006F928 /* AKWindowView.h */,
-				347B5E9D17035A8D0006F928 /* AKWindowView.m */,
-				3434692F1704CE2D0077D298 /* AKXMLDOMParser.h */,
-				343469301704CE2D0077D298 /* AKXMLDOMParser.m */,
-				343469321704D6750077D298 /* AKXMLSAXParser.h */,
-				343469331704D6750077D298 /* AKXMLSAXParser.m */,
+				3486EE741B24C09300ACA46E /* AgilKitSwiftTests.swift */,
+				3486EE721B24C09300ACA46E /* Supporting Files */,
+			);
+			path = AgilKitSwiftTests;
+			sourceTree = "<group>";
+		};
+		3486EE721B24C09300ACA46E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3486EE731B24C09300ACA46E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		34B67F841A0297C200FBF94E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				34B67F851A0297D500FBF94E /* AgilKitObjC-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		34B67F861A02994C00FBF94E /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				34B67F871A02997300FBF94E /* README.md */,
+				34B67F881A02997300FBF94E /* Version.txt */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		34BEC2BB1A02882B004F6DF5 = {
+			isa = PBXGroup;
+			children = (
+				34BEC2FC1A028992004F6DF5 /* AgilKitObjC */,
+				34C911861A325B280032D777 /* AgilKitObjCTests */,
+				3486EE5B1B24C09300ACA46E /* AgilKitSwift */,
+				3486EE711B24C09300ACA46E /* AgilKitSwiftTests */,
+				3409BCEF1A028A8800518B8E /* Frameworks */,
+				34B67F861A02994C00FBF94E /* Other */,
+				34BEC2C51A02882B004F6DF5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		34BEC2C51A02882B004F6DF5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34BEC2C41A02882B004F6DF5 /* libAgilKitObjC.a */,
+				34C911851A325B280032D777 /* AgilKitObjCTests.xctest */,
+				3486EE5A1B24C09300ACA46E /* AgilKitSwift.app */,
+				3486EE6E1B24C09300ACA46E /* AgilKitSwiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		34BEC2FC1A028992004F6DF5 /* AgilKitObjC */ = {
+			isa = PBXGroup;
+			children = (
+				34BEC2FD1A028992004F6DF5 /* Classes */,
+				34B67F841A0297C200FBF94E /* Supporting Files */,
+			);
+			path = AgilKitObjC;
+			sourceTree = "<group>";
+		};
+		34BEC2FD1A028992004F6DF5 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				34BEC2FE1A028992004F6DF5 /* AKBase64.h */,
+				34BEC2FF1A028992004F6DF5 /* AKBase64.m */,
+				34BEC3001A028992004F6DF5 /* AKCache.h */,
+				34BEC3011A028992004F6DF5 /* AKCache.m */,
+				34BEC3021A028992004F6DF5 /* AKColor.h */,
+				34BEC3031A028992004F6DF5 /* AKColor.m */,
+				34BEC3041A028992004F6DF5 /* AKCrypto.h */,
+				34BEC3051A028992004F6DF5 /* AKCrypto.m */,
+				342F7EEE1B0285E0001ABF27 /* AKDisplayLink.h */,
+				342F7EEF1B0285E0001ABF27 /* AKDisplayLink.m */,
+				34BEC3061A028992004F6DF5 /* AKHex.h */,
+				34BEC3071A028992004F6DF5 /* AKHex.m */,
+				34BEC3081A028992004F6DF5 /* AKImage.h */,
+				34BEC3091A028992004F6DF5 /* AKImage.m */,
+				34C565D91B26455D00FC7ED5 /* AKImageEffects.h */,
+				34C565DA1B26455D00FC7ED5 /* AKImageEffects.m */,
+				34BEC30A1A028992004F6DF5 /* AKKeyboard.h */,
+				34BEC30B1A028992004F6DF5 /* AKKeyboard.m */,
+				34BEC30C1A028992004F6DF5 /* AKKeychain.h */,
+				34BEC30D1A028992004F6DF5 /* AKKeychain.m */,
+				34BEC30E1A028992004F6DF5 /* AKLocStr.h */,
+				34BEC30F1A028992004F6DF5 /* AKLocStr.m */,
+				34BEC3101A028992004F6DF5 /* AKMultipartFormData.h */,
+				34BEC3111A028992004F6DF5 /* AKMultipartFormData.m */,
+				34BEC3121A028992004F6DF5 /* AKNetActivityIndicator.h */,
+				34BEC3131A028992004F6DF5 /* AKNetActivityIndicator.m */,
+				34BEC3141A028992004F6DF5 /* AKNetRequest.h */,
+				34BEC3151A028992004F6DF5 /* AKNetRequest.m */,
+				34BEC3161A028992004F6DF5 /* AKQueryString.h */,
+				34BEC3171A028992004F6DF5 /* AKQueryString.m */,
+				34BEC3181A028992004F6DF5 /* AKStringEscape.h */,
+				34BEC3191A028992004F6DF5 /* AKStringEscape.m */,
+				34BEC31A1A028992004F6DF5 /* AKTimer.h */,
+				34BEC31B1A028992004F6DF5 /* AKTimer.m */,
+				34BEC31C1A028992004F6DF5 /* AKWindowView.h */,
+				34BEC31D1A028992004F6DF5 /* AKWindowView.m */,
+				34BEC31E1A028992004F6DF5 /* AKXMLDOMParser.h */,
+				34BEC31F1A028992004F6DF5 /* AKXMLDOMParser.m */,
+				34BEC3201A028992004F6DF5 /* AKXMLSAXParser.h */,
+				34BEC3211A028992004F6DF5 /* AKXMLSAXParser.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		34C911861A325B280032D777 /* AgilKitObjCTests */ = {
+			isa = PBXGroup;
+			children = (
+				34C911891A325B280032D777 /* AgilKitObjCTests.m */,
+				34C911871A325B280032D777 /* Supporting Files */,
+			);
+			path = AgilKitObjCTests;
+			sourceTree = "<group>";
+		};
+		34C911871A325B280032D777 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				34C911881A325B280032D777 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3451F9A5170356410046B9A9 /* AgilKit */ = {
+		3486EE591B24C09300ACA46E /* AgilKitSwift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3451F9B4170356410046B9A9 /* Build configuration list for PBXNativeTarget "AgilKit" */;
+			buildConfigurationList = 3486EE7A1B24C09300ACA46E /* Build configuration list for PBXNativeTarget "AgilKitSwift" */;
 			buildPhases = (
-				3451F9A2170356410046B9A9 /* Sources */,
-				3451F9A3170356410046B9A9 /* Frameworks */,
-				3451F9A4170356410046B9A9 /* CopyFiles */,
+				3486EE561B24C09300ACA46E /* Sources */,
+				3486EE571B24C09300ACA46E /* Frameworks */,
+				3486EE581B24C09300ACA46E /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = AgilKit;
+			name = AgilKitSwift;
+			productName = AgilKitSwift;
+			productReference = 3486EE5A1B24C09300ACA46E /* AgilKitSwift.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3486EE6D1B24C09300ACA46E /* AgilKitSwiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3486EE7B1B24C09300ACA46E /* Build configuration list for PBXNativeTarget "AgilKitSwiftTests" */;
+			buildPhases = (
+				3486EE6A1B24C09300ACA46E /* Sources */,
+				3486EE6B1B24C09300ACA46E /* Frameworks */,
+				3486EE6C1B24C09300ACA46E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3486EE701B24C09300ACA46E /* PBXTargetDependency */,
+			);
+			name = AgilKitSwiftTests;
+			productName = AgilKitSwiftTests;
+			productReference = 3486EE6E1B24C09300ACA46E /* AgilKitSwiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		34BEC2C31A02882B004F6DF5 /* AgilKitObjC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 34BEC2D81A02882B004F6DF5 /* Build configuration list for PBXNativeTarget "AgilKitObjC" */;
+			buildPhases = (
+				34BEC2C01A02882B004F6DF5 /* Sources */,
+				34BEC2C11A02882B004F6DF5 /* Frameworks */,
+				34BEC2C21A02882B004F6DF5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AgilKitObjC;
 			productName = AgilKit;
-			productReference = 3451F9A6170356410046B9A9 /* libAgilKit.a */;
+			productReference = 34BEC2C41A02882B004F6DF5 /* libAgilKitObjC.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		34C911841A325B280032D777 /* AgilKitObjCTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 34C911901A325B280032D777 /* Build configuration list for PBXNativeTarget "AgilKitObjCTests" */;
+			buildPhases = (
+				34C911811A325B280032D777 /* Sources */,
+				34C911821A325B280032D777 /* Frameworks */,
+				34C911831A325B280032D777 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				34C9118D1A325B280032D777 /* PBXTargetDependency */,
+			);
+			name = AgilKitObjCTests;
+			productName = AgilKitObjCTests;
+			productReference = 34C911851A325B280032D777 /* AgilKitObjCTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		3451F99E170356410046B9A9 /* Project object */ = {
+		34BEC2BC1A02882B004F6DF5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Agilstream, LLC";
+				TargetAttributes = {
+					3486EE591B24C09300ACA46E = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					3486EE6D1B24C09300ACA46E = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = 3486EE591B24C09300ACA46E;
+					};
+					34BEC2C31A02882B004F6DF5 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					34C911841A325B280032D777 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
 			};
-			buildConfigurationList = 3451F9A1170356410046B9A9 /* Build configuration list for PBXProject "AgilKit" */;
+			buildConfigurationList = 34BEC2BF1A02882B004F6DF5 /* Build configuration list for PBXProject "AgilKit" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 3451F99D170356410046B9A9;
-			productRefGroup = 3451F9A7170356410046B9A9 /* Products */;
+			mainGroup = 34BEC2BB1A02882B004F6DF5;
+			productRefGroup = 34BEC2C51A02882B004F6DF5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3451F9A5170356410046B9A9 /* AgilKit */,
+				34BEC2C31A02882B004F6DF5 /* AgilKitObjC */,
+				34C911841A325B280032D777 /* AgilKitObjCTests */,
+				3486EE591B24C09300ACA46E /* AgilKitSwift */,
+				3486EE6D1B24C09300ACA46E /* AgilKitSwiftTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		3486EE581B24C09300ACA46E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3486EE6C1B24C09300ACA46E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34C911831A325B280032D777 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		3451F9A2170356410046B9A9 /* Sources */ = {
+		3486EE561B24C09300ACA46E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				341DF768170DE1A800834B2F /* AKBase64.m in Sources */,
-				341462961703A2DF00DC9BBB /* AKCache.m in Sources */,
-				345FDE851705F808002C8B23 /* AKColor.m in Sources */,
-				341BA07C17039934009CACDD /* AKCrypto.m in Sources */,
-				347B5EA117035B970006F928 /* AKHex.m in Sources */,
-				345FDE881705FB5D002C8B23 /* AKImage.m in Sources */,
-				3434692E1704C5400077D298 /* AKKeyboard.m in Sources */,
-				343469281704B8DC0077D298 /* AKKeychain.m in Sources */,
-				347B5E97170357110006F928 /* AKLocStr.m in Sources */,
-				3434693E1704D94A0077D298 /* AKMultipartFormData.m in Sources */,
-				344788881705DFB5005658F4 /* AKNetActivityIndicator.m in Sources */,
-				349CE38517035E480051A81C /* AKNetRequest.m in Sources */,
-				3434693B1704D88B0077D298 /* AKQueryString.m in Sources */,
-				3434692B1704BBEF0077D298 /* AKStringEscape.m in Sources */,
-				347B5E9E17035A8D0006F928 /* AKWindowView.m in Sources */,
-				343469311704CE2D0077D298 /* AKXMLDOMParser.m in Sources */,
-				343469341704D6750077D298 /* AKXMLSAXParser.m in Sources */,
-				3444EB8B173D441F00D2332C /* AKTimer.m in Sources */,
+				34582DC91B24C1EA005D6AC9 /* AGKCache.swift in Sources */,
+				34582DCA1B24C1EA005D6AC9 /* AGKColor.swift in Sources */,
+				34582DCB1B24C1EA005D6AC9 /* AGKCrypto.swift in Sources */,
+				34582DCC1B24C1EA005D6AC9 /* AGKHex.swift in Sources */,
+				34582DCD1B24C1EA005D6AC9 /* AGKImage.swift in Sources */,
+				34582DCE1B24C1EA005D6AC9 /* AGKKeyboard.swift in Sources */,
+				34582DCF1B24C1EA005D6AC9 /* AGKLocStr.swift in Sources */,
+				34582DD01B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift in Sources */,
+				34582DD11B24C1EA005D6AC9 /* AGKNetRequest.swift in Sources */,
+				34582DD21B24C1EA005D6AC9 /* AGKStringEscape.swift in Sources */,
+				34582DD31B24C1EA005D6AC9 /* AGKTimer.swift in Sources */,
+				34E2563D1B32631A00540BD4 /* AGKWindowView.swift in Sources */,
+				3439972D1B27B5570078FD94 /* AGKXMLSAXParser.swift in Sources */,
+				3486EE5F1B24C09300ACA46E /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3486EE6A1B24C09300ACA46E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3486EE751B24C09300ACA46E /* AgilKitSwiftTests.swift in Sources */,
+				34582DD51B24C2FB005D6AC9 /* AGKColor.swift in Sources */,
+				34582DD81B24C388005D6AC9 /* AGKCrypto.swift in Sources */,
+				34582DD61B24C309005D6AC9 /* AGKHex.swift in Sources */,
+				34582DD71B24C316005D6AC9 /* AGKStringEscape.swift in Sources */,
+				34E6F2751B27BD180062B33F /* AGKXMLSAXParser.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34BEC2C01A02882B004F6DF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34BEC3221A028992004F6DF5 /* AKBase64.m in Sources */,
+				34BEC3231A028992004F6DF5 /* AKCache.m in Sources */,
+				34BEC3241A028992004F6DF5 /* AKColor.m in Sources */,
+				34BEC3251A028992004F6DF5 /* AKCrypto.m in Sources */,
+				342F7EF01B0285E0001ABF27 /* AKDisplayLink.m in Sources */,
+				34BEC3261A028992004F6DF5 /* AKHex.m in Sources */,
+				34BEC3271A028992004F6DF5 /* AKImage.m in Sources */,
+				34C565DB1B26455D00FC7ED5 /* AKImageEffects.m in Sources */,
+				34BEC3281A028992004F6DF5 /* AKKeyboard.m in Sources */,
+				34BEC3291A028992004F6DF5 /* AKKeychain.m in Sources */,
+				34BEC32A1A028992004F6DF5 /* AKLocStr.m in Sources */,
+				34BEC32B1A028992004F6DF5 /* AKMultipartFormData.m in Sources */,
+				34BEC32C1A028992004F6DF5 /* AKNetActivityIndicator.m in Sources */,
+				34BEC32D1A028992004F6DF5 /* AKNetRequest.m in Sources */,
+				34BEC32E1A028992004F6DF5 /* AKQueryString.m in Sources */,
+				34BEC32F1A028992004F6DF5 /* AKStringEscape.m in Sources */,
+				34BEC3301A028992004F6DF5 /* AKTimer.m in Sources */,
+				34BEC3311A028992004F6DF5 /* AKWindowView.m in Sources */,
+				34BEC3321A028992004F6DF5 /* AKXMLDOMParser.m in Sources */,
+				34BEC3331A028992004F6DF5 /* AKXMLSAXParser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34C911811A325B280032D777 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34C9118A1A325B280032D777 /* AgilKitObjCTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3486EE701B24C09300ACA46E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3486EE591B24C09300ACA46E /* AgilKitSwift */;
+			targetProxy = 3486EE6F1B24C09300ACA46E /* PBXContainerItemProxy */;
+		};
+		34C9118D1A325B280032D777 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 34BEC2C31A02882B004F6DF5 /* AgilKitObjC */;
+			targetProxy = 34C9118C1A325B280032D777 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		3451F9B2170356410046B9A9 /* Debug */ = {
+		3486EE761B24C09300ACA46E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AgilKitSwift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AgilKitSwift/AgilKitSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3486EE771B24C09300ACA46E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = AgilKitSwift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AgilKitSwift/AgilKitSwift-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3486EE781B24C09300ACA46E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AgilKitSwiftTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AgilKitSwift/AgilKitSwift-Bridging-Header.h";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AgilKitSwift.app/AgilKitSwift";
+			};
+			name = Debug;
+		};
+		3486EE791B24C09300ACA46E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = AgilKitSwiftTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AgilKitSwift/AgilKitSwift-Bridging-Header.h";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AgilKitSwift.app/AgilKitSwift";
+			};
+			name = Release;
+		};
+		34BEC2D61A02882B004F6DF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -274,85 +703,150 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
-		3451F9B3170356410046B9A9 /* Release */ = {
+		34BEC2D71A02882B004F6DF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		3451F9B5170356410046B9A9 /* Debug */ = {
+		34BEC2D91A02882B004F6DF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/AgilKit.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AgilKit-Prefix.pch";
+				GCC_PREFIX_HEADER = "AgilKitObjC/AgilKitObjC-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		3451F9B6170356410046B9A9 /* Release */ = {
+		34BEC2DA1A02882B004F6DF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/AgilKit.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AgilKit-Prefix.pch";
+				GCC_PREFIX_HEADER = "AgilKitObjC/AgilKitObjC-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		34C9118E1A325B280032D777 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AgilKitObjCTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		34C9118F1A325B280032D777 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AgilKitObjCTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3451F9A1170356410046B9A9 /* Build configuration list for PBXProject "AgilKit" */ = {
+		3486EE7A1B24C09300ACA46E /* Build configuration list for PBXNativeTarget "AgilKitSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3451F9B2170356410046B9A9 /* Debug */,
-				3451F9B3170356410046B9A9 /* Release */,
+				3486EE761B24C09300ACA46E /* Debug */,
+				3486EE771B24C09300ACA46E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3451F9B4170356410046B9A9 /* Build configuration list for PBXNativeTarget "AgilKit" */ = {
+		3486EE7B1B24C09300ACA46E /* Build configuration list for PBXNativeTarget "AgilKitSwiftTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3451F9B5170356410046B9A9 /* Debug */,
-				3451F9B6170356410046B9A9 /* Release */,
+				3486EE781B24C09300ACA46E /* Debug */,
+				3486EE791B24C09300ACA46E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		34BEC2BF1A02882B004F6DF5 /* Build configuration list for PBXProject "AgilKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34BEC2D61A02882B004F6DF5 /* Debug */,
+				34BEC2D71A02882B004F6DF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		34BEC2D81A02882B004F6DF5 /* Build configuration list for PBXNativeTarget "AgilKitObjC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34BEC2D91A02882B004F6DF5 /* Debug */,
+				34BEC2DA1A02882B004F6DF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		34C911901A325B280032D777 /* Build configuration list for PBXNativeTarget "AgilKitObjCTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34C9118E1A325B280032D777 /* Debug */,
+				34C9118F1A325B280032D777 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 3451F99E170356410046B9A9 /* Project object */;
+	rootObject = 34BEC2BC1A02882B004F6DF5 /* Project object */;
 }
