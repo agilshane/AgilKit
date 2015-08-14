@@ -26,6 +26,35 @@ import UIKit
 
 class AGKImage {
 
+	class func croppedImageWithImage(image: UIImage, rect: CGRect) -> UIImage {
+		var r = rect
+		if image.imageOrientation == .Down {
+			r.origin.x = image.size.width - rect.maxX
+			r.origin.y = image.size.height - rect.maxY
+		}
+		else if image.imageOrientation == .Left {
+			r.origin.x = image.size.height - rect.maxY
+			r.origin.y = rect.origin.x
+			r.size.width = rect.size.height
+			r.size.height = rect.size.width
+		}
+		else if image.imageOrientation == .Right {
+			r.origin.x = rect.origin.y
+			r.origin.y = image.size.width - rect.maxX
+			r.size.width = rect.size.height
+			r.size.height = rect.size.width
+		}
+		let scale = image.scale
+		r.origin.x *= scale
+		r.origin.y *= scale
+		r.size.width *= scale
+		r.size.height *= scale
+		if let imageRef = CGImageCreateWithImageInRect(image.CGImage, r) {
+			return UIImage(CGImage: imageRef, scale: scale, orientation: image.imageOrientation)
+		}
+		return image
+	}
+
 	// Returns a resizable image with a 1x1 point that is not capped. The point is centered
 	// vertically and horizontally.
 
@@ -60,7 +89,7 @@ class AGKImage {
 		color.setFill()
 		CGContextFillRect(UIGraphicsGetCurrentContext(),
 			CGRectMake(0, 0, image.size.width, image.size.height))
-		image.drawAtPoint(CGPointZero, blendMode: kCGBlendModeDestinationIn, alpha: 1)
+		image.drawAtPoint(CGPointZero, blendMode: .DestinationIn, alpha: 1)
 		let result = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		return result

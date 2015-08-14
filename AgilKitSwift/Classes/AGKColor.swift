@@ -26,6 +26,12 @@ import UIKit
 
 class AGKColor {
 
+	private static let scalar0 = UInt32(UnicodeScalar("0"))
+	private static let scalarA = UInt32(UnicodeScalar("A"))
+	private static let scalarF = UInt32(UnicodeScalar("F"))
+	private static let scalara = UInt32(UnicodeScalar("a"))
+	private static let scalarf = UInt32(UnicodeScalar("f"))
+
 	class func colorWithRRGGBB(rrggbb: String) -> UIColor? {
 		let scalars = Array(rrggbb.unicodeScalars)
 		let len = scalars.count
@@ -37,7 +43,7 @@ class AGKColor {
 		let r = hexCharToInt(scalars[0]) * 16 + hexCharToInt(scalars[1])
 		let g = hexCharToInt(scalars[2]) * 16 + hexCharToInt(scalars[3])
 		let b = hexCharToInt(scalars[4]) * 16 + hexCharToInt(scalars[5])
-		var a = (len == 8) ? hexCharToInt(scalars[6]) * 16 + hexCharToInt(scalars[7]) : 255
+		let a = (len == 8) ? hexCharToInt(scalars[6]) * 16 + hexCharToInt(scalars[7]) : 255
 
 		return UIColor(
 			red:   CGFloat(r) / CGFloat(255),
@@ -79,15 +85,15 @@ class AGKColor {
 	private class func hexCharToInt(scalar: UnicodeScalar) -> Int {
 		let value = scalar.value
 
-		if value >= UInt32("A") && value <= UInt32("F") {
-			return Int(value - UInt32("A")) + 10
+		if value >= scalarA && value <= scalarF {
+			return Int(value - scalarA) + 10
 		}
 
-		if value >= UInt32("a") && value <= UInt32("f") {
-			return Int(value - UInt32("a")) + 10
+		if value >= scalara && value <= scalarf {
+			return Int(value - scalara) + 10
 		}
 
-		return Int(value - UInt32("0"))
+		return Int(value - scalar0)
 	}
 
 	class func rrggbbStringForColor(color: UIColor, includeAlpha: Bool) -> String {

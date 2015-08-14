@@ -24,7 +24,7 @@
 
 import Foundation
 
-func AGKLocStr(key: String, args: (String, String)...) -> String {
+func AGKLocStr(key: String, _ args: (String, String)...) -> String {
 	let notFound = "NOT_F0UND"
 	var s = NSBundle.mainBundle().localizedStringForKey(key, value: notFound, table: nil)
 	assert(s != notFound, "Localized string '\(key)' not found!")
@@ -36,7 +36,7 @@ func AGKLocStr(key: String, args: (String, String)...) -> String {
 	return s
 }
 
-func AGKLocStrError(key: String, args: (String, String)...) -> NSError {
+func AGKLocStrError(key: String, _ args: (String, String)...) -> NSError {
 	let notFound = "NOT_F0UND"
 	var s = NSBundle.mainBundle().localizedStringForKey(key, value: notFound, table: nil)
 	assert(s != notFound, "Localized string '\(key)' not found!")

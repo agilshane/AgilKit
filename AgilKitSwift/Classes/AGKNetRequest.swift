@@ -54,24 +54,24 @@ class AGKNetRequest {
 	private static var cleanUpTime = NSTimeInterval(0)
 	private weak var delegate: AGKNetRequestDelegate?
 	private static var ignoreCount = 0
-	private var ignoreInteraction: Bool
+	private var ignoreInteraction = false
 	private var impl: AGKNetRequestImpl?
 	weak var progressDelegate: AGKNetRequestProgressDelegate?
 	private(set) var responseBody = NSData()
 	private var responseBodyMutable: NSMutableData?
 	private(set) var responseHeaders = [String: String]()
-	private(set) var responsePath: String?
-	private var showNetActivityIndicator: Bool
+	private(set) var responseURL: NSURL?
+	private var showNetActivityIndicator = false
 	private(set) var statusCode = 0
 	private var totalBytesExpected = Int64(0)
 	static var trustServerRegardlessForDebugging = false
 	let url: String
 	var userInfo: [String: Any]?
 
-	private static let basePath: String = {
-		let array = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-		let path = array[0] as! String
-		return path.stringByAppendingPathComponent("AGKNetRequest")
+	private static let basePath: NSURL = {
+		let fm = NSFileManager.defaultManager()
+		let url = fm.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0]
+		return url.URLByAppendingPathComponent("AGKNetRequest", isDirectory: true)
 	}()
 
 	init?(delegate: AGKNetRequestDelegate,
@@ -84,8 +84,6 @@ class AGKNetRequest {
 		writeResponseToFile: Bool = false)
 	{
 		self.delegate = delegate
-		self.ignoreInteraction = ignoreInteraction
-		self.showNetActivityIndicator = showNetActivityIndicator
 		self.url = url
 
 		let nsurl = NSURL(string: url)
@@ -127,23 +125,28 @@ class AGKNetRequest {
 
 			while true {
 				let filename = "\(now)_\(rand()).bin"
-				let responsePath = AGKNetRequest.basePath.stringByAppendingPathComponent(filename)
+				let responseURL = AGKNetRequest.basePath.URLByAppendingPathComponent(
+					filename, isDirectory: false)
 
-				if !fm.fileExistsAtPath(responsePath) {
-					self.responsePath = responsePath
-					fm.createDirectoryAtPath(AGKNetRequest.basePath,
-						withIntermediateDirectories: true, attributes: nil, error: nil)
-					fm.createFileAtPath(responsePath, contents: nil, attributes: nil)
+				if !responseURL.checkResourceIsReachableAndReturnError(nil) {
+					self.responseURL = responseURL
+					_ = try? fm.createDirectoryAtURL(AGKNetRequest.basePath,
+						withIntermediateDirectories: true, attributes: nil)
+					NSData().writeToURL(responseURL, atomically: true)
 					break
 				}
 			}
 		}
 
+		self.ignoreInteraction = ignoreInteraction
+		self.showNetActivityIndicator = showNetActivityIndicator
+
 		if ignoreInteraction {
 			AGKNetRequest.ignoreCount++
-
 			if AGKNetRequest.ignoreCount == 1 {
-				UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+				#if !NO_UIAPPLICATION
+					UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+				#endif
 			}
 		}
 
@@ -168,7 +171,9 @@ class AGKNetRequest {
 			}
 
 			if AGKNetRequest.ignoreCount == 0 {
-				UIApplication.sharedApplication().endIgnoringInteractionEvents()
+				#if !NO_UIAPPLICATION
+					UIApplication.sharedApplication().endIgnoringInteractionEvents()
+				#endif
 			}
 		}
 
@@ -177,8 +182,8 @@ class AGKNetRequest {
 			AGKNetActivityIndicator.hide()
 		}
 
-		if let responsePath = self.responsePath {
-			NSFileManager.defaultManager().removeItemAtPath(responsePath, error: nil)
+		if let responseURL = self.responseURL {
+			_ = try? NSFileManager.defaultManager().removeItemAtURL(responseURL)
 		}
 	}
 
@@ -198,12 +203,14 @@ class AGKNetRequest {
 			return
 		}
 
-		var pathsToNuke = [String]()
+		var pathsToNuke = [NSURL]()
 		let fm = NSFileManager.defaultManager()
 
-		if let contents = fm.contentsOfDirectoryAtPath(basePath, error: nil) {
-			for filename in contents as! [String] {
-				let path = basePath.stringByAppendingPathComponent(filename)
+		if let contents = try? fm.contentsOfDirectoryAtURL(basePath,
+			includingPropertiesForKeys: nil, options: [])
+		{
+			for path in contents {
+				let filename = path.pathComponents!.last!
 				let range = filename.rangeOfString("_")
 
 				if range == nil || !filename.hasSuffix(".bin") {
@@ -211,9 +218,7 @@ class AGKNetRequest {
 				}
 				else {
 					let s = filename.substringToIndex(range!.startIndex) as NSString
-					let fileTime = s.doubleValue
-
-					if abs(now - fileTime) >= NSTimeInterval(24 * 3600) {
+					if abs(now - s.doubleValue) >= NSTimeInterval(24 * 3600) {
 						pathsToNuke.append(path)
 					}
 				}
@@ -221,7 +226,7 @@ class AGKNetRequest {
 		}
 
 		for pathToNuke in pathsToNuke {
-			fm.removeItemAtPath(pathToNuke, error: nil)
+			_ = try? fm.removeItemAtURL(pathToNuke)
 		}
 	}
 
@@ -239,7 +244,9 @@ class AGKNetRequest {
 			}
 
 			if AGKNetRequest.ignoreCount == 0 {
-				UIApplication.sharedApplication().endIgnoringInteractionEvents()
+				#if !NO_UIAPPLICATION
+					UIApplication.sharedApplication().endIgnoringInteractionEvents()
+				#endif
 			}
 		}
 
@@ -263,8 +270,8 @@ class AGKNetRequest {
 	private func implDidReceiveData(data: NSData) {
 		var totalBytesDownloaded = Int64(0)
 
-		if let responsePath = self.responsePath {
-			if let handle = NSFileHandle(forWritingAtPath: responsePath) {
+		if let responseURL = self.responseURL {
+			if let handle = try? NSFileHandle(forWritingToURL: responseURL) {
 				handle.seekToEndOfFile()
 				handle.writeData(data)
 				totalBytesDownloaded = Int64(handle.offsetInFile)
@@ -360,12 +367,13 @@ class AGKNetRequestImpl: NSObject, NSURLConnectionDataDelegate {
 		else if AGKNetRequest.trustServerRegardlessForDebugging &&
 			challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust
 		{
-			challenge.sender.useCredential(
-				NSURLCredential(forTrust: challenge.protectionSpace.serverTrust),
-				forAuthenticationChallenge: challenge)
+			if let serverTrust = challenge.protectionSpace.serverTrust {
+				challenge.sender?.useCredential(NSURLCredential(forTrust: serverTrust),
+					forAuthenticationChallenge: challenge)
+			}
 		}
 		else {
-			challenge.sender.performDefaultHandlingForAuthenticationChallenge?(challenge)
+			challenge.sender?.performDefaultHandlingForAuthenticationChallenge?(challenge)
 		}
 	}
 

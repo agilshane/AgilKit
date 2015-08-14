@@ -37,13 +37,17 @@ class AGKNetActivityIndicator {
 		}
 
 		if i == 0 {
-			UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+			#if !NO_UIAPPLICATION
+				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+			#endif
 		}
 	}
 
 	class func show() {
 		i++
-		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+		#if !NO_UIAPPLICATION
+			UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+		#endif
 	}
 
 }

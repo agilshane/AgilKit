@@ -28,10 +28,9 @@
 @interface AKWindowView () {
 	@private UIView *m_contentView;
 	@private BOOL m_didFinishLaunching;
+	@private BOOL m_oldSDK;
 	@private BOOL m_orientationLocked;
 }
-
-- (void)layoutWithOrientation:(UIInterfaceOrientation)orientation;
 
 @end
 
@@ -65,6 +64,8 @@
 	if (self = [super initWithFrame:bounds]) {
 		m_didFinishLaunching = (app.applicationState == UIApplicationStateActive);
 		m_contentView = contentView;
+		m_oldSDK = oldSDK;
+
 		[self addSubview:contentView];
 
 		if (oldSDK) {
@@ -95,6 +96,20 @@
 	}
 
 	return self;
+}
+
+
+- (void)layoutSubviews {
+	if (!m_oldSDK) {
+		UIView *v = self.superview;
+		if (v != nil) {
+			// Setting our frame shouldn't be necessary, but if we are a subview of an iOS 9.0
+			// split screen window, the window doesn't properly honor the autoresizingMask when
+			// the window size changes.
+			self.frame = v.bounds;
+			m_contentView.frame = v.bounds;
+		}
+	}
 }
 
 

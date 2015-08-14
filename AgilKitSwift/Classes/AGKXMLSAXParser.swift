@@ -68,25 +68,15 @@ class AGKXMLSAXParser: NSObject, NSXMLParserDelegate {
 		didStartElement elementName: String,
 		namespaceURI: String?,
 		qualifiedName qName: String?,
-		attributes attributeDict: [NSObject: AnyObject])
+		attributes attributeDict: [String: String])
 	{
 		currText = ""
 		currPath += "/" + elementName
-		if let dict = attributeDict as? [String: String] {
-			delegate?.xmlsaxParser(self, didStartElementPath: currPath, attributes: dict)
-		}
-		else {
-			assertionFailure("The attribute dictionary has an unexpected type!")
-		}
+		delegate?.xmlsaxParser(self, didStartElementPath: currPath, attributes: attributeDict)
 	}
 
-	func parser(parser: NSXMLParser, foundCharacters string: String?) {
-		if let s = string {
-			currText += s
-		}
-		else {
-			assertionFailure("The parser found no characters!")
-		}
+	func parser(parser: NSXMLParser, foundCharacters string: String) {
+		currText += string
 	}
 
 	func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {

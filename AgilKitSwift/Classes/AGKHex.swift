@@ -26,12 +26,12 @@ import Foundation
 
 class AGKHex {
 
-	private static let scalar0 = UInt32("0")
-	private static let scalar9 = UInt32("9")
-	private static let scalarA = UInt32("A")
-	private static let scalarF = UInt32("F")
-	private static let scalara = UInt32("a")
-	private static let scalarf = UInt32("f")
+	private static let scalar0 = UInt32(UnicodeScalar("0"))
+	private static let scalar9 = UInt32(UnicodeScalar("9"))
+	private static let scalarA = UInt32(UnicodeScalar("A"))
+	private static let scalarF = UInt32(UnicodeScalar("F"))
+	private static let scalara = UInt32(UnicodeScalar("a"))
+	private static let scalarf = UInt32(UnicodeScalar("f"))
 
 	class func bytesFromString(s: String) -> [UInt8] {
 		let chars = Array(s.unicodeScalars)

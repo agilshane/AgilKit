@@ -38,11 +38,11 @@ class AGKCache: AGKNetRequestDelegate {
 		case BecomeOrResignActive, None
 	}
 
-	private static var basePaths = [String: String]()
+	private static var basePaths = [String: NSURL]()
 	private(set) var data: NSData?
 	private weak var delegate: AGKCacheDelegate?
 	private static var didAddToCacheSinceLastTrim = false
-	private static var fileInfos = [String: AGKCacheFileInfo]()
+	private static var fileInfos = [NSURL: AGKCacheFileInfo]()
 	private(set) var image: UIImage?
 	private let keepIfExpired: Bool
 	private static var maxBytes = UInt64(10 * 1024 * 1024)
@@ -53,9 +53,10 @@ class AGKCache: AGKNetRequestDelegate {
 	private static var trimPolicy = TrimPolicy.BecomeOrResignActive
 	let url: String
 
-	private static let rootPath: String = {
-		let array = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
-		return (array[0] as! String).stringByAppendingPathComponent("AGKCache")
+	private static let rootPath: NSURL = {
+		let fm = NSFileManager.defaultManager()
+		let url = fm.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0]
+		return url.URLByAppendingPathComponent("AGKCache", isDirectory: true)
 	}()
 
 	init?(delegate: AGKCacheDelegate,
@@ -81,9 +82,10 @@ class AGKCache: AGKNetRequestDelegate {
 
 	class func addData(data: NSData, url: String, timeToLive: NSTimeInterval, keepIfExpired: Bool) {
 		let basePath = basePathForURL(url)
-		NSFileManager.defaultManager().createDirectoryAtPath(basePath,
-			withIntermediateDirectories: true, attributes: nil, error: nil)
-		data.writeToFile(basePath.stringByAppendingPathComponent("file.bin"), atomically: true)
+		_ = try? NSFileManager.defaultManager().createDirectoryAtURL(basePath,
+			withIntermediateDirectories: true, attributes: nil)
+		data.writeToURL(basePath.URLByAppendingPathComponent(
+			"file.bin", isDirectory: false), atomically: true)
 		writeInfoFileWithBasePath(basePath, timeToLive: timeToLive, keepIfExpired: keepIfExpired)
 	}
 
@@ -94,14 +96,14 @@ class AGKCache: AGKNetRequestDelegate {
 		keepIfExpired: Bool)
 	{
 		let basePath = basePathForURL(url)
-		NSFileManager.defaultManager().createDirectoryAtPath(basePath,
-			withIntermediateDirectories: true, attributes: nil, error: nil)
+		_ = try? NSFileManager.defaultManager().createDirectoryAtURL(basePath,
+			withIntermediateDirectories: true, attributes: nil)
 		let scale = UIScreen.mainScreen().scale
-		var filename =
+		let filename =
 			scale == CGFloat(3) ? "file@3x" :
 			scale == CGFloat(2) ? "file@2x" : "file"
-		let path = basePath.stringByAppendingPathComponent(filename + ext)
-		data.writeToFile(path, atomically: true)
+		let path = basePath.URLByAppendingPathComponent(filename + ext, isDirectory: false)
+		data.writeToURL(path, atomically: true)
 		writeInfoFileWithBasePath(basePath, timeToLive: timeToLive, keepIfExpired: keepIfExpired)
 	}
 
@@ -123,12 +125,13 @@ class AGKCache: AGKNetRequestDelegate {
 			keepIfExpired: keepIfExpired)
 	}
 
-	private class func basePathForURL(url: String) -> String {
+	private class func basePathForURL(url: String) -> NSURL {
 		if let path = basePaths[url] {
 			return path
 		}
 		let data = AGKCrypto.sha1(url.dataUsingEncoding(NSUTF8StringEncoding)!)
-		let path = rootPath.stringByAppendingPathComponent(AGKHex.stringFromData(data))
+		let path = rootPath.URLByAppendingPathComponent(
+			AGKHex.stringFromData(data), isDirectory: true)
 		basePaths[url] = path
 		return path
 	}
@@ -136,9 +139,13 @@ class AGKCache: AGKNetRequestDelegate {
 	class func dataWithURL(url: String) -> NSData? {
 		let basePath = basePathForURL(url)
 		let fm = NSFileManager.defaultManager()
-		for name in fm.contentsOfDirectoryAtPath(basePath, error: nil) as! [String] {
-			if name.hasSuffix(".jpg") || name.hasSuffix(".png") || name.hasSuffix(".bin") {
-				return NSData(contentsOfFile: basePath.stringByAppendingPathComponent(name))
+		if let contents = try? fm.contentsOfDirectoryAtURL(basePath,
+			includingPropertiesForKeys: nil, options: [])
+		{
+			for name in contents {
+				if let ext = name.pathExtension where ext == "jpg" || ext == "png" || ext == "bin" {
+					return NSData(contentsOfURL: name)
+				}
 			}
 		}
 		return nil
@@ -147,12 +154,12 @@ class AGKCache: AGKNetRequestDelegate {
 	class func deleteFileWithURL(url: String) {
 		let basePath = basePathForURL(url)
 		fileInfos.removeValueForKey(basePath)
-		NSFileManager.defaultManager().removeItemAtPath(basePath, error: nil)
+		_ = try? NSFileManager.defaultManager().removeItemAtURL(basePath)
 	}
 
 	class func fileExistsWithURL(url: String) -> Bool {
-		let path = basePathForURL(url).stringByAppendingPathComponent("file.info")
-		return NSFileManager.defaultManager().fileExistsAtPath(path)
+		let path = basePathForURL(url).URLByAppendingPathComponent("file.info", isDirectory: false)
+		return path.checkResourceIsReachableAndReturnError(nil)
 	}
 
 	class func fileExpiredWithURL(url: String) -> Bool {
@@ -167,23 +174,31 @@ class AGKCache: AGKNetRequestDelegate {
 		return false
 	}
 
-	class func imageWithURL(url: String) -> UIImage? {
+	class func imagePathWithURL(url: String) -> NSURL? {
 		let basePath = basePathForURL(url)
-		var scale = UIScreen.mainScreen().scale
-		var x = (scale == CGFloat(1)) ? "" : "@\(Int(scale))x"
-		var path = basePath.stringByAppendingPathComponent("file" + x)
-		var image = UIImage(contentsOfFile: path + ".jpg")
-
-		if image == nil {
-			image = UIImage(contentsOfFile: path + ".png")
+		let scale = UIScreen.mainScreen().scale
+		let x = (scale == CGFloat(1)) ? "" : "@\(Int(scale))x"
+		let path = basePath.URLByAppendingPathComponent("file" + x, isDirectory: false)
+		do {
+			let nsurl = path.URLByAppendingPathExtension("jpg")
+			if nsurl.checkResourceIsReachableAndReturnError(nil) {
+				return nsurl
+			}
 		}
-
-		if image != nil && image!.scale != scale {
-			image = UIImage(CGImage: image!.CGImage, scale: scale,
-				orientation: image!.imageOrientation)
+		do {
+			let nsurl = path.URLByAppendingPathExtension("png")
+			if nsurl.checkResourceIsReachableAndReturnError(nil) {
+				return nsurl
+			}
 		}
+		return nil
+	}
 
-		return image
+	class func imageWithURL(url: String) -> UIImage? {
+		if let path = imagePathWithURL(url)?.path {
+			return UIImage(contentsOfFile: path)
+		}
+		return nil
 	}
 
 	class func initialize(maxBytes: UInt64 = 10 * 1024 * 1024,
@@ -263,16 +278,23 @@ class AGKCache: AGKNetRequestDelegate {
 		let now = NSDate.timeIntervalSinceReferenceDate()
 		var totalSize = UInt64(0)
 
-		for baseName in fm.contentsOfDirectoryAtPath(rootPath, error: nil) as! [String] {
-			let basePath = rootPath.stringByAppendingPathComponent(baseName)
-			if let contents = fm.contentsOfDirectoryAtPath(basePath, error: nil) as? [String] {
-				for name in contents {
-					if name.hasSuffix(".jpg") || name.hasSuffix(".png") || name.hasSuffix(".bin") {
-						let path = basePath.stringByAppendingPathComponent(name)
-						if let attrs = fm.attributesOfItemAtPath(path, error: nil) {
-							if let modified = attrs[NSFileModificationDate] as? NSDate,
-								size = attrs[NSFileSize] as? NSNumber
-							{
+		do {
+			for basePath in try fm.contentsOfDirectoryAtURL(rootPath,
+				includingPropertiesForKeys: nil, options: [])
+			{
+				if let contents = try? fm.contentsOfDirectoryAtURL(basePath,
+					includingPropertiesForKeys: [NSURLContentModificationDateKey, NSURLFileSizeKey],
+					options: [])
+				{
+					for path in contents {
+						if let ext = path.pathExtension where ext == "jpg" ||
+							ext == "png" || ext == "bin"
+						{
+							var obj0: AnyObject?
+							var obj1: AnyObject?
+							try path.getResourceValue(&obj0, forKey: NSURLContentModificationDateKey)
+							try path.getResourceValue(&obj1, forKey: NSURLFileSizeKey)
+							if let modified = obj0 as? NSDate, size = obj1 as? NSNumber {
 								let item = AGKCacheItem(basePath: basePath, modified: modified,
 									size: size.unsignedLongLongValue)
 								var fileInfo = fileInfos[item.basePath]
@@ -285,17 +307,17 @@ class AGKCache: AGKNetRequestDelegate {
 								}
 								else {
 									fileInfos.removeValueForKey(item.basePath)
-									fm.removeItemAtPath(item.basePath, error: nil)
+									try fm.removeItemAtURL(item.basePath)
 								}
 							}
+							break
 						}
-						break
 					}
 				}
 			}
-		}
+		} catch {}
 
-		items.sort {
+		items.sortInPlace {
 			$0.modified.timeIntervalSinceReferenceDate <
 			$1.modified.timeIntervalSinceReferenceDate
 		}
@@ -305,41 +327,43 @@ class AGKCache: AGKNetRequestDelegate {
 				break
 			}
 			fileInfos.removeValueForKey(item.basePath)
-			fm.removeItemAtPath(item.basePath, error: nil)
+			_ = try? fm.removeItemAtURL(item.basePath)
 			totalSize -= item.size
 		}
 
 		didAddToCacheSinceLastTrim = false
 	}
 
-	private class func writeInfoFileWithBasePath(basePath: String,
+	private class func writeInfoFileWithBasePath(basePath: NSURL,
 		timeToLive: NSTimeInterval,
 		keepIfExpired: Bool)
 	{
-		let path = basePath.stringByAppendingPathComponent("file.info")
+		let path = basePath.URLByAppendingPathComponent("file.info", isDirectory: false)
 		var s = keepIfExpired ? "1|" : "0|"
 		s += "\(Int64(floor(NSDate.timeIntervalSinceReferenceDate() + timeToLive)))"
-		s.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+		_ = try? s.writeToURL(path, atomically: true, encoding: NSUTF8StringEncoding)
 		fileInfos[basePath] = AGKCacheFileInfo(basePath: basePath)
 		didAddToCacheSinceLastTrim = true
 	}
+
 }
 
 private class AGKCacheFileInfo {
 
-	let basePath: String
+	let basePath: NSURL
 	var expiry = NSTimeInterval(0)
 	var keepIfExpired = false
 
-	init?(basePath: String) {
+	init?(basePath: NSURL) {
 		self.basePath = basePath
 		var success = false
+		let path = basePath.URLByAppendingPathComponent("file.info", isDirectory: false)
 
-		if let info = String(contentsOfFile: basePath.stringByAppendingPathComponent("file.info"),
-			encoding: NSUTF8StringEncoding, error: nil) where count(info) >= 3
+		if let info = try? String(contentsOfURL: path, encoding: NSUTF8StringEncoding)
+			where info.characters.count >= 3
 		{
 			keepIfExpired = !info.hasPrefix("0")
-			if let time = info.substringFromIndex(advance(info.startIndex, 2)) as NSString? {
+			if let time = info.substringFromIndex(info.startIndex.advancedBy(2)) as NSString? {
 				expiry = NSTimeInterval(time.longLongValue)
 				success = true
 			}
@@ -354,11 +378,11 @@ private class AGKCacheFileInfo {
 
 private class AGKCacheItem {
 
-	let basePath: String
+	let basePath: NSURL
 	let modified: NSDate
 	let size: UInt64
 
-	init(basePath: String, modified: NSDate, size: UInt64) {
+	init(basePath: NSURL, modified: NSDate, size: UInt64) {
 		self.basePath = basePath
 		self.modified = modified
 		self.size = size

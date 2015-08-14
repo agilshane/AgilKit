@@ -29,16 +29,22 @@ class AGKWindowView: UIView {
 	let contentView: UIView
 	private var didFinishLaunching: Bool
 
+	private static let oldSDK: Bool = {
+		if #available(iOS 8, *) {
+			return false
+		}
+		return true
+	}()
+
 	init(contentView: UIView) {
 		self.contentView = contentView
 		let app = UIApplication.sharedApplication()
 		didFinishLaunching = (app.applicationState == .Active)
-		let oldSDK = !UIScreen.instancesRespondToSelector("fixedCoordinateSpace")
-		let rect = oldSDK ? CGRectZero : UIScreen.mainScreen().bounds
+		let rect = AGKWindowView.oldSDK ? CGRectZero : UIScreen.mainScreen().bounds
 		super.init(frame: rect)
 		addSubview(contentView)
 
-		if oldSDK {
+		if AGKWindowView.oldSDK {
 			layoutWithOrientation(app.statusBarOrientation)
 			let nc = NSNotificationCenter.defaultCenter()
 			nc.addObserver(self, selector: "onDidFinishLaunching:",
@@ -48,8 +54,8 @@ class AGKWindowView: UIView {
 		}
 		else {
 			contentView.frame = rect
-			autoresizingMask = .FlexibleWidth | .FlexibleHeight
-			contentView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+			autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+			contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 		}
 	}
 
@@ -63,6 +69,18 @@ class AGKWindowView: UIView {
 
 	override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
 		return contentView.hitTest(point, withEvent: event)
+	}
+
+	override func layoutSubviews() {
+		if !AGKWindowView.oldSDK {
+			if let v = superview {
+				// Setting our frame shouldn't be necessary, but if we are a subview of an iOS 9.0
+				// split screen window, the window doesn't properly honor the autoresizingMask when
+				// the window size changes.
+				frame = v.bounds
+				contentView.frame = v.bounds
+			}
+		}
 	}
 
 	private func layoutWithOrientation(orientation: UIInterfaceOrientation) {
@@ -90,7 +108,7 @@ class AGKWindowView: UIView {
 			angle = CGFloat(M_PI)
 		}
 
-		var t = CGAffineTransformMakeTranslation(0.5 * size.width, 0.5 * size.height)
+		let t = CGAffineTransformMakeTranslation(0.5 * size.width, 0.5 * size.height)
 		transform = CGAffineTransformRotate(t, angle)
 	}
 
