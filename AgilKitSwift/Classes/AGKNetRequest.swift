@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 12/5/14.
-//  Copyright (c) 2013-2015 Agilstream, LLC.
+//  Copyright © 2013-2016 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -142,7 +142,7 @@ class AGKNetRequest {
 		self.showNetActivityIndicator = showNetActivityIndicator
 
 		if ignoreInteraction {
-			AGKNetRequest.ignoreCount++
+			AGKNetRequest.ignoreCount += 1
 			if AGKNetRequest.ignoreCount == 1 {
 				#if !NO_UIAPPLICATION
 					UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -163,7 +163,7 @@ class AGKNetRequest {
 
 		if ignoreInteraction {
 			ignoreInteraction = false
-			AGKNetRequest.ignoreCount--
+			AGKNetRequest.ignoreCount -= 1
 
 			if AGKNetRequest.ignoreCount < 0 {
 				assertionFailure("AGKNetRequest has ended ignoring interaction too many times!")
@@ -236,7 +236,7 @@ class AGKNetRequest {
 
 		if ignoreInteraction {
 			ignoreInteraction = false
-			AGKNetRequest.ignoreCount--
+			AGKNetRequest.ignoreCount -= 1
 
 			if AGKNetRequest.ignoreCount < 0 {
 				assertionFailure("AGKNetRequest has ended ignoring interaction too many times!")

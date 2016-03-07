@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 12/5/14.
-//  Copyright (c) 2013-2015 Agilstream, LLC.
+//  Copyright © 2013-2016 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -29,7 +29,7 @@ class AGKNetActivityIndicator {
 	private static var i = 0
 
 	class func hide() {
-		i--
+		i -= 1
 
 		if i < 0 {
 			assertionFailure("AGKNetActivityIndicator has been hidden too many times!")
@@ -44,7 +44,7 @@ class AGKNetActivityIndicator {
 	}
 
 	class func show() {
-		i++
+		i += 1
 		#if !NO_UIAPPLICATION
 			UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 		#endif

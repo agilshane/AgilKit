@@ -3,7 +3,7 @@
 //  AgilKitSwiftTests
 //
 //  Created by Shane Meyer on 12/5/14.
-//  Copyright (c) 2014-2015 Agilstream, LLC. All rights reserved.
+//  Copyright © 2014-2016 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -76,7 +76,7 @@ class AgilKitSwiftTests: XCTestCase {
 		let count = 199;
 		var bytes = [UInt8](count: count, repeatedValue: 0)
 
-		for i in 0..<count {
+		for i in 0 ..< count {
 			bytes[i] = UInt8(arc4random() % 256)
 		}
 
@@ -92,7 +92,7 @@ class AgilKitSwiftTests: XCTestCase {
 	func testPercentEscape() {
 		let s0 = "<ab.cd>: /?#[]@!$&'()*+,;=\"!%^"
 		let s1 = AGKStringEscape.percentEscape(s0)
-		let s2 = s1.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+		let s2 = s1.stringByRemovingPercentEncoding
 		XCTAssertTrue(s0 == s2)
 	}
 
