@@ -26,6 +26,37 @@ import Foundation
 
 class AGKCrypto {
 
+	class func md5(data: NSData) -> NSData {
+		var bytes = [UInt8](count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
+		CC_MD5(data.bytes, CC_LONG(data.length), &bytes)
+		return NSData(bytes: bytes, length: bytes.count)
+	}
+
+	class func md5OfFileAtPath(path: NSURL) -> NSData? {
+		guard path.fileURL else {
+			assertionFailure("The path is not a file URL!")
+			return nil
+		}
+
+		guard let handle = try? NSFileHandle(forReadingFromURL: path) else {
+			assertionFailure("The file handle is nil!")
+			return nil
+		}
+
+		var bytes = [UInt8](count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
+		var ctx = CC_MD5_CTX()
+		CC_MD5_Init(&ctx)
+
+		while true {
+			let data = handle.readDataOfLength(16384)
+			guard data.length > 0 else { break }
+			CC_MD5_Update(&ctx, data.bytes, CC_LONG(data.length))
+		}
+
+		CC_MD5_Final(&bytes, &ctx)
+		return NSData(bytes: bytes, length: bytes.count)
+	}
+
 	class func sha1(data: NSData) -> NSData {
 		var bytes = [UInt8](count: Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
 		CC_SHA1(data.bytes, CC_LONG(data.length), &bytes)
