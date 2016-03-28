@@ -37,9 +37,9 @@ class AGKKeyboard: NSObject {
 		self.delegate = delegate
 		super.init()
 		let nc = NSNotificationCenter.defaultCenter()
-		nc.addObserver(self, selector: "onKeyboardWillHide:",
+		nc.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
 			name: UIKeyboardWillHideNotification, object: nil)
-		nc.addObserver(self, selector: "onKeyboardWillShow:",
+		nc.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
 			name: UIKeyboardWillShowNotification, object: nil)
 	}
 

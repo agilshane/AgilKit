@@ -395,11 +395,11 @@ class AGKCacheObserver: NSObject {
 	override init() {
 		super.init()
 		let nc = NSNotificationCenter.defaultCenter()
-		nc.addObserver(self, selector: "onAppNotification",
+		nc.addObserver(self, selector: #selector(onAppNotification),
 			name: UIApplicationDidBecomeActiveNotification, object: nil)
-		nc.addObserver(self, selector: "onAppNotification",
+		nc.addObserver(self, selector: #selector(onAppNotification),
 			name: UIApplicationWillResignActiveNotification, object: nil)
-		nc.addObserver(self, selector: "onLowMemory",
+		nc.addObserver(self, selector: #selector(onLowMemory),
 			name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
 	}
 

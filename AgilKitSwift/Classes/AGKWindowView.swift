@@ -47,9 +47,9 @@ class AGKWindowView: UIView {
 		if AGKWindowView.oldSDK {
 			layoutWithOrientation(app.statusBarOrientation)
 			let nc = NSNotificationCenter.defaultCenter()
-			nc.addObserver(self, selector: "onDidFinishLaunching:",
+			nc.addObserver(self, selector: #selector(onDidFinishLaunching(_:)),
 				name: UIApplicationDidFinishLaunchingNotification, object: nil)
-			nc.addObserver(self, selector: "onWillChangeStatusBarOrientation:",
+			nc.addObserver(self, selector: #selector(onWillChangeStatusBarOrientation(_:)),
 				name: UIApplicationWillChangeStatusBarOrientationNotification, object: nil)
 		}
 		else {

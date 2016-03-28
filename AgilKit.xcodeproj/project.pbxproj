@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3409BCF11A028AB600518B8E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3409BCF01A028AB600518B8E /* Foundation.framework */; };
 		3409BCF31A028ABF00518B8E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3409BCF21A028ABE00518B8E /* UIKit.framework */; };
+		341B46D71CA98C1E0079275A /* AGKDisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341B46D61CA98C1E0079275A /* AGKDisplayLink.swift */; };
 		342F7EF01B0285E0001ABF27 /* AKDisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 342F7EEF1B0285E0001ABF27 /* AKDisplayLink.m */; };
 		3439972D1B27B5570078FD94 /* AGKXMLSAXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3439972C1B27B5570078FD94 /* AGKXMLSAXParser.swift */; };
 		34582DC91B24C1EA005D6AC9 /* AGKCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DBE1B24C1EA005D6AC9 /* AGKCache.swift */; };
@@ -85,6 +86,7 @@
 /* Begin PBXFileReference section */
 		3409BCF01A028AB600518B8E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3409BCF21A028ABE00518B8E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		341B46D61CA98C1E0079275A /* AGKDisplayLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKDisplayLink.swift; sourceTree = "<group>"; };
 		342F7EEE1B0285E0001ABF27 /* AKDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKDisplayLink.h; sourceTree = "<group>"; };
 		342F7EEF1B0285E0001ABF27 /* AKDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKDisplayLink.m; sourceTree = "<group>"; };
 		3439972C1B27B5570078FD94 /* AGKXMLSAXParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKXMLSAXParser.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				34582DBE1B24C1EA005D6AC9 /* AGKCache.swift */,
 				34582DBF1B24C1EA005D6AC9 /* AGKColor.swift */,
 				34582DC01B24C1EA005D6AC9 /* AGKCrypto.swift */,
+				341B46D61CA98C1E0079275A /* AGKDisplayLink.swift */,
 				34582DC11B24C1EA005D6AC9 /* AGKHex.swift */,
 				34582DC21B24C1EA005D6AC9 /* AGKImage.swift */,
 				34582DC31B24C1EA005D6AC9 /* AGKKeyboard.swift */,
@@ -518,6 +521,7 @@
 				34582DC91B24C1EA005D6AC9 /* AGKCache.swift in Sources */,
 				34582DCA1B24C1EA005D6AC9 /* AGKColor.swift in Sources */,
 				34582DCB1B24C1EA005D6AC9 /* AGKCrypto.swift in Sources */,
+				341B46D71CA98C1E0079275A /* AGKDisplayLink.swift in Sources */,
 				34582DCC1B24C1EA005D6AC9 /* AGKHex.swift in Sources */,
 				34582DCD1B24C1EA005D6AC9 /* AGKImage.swift in Sources */,
 				34582DCE1B24C1EA005D6AC9 /* AGKKeyboard.swift in Sources */,

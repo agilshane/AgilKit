@@ -82,7 +82,7 @@ class AGKTimerPrivate: NSObject {
 		nstimer = NSTimer(
 			timeInterval: timeInterval,
 			target: self,
-			selector: "onTimer",
+			selector: #selector(onTimer),
 			userInfo: nil,
 			repeats: repeats)
 
