@@ -21,12 +21,11 @@
 		34582DCF1B24C1EA005D6AC9 /* AGKLocStr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */; };
 		34582DD01B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */; };
 		34582DD11B24C1EA005D6AC9 /* AGKNetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */; };
-		34582DD21B24C1EA005D6AC9 /* AGKStringEscape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC71B24C1EA005D6AC9 /* AGKStringEscape.swift */; };
 		34582DD31B24C1EA005D6AC9 /* AGKTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */; };
 		34582DD51B24C2FB005D6AC9 /* AGKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DBF1B24C1EA005D6AC9 /* AGKColor.swift */; };
 		34582DD61B24C309005D6AC9 /* AGKHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC11B24C1EA005D6AC9 /* AGKHex.swift */; };
-		34582DD71B24C316005D6AC9 /* AGKStringEscape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC71B24C1EA005D6AC9 /* AGKStringEscape.swift */; };
 		34582DD81B24C388005D6AC9 /* AGKCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC01B24C1EA005D6AC9 /* AGKCrypto.swift */; };
+		3459D4E11D353B4500AA9469 /* AGKQueryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3459D4E01D353B4500AA9469 /* AGKQueryString.swift */; };
 		3486EE5F1B24C09300ACA46E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3486EE5E1B24C09300ACA46E /* AppDelegate.swift */; };
 		3486EE751B24C09300ACA46E /* AgilKitSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3486EE741B24C09300ACA46E /* AgilKitSwiftTests.swift */; };
 		34BEC3221A028992004F6DF5 /* AKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC2FF1A028992004F6DF5 /* AKBase64.m */; };
@@ -50,7 +49,6 @@
 		34C565DB1B26455D00FC7ED5 /* AKImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C565DA1B26455D00FC7ED5 /* AKImageEffects.m */; };
 		34C9118A1A325B280032D777 /* AgilKitObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C911891A325B280032D777 /* AgilKitObjCTests.m */; };
 		34C9118B1A325B280032D777 /* libAgilKitObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BEC2C41A02882B004F6DF5 /* libAgilKitObjC.a */; };
-		34E2563D1B32631A00540BD4 /* AGKWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E2563C1B32631A00540BD4 /* AGKWindowView.swift */; };
 		34E6F2751B27BD180062B33F /* AGKXMLSAXParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3439972C1B27B5570078FD94 /* AGKXMLSAXParser.swift */; };
 /* End PBXBuildFile section */
 
@@ -99,9 +97,9 @@
 		34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKLocStr.swift; sourceTree = "<group>"; };
 		34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKNetActivityIndicator.swift; sourceTree = "<group>"; };
 		34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKNetRequest.swift; sourceTree = "<group>"; };
-		34582DC71B24C1EA005D6AC9 /* AGKStringEscape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKStringEscape.swift; sourceTree = "<group>"; };
 		34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKTimer.swift; sourceTree = "<group>"; };
 		34582DD41B24C26C005D6AC9 /* AgilKitSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AgilKitSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		3459D4E01D353B4500AA9469 /* AGKQueryString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKQueryString.swift; sourceTree = "<group>"; };
 		3486EE5A1B24C09300ACA46E /* AgilKitSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgilKitSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3486EE5D1B24C09300ACA46E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3486EE5E1B24C09300ACA46E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 		34C911851A325B280032D777 /* AgilKitObjCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgilKitObjCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34C911881A325B280032D777 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34C911891A325B280032D777 /* AgilKitObjCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgilKitObjCTests.m; sourceTree = "<group>"; };
-		34E2563C1B32631A00540BD4 /* AGKWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKWindowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,9 +210,8 @@
 				34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */,
 				34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */,
 				34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */,
-				34582DC71B24C1EA005D6AC9 /* AGKStringEscape.swift */,
+				3459D4E01D353B4500AA9469 /* AGKQueryString.swift */,
 				34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */,
-				34E2563C1B32631A00540BD4 /* AGKWindowView.swift */,
 				3439972C1B27B5570078FD94 /* AGKXMLSAXParser.swift */,
 			);
 			path = Classes;
@@ -451,14 +447,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Agilstream, LLC";
 				TargetAttributes = {
 					3486EE591B24C09300ACA46E = {
 						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 0800;
 					};
 					3486EE6D1B24C09300ACA46E = {
 						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 3486EE591B24C09300ACA46E;
 					};
 					34BEC2C31A02882B004F6DF5 = {
@@ -528,9 +526,8 @@
 				34582DCF1B24C1EA005D6AC9 /* AGKLocStr.swift in Sources */,
 				34582DD01B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift in Sources */,
 				34582DD11B24C1EA005D6AC9 /* AGKNetRequest.swift in Sources */,
-				34582DD21B24C1EA005D6AC9 /* AGKStringEscape.swift in Sources */,
+				3459D4E11D353B4500AA9469 /* AGKQueryString.swift in Sources */,
 				34582DD31B24C1EA005D6AC9 /* AGKTimer.swift in Sources */,
-				34E2563D1B32631A00540BD4 /* AGKWindowView.swift in Sources */,
 				3439972D1B27B5570078FD94 /* AGKXMLSAXParser.swift in Sources */,
 				3486EE5F1B24C09300ACA46E /* AppDelegate.swift in Sources */,
 			);
@@ -544,7 +541,6 @@
 				34582DD51B24C2FB005D6AC9 /* AGKColor.swift in Sources */,
 				34582DD81B24C388005D6AC9 /* AGKCrypto.swift in Sources */,
 				34582DD61B24C309005D6AC9 /* AGKHex.swift in Sources */,
-				34582DD71B24C316005D6AC9 /* AGKStringEscape.swift in Sources */,
 				34E6F2751B27BD180062B33F /* AGKXMLSAXParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -612,12 +608,13 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = AgilKitSwift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilstream.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AgilKitSwift/AgilKitSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -631,11 +628,13 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = AgilKitSwift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilstream.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AgilKitSwift/AgilKitSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -660,6 +659,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilstream.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AgilKitSwift/AgilKitSwift-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AgilKitSwift.app/AgilKitSwift";
 			};
 			name = Debug;
@@ -681,6 +681,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilstream.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AgilKitSwift/AgilKitSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AgilKitSwift.app/AgilKitSwift";
 			};
 			name = Release;
@@ -707,6 +709,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -719,7 +722,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -747,13 +750,14 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

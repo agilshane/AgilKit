@@ -71,7 +71,7 @@ class AGKNetRequest {
 	private static let basePath: NSURL = {
 		let fm = NSFileManager.defaultManager()
 		let url = fm.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0]
-		return url.URLByAppendingPathComponent("AGKNetRequest", isDirectory: true)
+		return url.URLByAppendingPathComponent("AGKNetRequest", isDirectory: true)!
 	}()
 
 	init?(delegate: AGKNetRequestDelegate,
@@ -124,9 +124,9 @@ class AGKNetRequest {
 			let fm = NSFileManager.defaultManager()
 
 			while true {
-				let filename = "\(now)_\(rand()).bin"
+				let filename = "\(now)_\(arc4random()).bin"
 				let responseURL = AGKNetRequest.basePath.URLByAppendingPathComponent(
-					filename, isDirectory: false)
+					filename, isDirectory: false)!
 
 				if !responseURL.checkResourceIsReachableAndReturnError(nil) {
 					self.responseURL = responseURL

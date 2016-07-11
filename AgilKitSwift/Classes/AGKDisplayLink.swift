@@ -36,83 +36,74 @@ protocol AGKDisplayLinkDelegate: class {
 	func displayLinkDidFire(displayLink: AGKDisplayLink)
 }
 
-class AGKDisplayLink: AGKDisplayLinkImplDelegate {
+class AGKDisplayLink {
 
 	private weak var delegate: AGKDisplayLinkDelegate?
 	private var didFire = false
-	private var displayLinkImpl: AGKDisplayLinkImpl?
+	private var impl: AGKDisplayLinkImpl?
 	private var originalTimestamp = CFTimeInterval(0)
 
 	var duration: CFTimeInterval {
-		return displayLinkImpl?.displayLink?.duration ?? 0
+		return impl?.displayLink?.duration ?? CFTimeInterval(0)
 	}
 
 	var paused: Bool {
 		get {
-			return displayLinkImpl?.displayLink?.paused ?? false
+			return impl?.displayLink?.paused ?? false
 		}
 		set {
-			displayLinkImpl?.displayLink?.paused = newValue
+			impl?.displayLink?.paused = newValue
 		}
 	}
 
 	var timestamp: CFTimeInterval {
-		let zero = CFTimeInterval(0)
-		let t = displayLinkImpl?.displayLink?.timestamp ?? zero
-		return didFire ? t - originalTimestamp : zero
+		let t = impl?.displayLink?.timestamp ?? CFTimeInterval(0)
+		return didFire ? t - originalTimestamp : CFTimeInterval(0)
 	}
 
-	init(delegate: AGKDisplayLinkDelegate, frameInterval: Int, commonModes: Bool) {
+	init(delegate: AGKDisplayLinkDelegate, frameInterval: Int, commonModes: Bool = false) {
 		self.delegate = delegate
-		displayLinkImpl = AGKDisplayLinkImpl(delegate: self,
-			frameInterval: frameInterval, commonModes: commonModes)
+		impl = AGKDisplayLinkImpl(parent: self, frameInterval: frameInterval,
+			commonModes: commonModes)
 	}
 
 	deinit {
-		displayLinkImpl?.invalidate()
-		displayLinkImpl = nil
+		impl?.invalidate()
+		impl = nil
 	}
 
-	func displayLinkImplDidFire(displayLink: AGKDisplayLinkImpl) {
+	private func implDidFire() {
 		if !didFire {
 			didFire = true
-			originalTimestamp = displayLinkImpl?.displayLink?.timestamp ?? 0
+			originalTimestamp = impl?.displayLink?.timestamp ?? CFTimeInterval(0)
 		}
 		delegate?.displayLinkDidFire(self)
 	}
 
 }
 
-//
-// AGKDisplayLinkImpl
-//
+private class AGKDisplayLinkImpl {
 
-private protocol AGKDisplayLinkImplDelegate: class {
-	func displayLinkImplDidFire(displayLinkImpl: AGKDisplayLinkImpl)
-}
+	var displayLink: CADisplayLink?
+	weak var parent: AGKDisplayLink?
 
-class AGKDisplayLinkImpl: NSObject {
-
-	private weak var delegate: AGKDisplayLinkImplDelegate?
-	private var displayLink: CADisplayLink?
-
-	private init(delegate: AGKDisplayLinkImplDelegate, frameInterval: Int, commonModes: Bool) {
-		self.delegate = delegate
-		super.init()
+	init(parent: AGKDisplayLink, frameInterval: Int, commonModes: Bool) {
+		self.parent = parent
 		displayLink = CADisplayLink(target: self, selector: #selector(onTimer))
 		displayLink?.frameInterval = frameInterval
 		displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: commonModes ?
 			NSRunLoopCommonModes : NSDefaultRunLoopMode)
 	}
 
-	private func invalidate() {
-		delegate = nil
+	func invalidate() {
+		parent = nil
 		displayLink?.invalidate()
 		displayLink = nil
 	}
 
+	@objc
 	func onTimer() {
-		delegate?.displayLinkImplDidFire(self)
+		parent?.implDidFire()
 	}
 
 }

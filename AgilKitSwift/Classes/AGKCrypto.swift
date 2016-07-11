@@ -26,6 +26,48 @@ import Foundation
 
 class AGKCrypto {
 
+	enum BlockCipherOption {
+		case ECBMode, PKCS7Padding
+		var value: CCOptions {
+			switch self {
+				case .ECBMode:
+					return CCOptions(kCCOptionECBMode)
+				case .PKCS7Padding:
+					return CCOptions(kCCOptionPKCS7Padding)
+			}
+		}
+	}
+
+	class func aes128EncryptData(data: NSData, key: NSData, option: BlockCipherOption) -> NSData? {
+		guard key.length == kCCKeySizeAES128 else {
+			assertionFailure("The AES 128 key size is invalid!")
+			return nil
+		}
+
+		var bytes = [UInt8](count: data.length + kCCBlockSizeAES128, repeatedValue: 0)
+		var numBytesEncrypted = 0
+
+		let status = CCCrypt(
+			CCOperation(kCCEncrypt),
+			CCAlgorithm(kCCAlgorithmAES128),
+			option.value,
+			key.bytes,
+			key.length,
+			nil,
+			data.bytes,
+			data.length,
+			&bytes,
+			bytes.count,
+			&numBytesEncrypted)
+
+		if status == CCCryptorStatus(kCCSuccess) {
+			return NSData(bytes: bytes, length: numBytesEncrypted)
+		}
+
+		assertionFailure("AES 128 encryption failed!")
+		return nil
+	}
+
 	class func md5(data: NSData) -> NSData {
 		var bytes = [UInt8](count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
 		CC_MD5(data.bytes, CC_LONG(data.length), &bytes)

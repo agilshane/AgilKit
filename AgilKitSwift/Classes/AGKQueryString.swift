@@ -1,9 +1,9 @@
 //
-//  AGKStringEscape.swift
+//  AGKQueryString.swift
 //  AgilKit
 //
-//  Created by Shane Meyer on 1/19/15.
-//  Copyright © 2013-2016 Agilstream, LLC. All rights reserved.
+//  Created by Shane Meyer on 7/12/16.
+//  Copyright © 2016 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -24,19 +24,19 @@
 
 import Foundation
 
-class AGKStringEscape {
+class AGKQueryString {
 
-	class func percentEscape(s: String) -> String {
-
-		// The list of characters in the fourth argument was obtained from:
-		// https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/URLLoadingSystem/WorkingwithURLEncoding/WorkingwithURLEncoding.html
-
-		return CFURLCreateStringByAddingPercentEscapes(
-			nil,
-			s,
-			nil,
-			":/?#[]@!$&'()*+,;=",
-			CFStringBuiltInEncodings.UTF8.rawValue) as String
+	class func stringForNameValuePairs(nameValuePairs: [(name: String, value: String)]) -> String {
+		if let comps = NSURLComponents(string: "http://ab.cd") {
+			comps.queryItems = nameValuePairs.map {
+				NSURLQueryItem(name: $0.name, value: $0.value)
+			}
+			if let result = comps.percentEncodedQuery {
+				return result
+			}
+		}
+		assertionFailure("The query string failed!")
+		return ""
 	}
 
 }

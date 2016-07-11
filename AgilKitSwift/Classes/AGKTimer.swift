@@ -38,66 +38,55 @@ protocol AGKTimerDelegate: class {
 class AGKTimer {
 
 	private weak var delegate: AGKTimerDelegate?
-	private var timerPrivate: AGKTimerPrivate?
+	private var impl: AGKTimerImpl?
 
-	init(delegate: AGKTimerDelegate,
-		timeInterval: NSTimeInterval,
-		repeats: Bool = true,
-		commonModes: Bool = false)
+	init(delegate: AGKTimerDelegate, timeInterval: NSTimeInterval,
+		repeats: Bool, commonModes: Bool = false)
 	{
 		self.delegate = delegate
-
-		timerPrivate = AGKTimerPrivate(
-			timer: self,
-			timeInterval: timeInterval,
-			repeats: repeats,
-			commonModes: commonModes)
+		impl = AGKTimerImpl(parent: self, timeInterval: timeInterval,
+			repeats: repeats, commonModes: commonModes)
 	}
 
 	deinit {
 		delegate = nil
-		timerPrivate?.invalidate()
-		timerPrivate = nil
+		impl?.invalidate()
+		impl = nil
 	}
 
-	private func timerDidFire() {
+	private func implDidFire() {
 		delegate?.timerDidFire(self)
 	}
 
 }
 
-class AGKTimerPrivate: NSObject {
+private class AGKTimerImpl {
 
-	private var nstimer: NSTimer?
-	private weak var timer: AGKTimer?
+	weak var parent: AGKTimer?
+	var timer: NSTimer?
 
-	private init(timer: AGKTimer,
-		timeInterval: NSTimeInterval,
-		repeats: Bool,
-		commonModes: Bool)
-	{
-		self.timer = timer
-		super.init()
-
-		nstimer = NSTimer(
-			timeInterval: timeInterval,
-			target: self,
-			selector: #selector(onTimer),
-			userInfo: nil,
-			repeats: repeats)
-
-		NSRunLoop.currentRunLoop().addTimer(nstimer!, forMode: commonModes ?
-			NSRunLoopCommonModes : NSDefaultRunLoopMode)
+	init(parent: AGKTimer, timeInterval: NSTimeInterval, repeats: Bool, commonModes: Bool) {
+		self.parent = parent
+		timer = NSTimer(timeInterval: timeInterval, target: self, selector: #selector(onTimer),
+			userInfo: nil, repeats: repeats)
+		if let t = timer {
+			NSRunLoop.currentRunLoop().addTimer(t, forMode: commonModes ?
+				NSRunLoopCommonModes : NSDefaultRunLoopMode)
+		}
+		else {
+			assertionFailure("The NSTimer is nil!")
+		}
 	}
 
-	private func invalidate() {
+	func invalidate() {
+		parent = nil
+		timer?.invalidate()
 		timer = nil
-		nstimer?.invalidate()
-		nstimer = nil
 	}
 
+	@objc
 	func onTimer() {
-		timer?.timerDidFire()
+		parent?.implDidFire()
 	}
 
 }

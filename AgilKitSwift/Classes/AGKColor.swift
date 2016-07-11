@@ -52,36 +52,6 @@ class AGKColor {
 			alpha: CGFloat(a) / CGFloat(255))
 	}
 
-	class func componentsOfColor(color: UIColor) ->
-		(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat)
-	{
-		var r = CGFloat(0)
-		var g = CGFloat(0)
-		var b = CGFloat(0)
-		var a = CGFloat(0)
-
-		let len = CGColorGetNumberOfComponents(color.CGColor)
-		let components = CGColorGetComponents(color.CGColor)
-
-		if len == 2 {
-			r = components[0]
-			g = components[0]
-			b = components[0]
-			a = components[1]
-		}
-		else if len == 4 {
-			r = components[0]
-			g = components[1]
-			b = components[2]
-			a = components[3]
-		}
-		else {
-			assertionFailure("Got a color with \(len) components!")
-		}
-
-		return (r, g, b, a)
-	}
-
 	private class func hexCharToInt(scalar: UnicodeScalar) -> Int {
 		let value = scalar.value
 
@@ -96,8 +66,26 @@ class AGKColor {
 		return Int(value - scalar0)
 	}
 
+	class func hsbaForColor(color: UIColor) -> (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
+		var h = CGFloat(0)
+		var s = CGFloat(0)
+		var b = CGFloat(0)
+		var a = CGFloat(0)
+		color.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+		return (h, s, b, a)
+	}
+
+	class func rgbaForColor(color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+		var r = CGFloat(0)
+		var g = CGFloat(0)
+		var b = CGFloat(0)
+		var a = CGFloat(0)
+		color.getRed(&r, green: &g, blue: &b, alpha: &a)
+		return (r, g, b, a)
+	}
+
 	class func rrggbbStringForColor(color: UIColor, includeAlpha: Bool) -> String {
-		let (r, g, b, a) = componentsOfColor(color)
+		let (r, g, b, a) = rgbaForColor(color)
 
 		if includeAlpha {
 			return AGKHex.stringFromBytes([
