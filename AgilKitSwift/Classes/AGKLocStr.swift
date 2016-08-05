@@ -24,25 +24,25 @@
 
 import Foundation
 
-func AGKLocStr(key: String, _ args: (String, String)...) -> String {
+func AGKLocStr(_ key: String, _ args: (String, String)...) -> String {
 	let notFound = "NOT_F0UND"
-	var s = NSBundle.mainBundle().localizedStringForKey(key, value: notFound, table: nil)
+	var s = Bundle.main.localizedString(forKey: key, value: notFound, table: nil)
 	assert(s != notFound, "Localized string '\(key)' not found!")
 
 	for (argKey, argVal) in args {
-		s = s.stringByReplacingOccurrencesOfString(argKey, withString: argVal)
+		s = s.replacingOccurrences(of: argKey, with: argVal)
 	}
 
 	return s
 }
 
-func AGKLocStrError(key: String, _ args: (String, String)...) -> NSError {
+func AGKLocStrError(_ key: String, _ args: (String, String)...) -> Error {
 	let notFound = "NOT_F0UND"
-	var s = NSBundle.mainBundle().localizedStringForKey(key, value: notFound, table: nil)
+	var s = Bundle.main.localizedString(forKey: key, value: notFound, table: nil)
 	assert(s != notFound, "Localized string '\(key)' not found!")
 
 	for (argKey, argVal) in args {
-		s = s.stringByReplacingOccurrencesOfString(argKey, withString: argVal)
+		s = s.replacingOccurrences(of: argKey, with: argVal)
 	}
 
 	return NSError(domain: "AGKLocStrErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: s])

@@ -26,19 +26,19 @@ import UIKit
 
 class AGKImage {
 
-	class func croppedImageWithImage(image: UIImage, rect: CGRect) -> UIImage {
+	class func cropped(image: UIImage, rect: CGRect) -> UIImage {
 		var r = rect
 
 		switch image.imageOrientation {
-			case .Down:
+			case .down:
 				r.origin.x = image.size.width - rect.maxX
 				r.origin.y = image.size.height - rect.maxY
-			case .Left:
+			case .left:
 				r.origin.x = image.size.height - rect.maxY
 				r.origin.y = rect.origin.x
 				r.size.width = rect.size.height
 				r.size.height = rect.size.width
-			case .Right:
+			case .right:
 				r.origin.x = rect.origin.y
 				r.origin.y = image.size.width - rect.maxX
 				r.size.width = rect.size.height
@@ -53,8 +53,8 @@ class AGKImage {
 		r.size.width *= scale
 		r.size.height *= scale
 
-		if let cgImage = image.CGImage, imageRef = CGImageCreateWithImageInRect(cgImage, r) {
-			return UIImage(CGImage: imageRef, scale: scale, orientation: image.imageOrientation)
+		if let cgImage = image.cgImage, let imageRef = cgImage.cropping(to: r) {
+			return UIImage(cgImage: imageRef, scale: scale, orientation: image.imageOrientation)
 		}
 
 		return image
@@ -63,37 +63,37 @@ class AGKImage {
 	// Returns a resizable image with a 1x1 point that is not capped. The point is centered
 	// vertically and horizontally.
 
-	class func resizableImageWithImage(image: UIImage) -> UIImage {
+	class func resizable(image: UIImage) -> UIImage {
 		let left = round(CGFloat(0.5) * image.size.width) - CGFloat(1)
-		return resizableImageWithImage(image, insetLeft: left)
+		return resizable(image: image, insetLeft: left)
 	}
 
 	// Returns a resizable image with a 1x1 point that is not capped. The point is centered
 	// vertically and uses the given left inset.
 
-	class func resizableImageWithImage(image: UIImage, insetLeft: CGFloat) -> UIImage {
+	class func resizable(image: UIImage, insetLeft: CGFloat) -> UIImage {
 		let top = round(CGFloat(0.5) * image.size.height) - CGFloat(1)
-		return image.resizableImageWithCapInsets(UIEdgeInsetsMake(top, insetLeft,
+		return image.resizableImage(withCapInsets: UIEdgeInsetsMake(top, insetLeft,
 			image.size.height - top - CGFloat(1), image.size.width - insetLeft - CGFloat(1)))
 	}
 
 	// Returns a resizable image with a 1x1 point that is not capped. The point is centered
 	// vertically and uses the given right inset.
 
-	class func resizableImageWithImage(image: UIImage, insetRight: CGFloat) -> UIImage {
+	class func resizable(image: UIImage, insetRight: CGFloat) -> UIImage {
 		let top = round(CGFloat(0.5) * image.size.height) - CGFloat(1)
-		return image.resizableImageWithCapInsets(UIEdgeInsetsMake(
+		return image.resizableImage(withCapInsets: UIEdgeInsetsMake(
 			top, image.size.width - insetRight - CGFloat(1),
 			image.size.height - top - CGFloat(1), insetRight))
 	}
 
 	// Replaces all pixels with the given color, preserving the alpha channel.
 
-	class func tintImage(image: UIImage, color: UIColor) -> UIImage {
+	class func tint(image: UIImage, color: UIColor) -> UIImage {
 		UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
 		color.setFill()
-		UIRectFill(CGRectMake(0, 0, image.size.width, image.size.height))
-		image.drawAtPoint(CGPointZero, blendMode: .DestinationIn, alpha: 1)
+		UIRectFill(CGRect(origin: .zero, size: image.size))
+		image.draw(at: .zero, blendMode: .destinationIn, alpha: 1)
 		let result = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		return result ?? UIImage()

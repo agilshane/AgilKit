@@ -25,37 +25,38 @@
 import UIKit
 
 protocol AGKKeyboardDelegate: class {
-	func keyboardHeightWillChange(keyboard: AGKKeyboard, duration: Double)
+	func keyboardHeightWillChange(_ keyboard: AGKKeyboard, duration: Double)
 }
 
-class AGKKeyboard: NSObject {
+class AGKKeyboard {
 
-	private weak var delegate: AGKKeyboardDelegate?
+	weak var delegate: AGKKeyboardDelegate?
 	private(set) var height = CGFloat(0)
 
-	init(delegate: AGKKeyboardDelegate) {
+	init(delegate: AGKKeyboardDelegate?) {
 		self.delegate = delegate
-		super.init()
-		let nc = NSNotificationCenter.defaultCenter()
+		let nc = NotificationCenter.default
 		nc.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
-			name: UIKeyboardWillHideNotification, object: nil)
+			name: .UIKeyboardWillHide, object: nil)
 		nc.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
-			name: UIKeyboardWillShowNotification, object: nil)
+			name: .UIKeyboardWillShow, object: nil)
 	}
 
 	deinit {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 
-	func onKeyboardWillHide(notification: NSNotification) {
+	@objc
+	func onKeyboardWillHide(_ notification: Notification) {
 		height = 0
 		let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
 		delegate?.keyboardHeightWillChange(self, duration: duration)
 	}
 
-	func onKeyboardWillShow(notification: NSNotification) {
+	@objc
+	func onKeyboardWillShow(_ notification: Notification) {
 		if let val = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-			let size = val.CGRectValue().size
+			let size = val.cgRectValue.size
 			height = size.width > size.height ? size.height : size.width
 			let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
 			delegate?.keyboardHeightWillChange(self, duration: duration)

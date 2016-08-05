@@ -23,7 +23,7 @@
 //
 //  -------------------------------------------------------------------------------------------
 //
-//  The purpose of this class is simply to avoid the need to invalidate. An NSTimer retains
+//  The purpose of this class is simply to avoid the need to invalidate. A Timer retains
 //  its delegate, requiring someone to invalidate the timer in order for its delegate to be
 //  released. Often that burden is placed on someone higher up the call chain, which isn't
 //  good encapsulation and can easily be forgotten, leading to leaks.
@@ -32,7 +32,7 @@
 import Foundation
 
 protocol AGKTimerDelegate: class {
-	func timerDidFire(timer: AGKTimer)
+	func timerDidFire(_ timer: AGKTimer)
 }
 
 class AGKTimer {
@@ -40,7 +40,7 @@ class AGKTimer {
 	private weak var delegate: AGKTimerDelegate?
 	private var impl: AGKTimerImpl?
 
-	init(delegate: AGKTimerDelegate, timeInterval: NSTimeInterval,
+	init(delegate: AGKTimerDelegate, timeInterval: TimeInterval,
 		repeats: Bool, commonModes: Bool = false)
 	{
 		self.delegate = delegate
@@ -54,7 +54,7 @@ class AGKTimer {
 		impl = nil
 	}
 
-	private func implDidFire() {
+	fileprivate func implDidFire() {
 		delegate?.timerDidFire(self)
 	}
 
@@ -63,18 +63,17 @@ class AGKTimer {
 private class AGKTimerImpl {
 
 	weak var parent: AGKTimer?
-	var timer: NSTimer?
+	var timer: Timer?
 
-	init(parent: AGKTimer, timeInterval: NSTimeInterval, repeats: Bool, commonModes: Bool) {
+	init(parent: AGKTimer, timeInterval: TimeInterval, repeats: Bool, commonModes: Bool) {
 		self.parent = parent
-		timer = NSTimer(timeInterval: timeInterval, target: self, selector: #selector(onTimer),
+		timer = Timer(timeInterval: timeInterval, target: self, selector: #selector(onTimer),
 			userInfo: nil, repeats: repeats)
 		if let t = timer {
-			NSRunLoop.currentRunLoop().addTimer(t, forMode: commonModes ?
-				NSRunLoopCommonModes : NSDefaultRunLoopMode)
+			RunLoop.current.add(t, forMode: commonModes ? .commonModes : .defaultRunLoopMode)
 		}
 		else {
-			assertionFailure("The NSTimer is nil!")
+			assertionFailure("The Timer is nil!")
 		}
 	}
 

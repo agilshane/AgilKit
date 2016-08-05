@@ -28,16 +28,16 @@ import XCTest
 class AgilKitSwiftTests: XCTestCase {
 
 	func testColor() {
-		let (r0, g0, b0, a0) = AGKColor.componentsOfColor(UIColor.whiteColor())
+		let (r0, g0, b0, a0) = AGKColor.rgba(color: UIColor.white)
 		XCTAssertTrue(r0 == 1.0 && g0 == 1.0 && b0 == 1.0 && a0 == 1.0)
 
-		let (r1, g1, b1, a1) = AGKColor.componentsOfColor(UIColor.blackColor())
+		let (r1, g1, b1, a1) = AGKColor.rgba(color: UIColor.black)
 		XCTAssertTrue(r1 == 0.0 && g1 == 0.0 && b1 == 0.0 && a1 == 1.0)
 
-		XCTAssertTrue(AGKColor.colorWithRRGGBB("1234567") == nil)
+		XCTAssertTrue(AGKColor.color(rrggbb: "1234567") == nil)
 
-		let c0 = AGKColor.colorWithRRGGBB("05A9cE")!
-		let (r2, g2, b2, a2) = AGKColor.componentsOfColor(c0)
+		let c0 = AGKColor.color(rrggbb: "05A9cE")!
+		let (r2, g2, b2, a2) = AGKColor.rgba(color: c0)
 
 		XCTAssertTrue(
 			r2 == CGFloat(  5) / CGFloat(255) &&
@@ -45,8 +45,8 @@ class AgilKitSwiftTests: XCTestCase {
 			b2 == CGFloat(206) / CGFloat(255) &&
 			a2 == 1.0)
 
-		XCTAssertTrue(AGKColor.rrggbbStringForColor(c0, includeAlpha: true) == "05A9CEFF")
-		XCTAssertTrue(AGKColor.rrggbbStringForColor(c0, includeAlpha: false) == "05A9CE")
+		XCTAssertTrue(AGKColor.rrggbbString(color: c0, includeAlpha: true) == "05A9CEFF")
+		XCTAssertTrue(AGKColor.rrggbbString(color: c0, includeAlpha: false) == "05A9CE")
 
 		let c1 = UIColor(
 			red:   CGFloat(  5) / CGFloat(255),
@@ -55,45 +55,38 @@ class AgilKitSwiftTests: XCTestCase {
 			alpha: CGFloat(1))
 
 		XCTAssertTrue(c0 == c1)
-		XCTAssertTrue(c0 != UIColor.redColor())
+		XCTAssertTrue(c0 != UIColor.red)
 	}
 
 	func testCrypto() {
-		let data = "abcdefghijklmnopqrstuvwxyz".dataUsingEncoding(NSUTF8StringEncoding)!
-		let key = "this is the key".dataUsingEncoding(NSUTF8StringEncoding)!
+		let data = "abcdefghijklmnopqrstuvwxyz".data(using: String.Encoding.utf8)!
+		let key = "this is the key".data(using: String.Encoding.utf8)!
 
-		var result = AGKHex.stringFromData(AGKCrypto.sha1(data))
+		var result = AGKHex.string(data: AGKCrypto.sha1(data: data))
 		XCTAssertTrue(result == "32D10C7B8CF96570CA04CE37F2A19D84240D3A89")
 
-		result = AGKHex.stringFromData(AGKCrypto.sha1(data, hmacKey: key))
+		result = AGKHex.string(data: AGKCrypto.sha1(data: data, hmacKey: key))
 		XCTAssertTrue(result == "345DF8EAF4AE8ADF276BEA5E282FA732F8F8BEF4")
 
-		result = AGKHex.stringFromData(AGKCrypto.sha256(data))
+		result = AGKHex.string(data: AGKCrypto.sha256(data: data))
 		XCTAssertTrue(result == "71C480DF93D6AE2F1EFAD1447C66C9525E316218CF51FC8D9ED832F2DAF18B73")
 	}
 
 	func testHex() {
 		let count = 199;
-		var bytes = [UInt8](count: count, repeatedValue: 0)
+		var bytes = [UInt8](repeating: 0, count: count)
 
 		for i in 0 ..< count {
 			bytes[i] = UInt8(arc4random() % 256)
 		}
 
-		let data0 = NSData(bytes: bytes, length: count)
-		let hex0 = AGKHex.stringFromData(data0)
-		let data1 = AGKHex.dataFromString(hex0)
-		let hex1 = AGKHex.stringFromData(data1)
+		let data0 = Data(bytes: UnsafePointer<UInt8>(bytes), count: count)
+		let hex0 = AGKHex.string(data: data0)
+		let data1 = AGKHex.data(string: hex0)!
+		let hex1 = AGKHex.string(data: data1)
 
 		XCTAssertTrue(data0 == data1)
 		XCTAssertTrue(hex0 == hex1)
-	}
-
-	func testPercentEscape() {
-		let s0 = "<ab.cd>: /?#[]@!$&'()*+,;=\"!%^"
-		let s1 = AGKStringEscape.percentEscape(s0)
-		let s2 = s1.stringByRemovingPercentEncoding
-		XCTAssertTrue(s0 == s2)
 	}
 
 	func testXML() {
@@ -110,10 +103,10 @@ class TestParser: AGKXMLSAXParserDelegate {
 
 	init() {
 		let parser = AGKXMLSAXParser(delegate: self)
-		parser.parseData(xml.dataUsingEncoding(NSUTF8StringEncoding)!)
+		parser.parseData(xml.data(using: String.Encoding.utf8)!)
 	}
 
-	func xmlsaxParser(parser: AGKXMLSAXParser,
+	func xmlsaxParser(_ parser: AGKXMLSAXParser,
 		didEndElementPath path: String,
 		text: String)
 	{
@@ -124,7 +117,7 @@ class TestParser: AGKXMLSAXParserDelegate {
 		}
 	}
 
-	func xmlsaxParser(parser: AGKXMLSAXParser,
+	func xmlsaxParser(_ parser: AGKXMLSAXParser,
 		didStartElementPath path: String,
 		attributes: [String : String])
 	{
@@ -135,7 +128,7 @@ class TestParser: AGKXMLSAXParserDelegate {
 		}
 	}
 
-	func xmlsaxParser(parser: AGKXMLSAXParser, hadError error: NSError) {
+	func xmlsaxParser(_ parser: AGKXMLSAXParser, hadError error: Error) {
 		success = false
 	}
 

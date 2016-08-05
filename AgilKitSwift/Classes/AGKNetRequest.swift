@@ -24,128 +24,98 @@
 
 import UIKit
 
-protocol AGKNetRequestAuthenticationChallengeDelegate: class {
-	func netRequest(netRequest: AGKNetRequest,
-		connection: NSURLConnection,
-		willSendRequestForAuthenticationChallenge challenge: NSURLAuthenticationChallenge)
-}
-
 protocol AGKNetRequestDelegate: class {
-	func netRequestDidFinish(netRequest: AGKNetRequest, error: NSError?)
+	func netRequestDidFinish(_ netRequest: AGKNetRequest, error: Error?)
 }
 
 protocol AGKNetRequestProgressDelegate: class {
-	func netRequest(netRequest: AGKNetRequest,
-		didDownloadChunk chunkSize: Int64,
-		totalBytesDownloaded: Int64,
-		totalBytesExpected: Int64)
+	func netRequest(_ netRequest: AGKNetRequest, didDownloadChunk chunkSize: Int64,
+		totalBytesDownloaded: Int64, totalBytesExpected: Int64)
 }
 
 class AGKNetRequest {
 
 	enum Method: String {
-		case Delete = "DELETE"
-		case Get = "GET"
-		case Post = "POST"
-		case Put = "PUT"
+		case delete = "DELETE"
+		case get = "GET"
+		case post = "POST"
+		case put = "PUT"
 	}
 
-	weak static var authenticationChallengeDelegate: AGKNetRequestAuthenticationChallengeDelegate?
-	private static var cleanUpTime = NSTimeInterval(0)
-	private weak var delegate: AGKNetRequestDelegate?
+	private static var cleanUpTime = TimeInterval(0)
+	weak var delegate: AGKNetRequestDelegate?
 	private static var ignoreCount = 0
 	private var ignoreInteraction = false
 	private var impl: AGKNetRequestImpl?
 	weak var progressDelegate: AGKNetRequestProgressDelegate?
-	private(set) var responseBody = NSData()
-	private var responseBodyMutable: NSMutableData?
+	private(set) var responseBody = Data()
+	private var responseBodyMutable: Data?
 	private(set) var responseHeaders = [String: String]()
-	private(set) var responseURL: NSURL?
+	private(set) var responseURL: URL?
 	private var showNetActivityIndicator = false
 	private(set) var statusCode = 0
 	private var totalBytesExpected = Int64(0)
-	static var trustServerRegardlessForDebugging = false
-	let url: String
+	let url: URL
 	var userInfo: [String: Any]?
 
-	private static let basePath: NSURL = {
-		let fm = NSFileManager.defaultManager()
-		let url = fm.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)[0]
-		return url.URLByAppendingPathComponent("AGKNetRequest", isDirectory: true)!
+	private static let basePath: URL = {
+		let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+		return url.appendingPathComponent("AGKNetRequest", isDirectory: true)
 	}()
 
-	init?(delegate: AGKNetRequestDelegate,
-		url: String,
+	init(
+		delegate: AGKNetRequestDelegate?,
+		url: URL,
 		ignoreInteraction: Bool = false,
 		showNetActivityIndicator: Bool = false,
 		headers: [String: String]? = nil,
-		body: NSData? = nil,
-		method: Method = .Get,
+		body: Data? = nil,
+		method: Method = .get,
 		writeResponseToFile: Bool = false)
 	{
 		self.delegate = delegate
+		self.ignoreInteraction = ignoreInteraction
+		self.showNetActivityIndicator = showNetActivityIndicator
 		self.url = url
 
-		let nsurl = NSURL(string: url)
+		AGKNetRequest.cleanUpTempFiles()
 
-		if nsurl == nil {
-			return nil
-		}
+		var req = URLRequest(url: url)
+		req.httpMethod = method.rawValue
 
-		let req = NSMutableURLRequest(URL: nsurl!)
-		req.HTTPMethod = method.rawValue
-
-		if headers != nil {
-			for (key, val) in headers! {
+		if let headers = headers {
+			for (key, val) in headers {
 				req.setValue(val, forHTTPHeaderField: key)
 			}
 		}
 
-		if body != nil {
-			req.setValue("\(body!.length)", forHTTPHeaderField: "Content-Length")
-			req.HTTPBody = body
+		if let body = body {
+			req.setValue("\(body.count)", forHTTPHeaderField: "Content-Length")
+			req.httpBody = body
 		}
-
-		// Create an instance of AGKNetRequestImpl to manage the connection, rather than
-		// managing it ourselves, because the connection retains its delegate. By having the
-		// impl code manage the connection, we (AGKNetRequest) can be released as a means to
-		// trigger canceling the connection.
-
-		impl = AGKNetRequestImpl(netRequest: self, urlRequest: req)
-
-		if impl == nil {
-			return nil
-		}
-
-		AGKNetRequest.cleanUpTempFiles()
 
 		if writeResponseToFile {
-			let now = NSDate.timeIntervalSinceReferenceDate()
-			let fm = NSFileManager.defaultManager()
-
+			let now = Date.timeIntervalSinceReferenceDate
 			while true {
 				let filename = "\(now)_\(arc4random()).bin"
-				let responseURL = AGKNetRequest.basePath.URLByAppendingPathComponent(
-					filename, isDirectory: false)!
-
-				if !responseURL.checkResourceIsReachableAndReturnError(nil) {
+				let responseURL = AGKNetRequest.basePath.appendingPathComponent(
+					filename, isDirectory: false)
+				let exists = (try? responseURL.checkResourceIsReachable()) ?? false
+				if !exists {
 					self.responseURL = responseURL
-					_ = try? fm.createDirectoryAtURL(AGKNetRequest.basePath,
+					_ = try? FileManager.default.createDirectory(at: AGKNetRequest.basePath,
 						withIntermediateDirectories: true, attributes: nil)
-					NSData().writeToURL(responseURL, atomically: true)
+					_ = try? Data().write(to: responseURL, options: [.atomic])
 					break
 				}
 			}
 		}
 
-		self.ignoreInteraction = ignoreInteraction
-		self.showNetActivityIndicator = showNetActivityIndicator
-
 		if ignoreInteraction {
 			AGKNetRequest.ignoreCount += 1
 			if AGKNetRequest.ignoreCount == 1 {
 				#if !NO_UIAPPLICATION
-					UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+					UIApplication.shared.beginIgnoringInteractionEvents()
 				#endif
 			}
 		}
@@ -154,7 +124,12 @@ class AGKNetRequest {
 			AGKNetActivityIndicator.show()
 		}
 
-		impl!.start()
+		// Create an instance of AGKNetRequestImpl to manage the connection, rather than
+		// managing it ourselves, because the connection retains its delegate. By having the
+		// impl code manage the connection, we (AGKNetRequest) can be released as a means to
+		// trigger canceling the connection.
+
+		impl = AGKNetRequestImpl(parent: self, urlRequest: req)
 	}
 
 	deinit {
@@ -172,7 +147,7 @@ class AGKNetRequest {
 
 			if AGKNetRequest.ignoreCount == 0 {
 				#if !NO_UIAPPLICATION
-					UIApplication.sharedApplication().endIgnoringInteractionEvents()
+					UIApplication.shared.endIgnoringInteractionEvents()
 				#endif
 			}
 		}
@@ -183,7 +158,7 @@ class AGKNetRequest {
 		}
 
 		if let responseURL = self.responseURL {
-			_ = try? NSFileManager.defaultManager().removeItemAtURL(responseURL)
+			_ = try? FileManager.default.removeItem(at: responseURL)
 		}
 	}
 
@@ -194,44 +169,42 @@ class AGKNetRequest {
 	//
 
 	private class func cleanUpTempFiles() {
-		let now = NSDate.timeIntervalSinceReferenceDate()
+		let now = Date.timeIntervalSinceReferenceDate
 
-		if abs(now - cleanUpTime) >= NSTimeInterval(3600) {
+		if abs(now - cleanUpTime) >= TimeInterval(3600) {
 			cleanUpTime = now
 		}
 		else {
 			return
 		}
 
-		var pathsToNuke = [NSURL]()
-		let fm = NSFileManager.defaultManager()
+		var pathsToNuke = [URL]()
+		let fm = FileManager.default
 
-		if let contents = try? fm.contentsOfDirectoryAtURL(basePath,
+		if let contents = try? fm.contentsOfDirectory(at: basePath,
 			includingPropertiesForKeys: nil, options: [])
 		{
 			for path in contents {
-				let filename = path.pathComponents!.last!
-				let range = filename.rangeOfString("_")
-
-				if range == nil || !filename.hasSuffix(".bin") {
-					pathsToNuke.append(path)
-				}
-				else {
-					let s = filename.substringToIndex(range!.startIndex) as NSString
-					if abs(now - s.doubleValue) >= NSTimeInterval(24 * 3600) {
+				guard let filename = path.pathComponents.last else { continue }
+				if filename.hasSuffix(".bin"), let range = filename.range(of: "_") {
+					let s = filename.substring(to: range.lowerBound)
+					if let val = TimeInterval(s), abs(now - val) >= TimeInterval(24 * 3600) {
 						pathsToNuke.append(path)
 					}
+				}
+				else {
+					pathsToNuke.append(path)
 				}
 			}
 		}
 
 		for pathToNuke in pathsToNuke {
-			_ = try? fm.removeItemAtURL(pathToNuke)
+			_ = try? fm.removeItem(at: pathToNuke)
 		}
 	}
 
-	private func finishUp(error: NSError?) {
-		impl?.netRequest = nil
+	fileprivate func implDidFinish(error: Error?) {
+		impl?.parent = nil
 		impl = nil
 
 		if ignoreInteraction {
@@ -245,7 +218,7 @@ class AGKNetRequest {
 
 			if AGKNetRequest.ignoreCount == 0 {
 				#if !NO_UIAPPLICATION
-					UIApplication.sharedApplication().endIgnoringInteractionEvents()
+					UIApplication.shared.endIgnoringInteractionEvents()
 				#endif
 			}
 		}
@@ -259,57 +232,47 @@ class AGKNetRequest {
 		delegate = nil
 	}
 
-	private func implDidFailWithError(error: NSError) {
-		finishUp(error)
-	}
-
-	private func implDidFinishLoading() {
-		finishUp(nil)
-	}
-
-	private func implDidReceiveData(data: NSData) {
+	fileprivate func implDidReceive(data: Data) {
 		var totalBytesDownloaded = Int64(0)
 
 		if let responseURL = self.responseURL {
-			if let handle = try? NSFileHandle(forWritingToURL: responseURL) {
+			if let handle = try? FileHandle(forWritingTo: responseURL) {
 				handle.seekToEndOfFile()
-				handle.writeData(data)
+				handle.write(data)
 				totalBytesDownloaded = Int64(handle.offsetInFile)
 			}
 		}
 		else {
 			if responseBodyMutable == nil {
 				if totalBytesExpected > 0 {
-					responseBodyMutable = NSMutableData(capacity: Int(totalBytesExpected))
-					responseBodyMutable!.appendData(data)
+					responseBodyMutable = Data(capacity: Int(totalBytesExpected))
+					responseBodyMutable?.append(data)
 				}
 				else {
-					responseBodyMutable = NSMutableData(data: data)
+					responseBodyMutable = data
 				}
 			}
 			else {
-				responseBodyMutable!.appendData(data)
+				responseBodyMutable?.append(data)
 			}
 
-			responseBody = responseBodyMutable!
-			totalBytesDownloaded = Int64(responseBody.length)
+			responseBody = responseBodyMutable ?? Data()
+			totalBytesDownloaded = Int64(responseBody.count)
 		}
 
-		progressDelegate?.netRequest(self,
-			didDownloadChunk: Int64(data.length),
-			totalBytesDownloaded: totalBytesDownloaded,
-			totalBytesExpected: totalBytesExpected)
+		progressDelegate?.netRequest(self, didDownloadChunk: Int64(data.count),
+			totalBytesDownloaded: totalBytesDownloaded, totalBytesExpected: totalBytesExpected)
 	}
 
-	private func implDidReceiveResponse(response: NSURLResponse) {
-		if let r = response as? NSHTTPURLResponse {
-			statusCode = r.statusCode
-
-			for (key, val) in r.allHeaderFields as! [String: String] {
-				responseHeaders[key] = val
-
-				if key.lowercaseString == "content-length" {
-					totalBytesExpected = (val as NSString).longLongValue
+	fileprivate func implDidReceive(response: URLResponse) {
+		guard let r = response as? HTTPURLResponse else { return }
+		statusCode = r.statusCode
+		guard let allHeaderFields = r.allHeaderFields as? [String: String] else { return }
+		for (key, val) in allHeaderFields {
+			responseHeaders[key] = val
+			if key.lowercased() == "content-length" {
+				if let contentLength = Int64(val) {
+					totalBytesExpected = contentLength
 				}
 			}
 		}
@@ -317,73 +280,108 @@ class AGKNetRequest {
 
 }
 
-class AGKNetRequestImpl: NSObject, NSURLConnectionDataDelegate {
+private class AGKNetRequestImpl {
 
-	private var cxn: NSURLConnection?
-	private weak var netRequest: AGKNetRequest?
+	weak var parent: AGKNetRequest?
+	var task: URLSessionTask?
 
-	private init?(netRequest: AGKNetRequest, urlRequest: NSURLRequest) {
-		super.init()
-		self.netRequest = netRequest
+	init(parent: AGKNetRequest, urlRequest: URLRequest) {
+		self.parent = parent
 
-		// This adds one to our retain count.
-		cxn = NSURLConnection(request: urlRequest, delegate: self, startImmediately: false)
+		let nc = NotificationCenter.default
+		nc.addObserver(self, selector: #selector(onDidComplete(_:)),
+			name: AGKNetRequestShared.eventDidComplete, object: nil)
+		nc.addObserver(self, selector: #selector(onDidReceiveData(_:)),
+			name: AGKNetRequestShared.eventDidReceiveData, object: nil)
+		nc.addObserver(self, selector: #selector(onDidReceiveResponse(_:)),
+			name: AGKNetRequestShared.eventDidReceiveResponse, object: nil)
 
-		if cxn == nil {
-			return nil
-		}
+		task = AGKNetRequestShared.shared.session?.dataTask(with: urlRequest)
+		task?.resume()
 	}
 
 	deinit {
 		cancel()
 	}
 
-	private func cancel() {
-		netRequest = nil
-		cxn?.cancel()
-		cxn = nil
+	func cancel() {
+		NotificationCenter.default.removeObserver(self)
+		parent = nil
+		task?.cancel()
+		task = nil
 	}
 
-	func connection(connection: NSURLConnection, didFailWithError error: NSError) {
-		netRequest?.implDidFailWithError(error)
+	@objc
+	func onDidComplete(_ notification: Notification) {
+		guard let userInfo = notification.userInfo else { return }
+		guard let task = userInfo["task"] as? URLSessionTask, task == self.task else { return }
+		parent?.implDidFinish(error: userInfo["error"] as? Error)
 	}
 
-	func connection(connection: NSURLConnection, didReceiveData data: NSData) {
-		netRequest?.implDidReceiveData(data)
+	@objc
+	func onDidReceiveData(_ notification: Notification) {
+		guard let userInfo = notification.userInfo else { return }
+		guard let task = userInfo["task"] as? URLSessionTask, task == self.task else { return }
+		guard let data = userInfo["data"] as? Data else { return }
+		parent?.implDidReceive(data: data)
 	}
 
-	func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
-		netRequest?.implDidReceiveResponse(response)
+	@objc
+	func onDidReceiveResponse(_ notification: Notification) {
+		guard let userInfo = notification.userInfo else { return }
+		guard let task = userInfo["task"] as? URLSessionTask, task == self.task else { return }
+		guard let response = userInfo["response"] as? URLResponse else { return }
+		parent?.implDidReceive(response: response)
 	}
 
-	func connection(connection: NSURLConnection,
-		willSendRequestForAuthenticationChallenge challenge: NSURLAuthenticationChallenge)
+}
+
+private class AGKNetRequestShared: NSObject, URLSessionDataDelegate {
+
+	static let eventDidComplete = Notification.Name("AGKNetRequestSharedDidComplete")
+	static let eventDidReceiveData = Notification.Name("AGKNetRequestSharedDidReceiveData")
+	static let eventDidReceiveResponse = Notification.Name("AGKNetRequestSharedDidReceiveResponse")
+	var session: URLSession?
+	static let shared = AGKNetRequestShared()
+
+	override init() {
+		super.init()
+		session = URLSession(configuration: URLSessionConfiguration.default,
+			delegate: self, delegateQueue: nil)
+	}
+
+	func urlSession(_ session: URLSession, task: URLSessionTask,
+		didCompleteWithError error: Error?)
 	{
-		if let authChallengeDelegate = AGKNetRequest.authenticationChallengeDelegate {
-			authChallengeDelegate.netRequest(netRequest!,
-				connection: connection,
-				willSendRequestForAuthenticationChallenge: challenge)
+		var userInfo: [String: Any] = ["task": task]
+		if let error = error {
+			userInfo["error"] = error
 		}
-		else if AGKNetRequest.trustServerRegardlessForDebugging &&
-			challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust
-		{
-			if let serverTrust = challenge.protectionSpace.serverTrust {
-				challenge.sender?.useCredential(NSURLCredential(forTrust: serverTrust),
-					forAuthenticationChallenge: challenge)
-			}
-		}
-		else {
-			challenge.sender?.performDefaultHandlingForAuthenticationChallenge?(challenge)
+		DispatchQueue.main.async {
+			NotificationCenter.default.post(name: AGKNetRequestShared.eventDidComplete,
+				object: nil, userInfo: userInfo)
 		}
 	}
 
-	func connectionDidFinishLoading(connection: NSURLConnection) {
-		netRequest?.implDidFinishLoading()
+	func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+		let userInfo: [String: Any] = ["data": data, "task": dataTask]
+		DispatchQueue.main.async {
+			NotificationCenter.default.post(name: AGKNetRequestShared.eventDidReceiveData,
+				object: nil, userInfo: userInfo)
+		}
 	}
 
-	private func start() {
-		cxn!.scheduleInRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
-		cxn!.start()
+	func urlSession(_ session: URLSession,
+		dataTask: URLSessionDataTask,
+		didReceive response: URLResponse,
+		completionHandler: @escaping (URLSession.ResponseDisposition) -> Void)
+	{
+		let userInfo = ["response": response, "task": dataTask]
+		DispatchQueue.main.async {
+			NotificationCenter.default.post(name: AGKNetRequestShared.eventDidReceiveResponse,
+				object: nil, userInfo: userInfo)
+		}
+		completionHandler(.allow)
 	}
 
 }

@@ -33,7 +33,7 @@ import Foundation
 import QuartzCore
 
 protocol AGKDisplayLinkDelegate: class {
-	func displayLinkDidFire(displayLink: AGKDisplayLink)
+	func displayLinkDidFire(_ displayLink: AGKDisplayLink)
 }
 
 class AGKDisplayLink {
@@ -49,10 +49,10 @@ class AGKDisplayLink {
 
 	var paused: Bool {
 		get {
-			return impl?.displayLink?.paused ?? false
+			return impl?.displayLink?.isPaused ?? false
 		}
 		set {
-			impl?.displayLink?.paused = newValue
+			impl?.displayLink?.isPaused = newValue
 		}
 	}
 
@@ -72,7 +72,7 @@ class AGKDisplayLink {
 		impl = nil
 	}
 
-	private func implDidFire() {
+	fileprivate func implDidFire() {
 		if !didFire {
 			didFire = true
 			originalTimestamp = impl?.displayLink?.timestamp ?? CFTimeInterval(0)
@@ -91,8 +91,7 @@ private class AGKDisplayLinkImpl {
 		self.parent = parent
 		displayLink = CADisplayLink(target: self, selector: #selector(onTimer))
 		displayLink?.frameInterval = frameInterval
-		displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: commonModes ?
-			NSRunLoopCommonModes : NSDefaultRunLoopMode)
+		displayLink?.add(to: .main, forMode: commonModes ? .commonModes : .defaultRunLoopMode)
 	}
 
 	func invalidate() {

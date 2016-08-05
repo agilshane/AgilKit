@@ -25,46 +25,46 @@
 import Foundation
 
 protocol AGKXMLSAXParserDelegate: class {
-	func xmlsaxParser(parser: AGKXMLSAXParser, didEndElementPath path: String, text: String)
-	func xmlsaxParser(parser: AGKXMLSAXParser, didStartElementPath path: String,
+	func xmlsaxParser(_ parser: AGKXMLSAXParser, didEndElementPath path: String, text: String)
+	func xmlsaxParser(_ parser: AGKXMLSAXParser, didStartElementPath path: String,
 		attributes: [String: String])
-	func xmlsaxParser(parser: AGKXMLSAXParser, hadError error: NSError)
+	func xmlsaxParser(_ parser: AGKXMLSAXParser, hadError error: Error)
 }
 
-class AGKXMLSAXParser: NSObject, NSXMLParserDelegate {
+class AGKXMLSAXParser: NSObject, XMLParserDelegate {
 
 	private var currPath = ""
 	private var currText = ""
-	private weak var delegate: AGKXMLSAXParserDelegate?
+	weak var delegate: AGKXMLSAXParserDelegate?
 
-	init(delegate: AGKXMLSAXParserDelegate) {
+	init(delegate: AGKXMLSAXParserDelegate?) {
 		self.delegate = delegate
 	}
 
-	func parseData(data: NSData) {
+	func parseData(_ data: Data) {
 		currPath = ""
 		currText = ""
-		let parser = NSXMLParser(data: data)
+		let parser = XMLParser(data: data as Data)
 		parser.delegate = self
 		parser.parse()
 	}
 
-	func parser(parser: NSXMLParser,
+	func parser(_ parser: XMLParser,
 		didEndElement elementName: String,
 		namespaceURI: String?,
 		qualifiedName qName: String?)
 	{
 		delegate?.xmlsaxParser(self, didEndElementPath: currPath, text: currText)
 		currText = ""
-		if let range = currPath.rangeOfString("/", options: .BackwardsSearch) {
-			currPath = currPath.substringToIndex(range.startIndex)
+		if let range = currPath.range(of: "/", options: .backwards) {
+			currPath = currPath.substring(to: range.lowerBound)
 		}
 		else {
 			assertionFailure("The current path has no forward slash!")
 		}
 	}
 
-	func parser(parser: NSXMLParser,
+	func parser(_ parser: XMLParser,
 		didStartElement elementName: String,
 		namespaceURI: String?,
 		qualifiedName qName: String?,
@@ -75,11 +75,11 @@ class AGKXMLSAXParser: NSObject, NSXMLParserDelegate {
 		delegate?.xmlsaxParser(self, didStartElementPath: currPath, attributes: attributeDict)
 	}
 
-	func parser(parser: NSXMLParser, foundCharacters string: String) {
+	func parser(_ parser: XMLParser, foundCharacters string: String) {
 		currText += string
 	}
 
-	func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
+	func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
 		delegate?.xmlsaxParser(self, hadError: parseError)
 	}
 

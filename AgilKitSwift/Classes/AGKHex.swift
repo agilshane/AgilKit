@@ -33,18 +33,18 @@ class AGKHex {
 	private static let scalara = UInt32(UnicodeScalar("a"))
 	private static let scalarf = UInt32(UnicodeScalar("f"))
 
-	class func bytesFromString(s: String) -> [UInt8] {
-		let chars = Array(s.unicodeScalars)
+	class func data(string: String) -> Data? {
+		let chars = Array(string.unicodeScalars)
 		let charCount = chars.count
 
 		if charCount % 2 != 0 {
 			assertionFailure("The hex string has an odd number of characters!")
-			return []
+			return nil
 		}
 
-		var bytes = [UInt8](count: charCount / 2, repeatedValue: 0)
+		var data = Data(count: charCount / 2)
 
-		for i in 0.stride(to: charCount, by: 2) {
+		for i in stride(from: 0, to: charCount, by: 2) {
 			var c0 = chars[i + 0].value
 			var c1 = chars[i + 1].value
 
@@ -61,7 +61,7 @@ class AGKHex {
 			}
 			else {
 				assertionFailure("The hex string contains invalid character \(c0)!")
-				return []
+				return nil
 			}
 
 			c0 <<= 4
@@ -79,41 +79,30 @@ class AGKHex {
 			}
 			else {
 				assertionFailure("The hex string contains invalid character \(c1)!")
-				return []
+				return nil
 			}
 
-			bytes[i / 2] = UInt8(c0 + c1)
+			data[i / 2] = UInt8(c0 + c1)
 		}
 
-		return bytes
+		return data
 	}
 
-	class func dataFromString(s: String) -> NSData {
-		let bytes = AGKHex.bytesFromString(s)
-		return NSData(bytes: bytes, length: bytes.count)
-	}
-
-	class func stringFromBytes(bytes: [UInt8]) -> String {
-		var chars = [Character](count: 2 * bytes.count, repeatedValue: "0")
+	class func string(data: Data) -> String {
+		var chars = [Character](repeating: "0", count: 2 * data.count)
 		var i = 0
 
-		for byte in bytes {
+		for byte in data {
 			var char0 = UInt32(byte >> 4)
 			var char1 = UInt32(byte & 0xF)
 			char0 += (char0 < 10 ? scalar0 : (scalarA - 10))
 			char1 += (char1 < 10 ? scalar0 : (scalarA - 10))
-			chars[i + 0] = Character(UnicodeScalar(char0))
-			chars[i + 1] = Character(UnicodeScalar(char1))
+			chars[i + 0] = Character(UnicodeScalar(char0)!)
+			chars[i + 1] = Character(UnicodeScalar(char1)!)
 			i += 2
 		}
 
 		return String(chars)
-	}
-
-	class func stringFromData(data: NSData) -> String {
-		var bytes = [UInt8](count: data.length, repeatedValue: 0)
-		data.getBytes(&bytes, length: data.length)
-		return AGKHex.stringFromBytes(bytes)
 	}
 
 }

@@ -32,13 +32,10 @@ class AGKColor {
 	private static let scalara = UInt32(UnicodeScalar("a"))
 	private static let scalarf = UInt32(UnicodeScalar("f"))
 
-	class func colorWithRRGGBB(rrggbb: String) -> UIColor? {
+	class func color(rrggbb: String) -> UIColor? {
 		let scalars = Array(rrggbb.unicodeScalars)
 		let len = scalars.count
-
-		if len != 6 && len != 8 {
-			return nil
-		}
+		guard len == 6 || len == 8 else { return nil }
 
 		let r = hexCharToInt(scalars[0]) * 16 + hexCharToInt(scalars[1])
 		let g = hexCharToInt(scalars[2]) * 16 + hexCharToInt(scalars[3])
@@ -52,7 +49,7 @@ class AGKColor {
 			alpha: CGFloat(a) / CGFloat(255))
 	}
 
-	private class func hexCharToInt(scalar: UnicodeScalar) -> Int {
+	private class func hexCharToInt(_ scalar: UnicodeScalar) -> Int {
 		let value = scalar.value
 
 		if value >= scalarA && value <= scalarF {
@@ -66,7 +63,7 @@ class AGKColor {
 		return Int(value - scalar0)
 	}
 
-	class func hsbaForColor(color: UIColor) -> (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
+	class func hsba(color: UIColor) -> (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
 		var h = CGFloat(0)
 		var s = CGFloat(0)
 		var b = CGFloat(0)
@@ -75,7 +72,7 @@ class AGKColor {
 		return (h, s, b, a)
 	}
 
-	class func rgbaForColor(color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+	class func rgba(color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
 		var r = CGFloat(0)
 		var g = CGFloat(0)
 		var b = CGFloat(0)
@@ -84,21 +81,29 @@ class AGKColor {
 		return (r, g, b, a)
 	}
 
-	class func rrggbbStringForColor(color: UIColor, includeAlpha: Bool) -> String {
-		let (r, g, b, a) = rgbaForColor(color)
+	class func rrggbbString(color: UIColor, includeAlpha: Bool) -> String {
+		let (r, g, b, a) = rgba(color: color)
 
 		if includeAlpha {
-			return AGKHex.stringFromBytes([
-				UInt8(round(r * CGFloat(255))),
-				UInt8(round(g * CGFloat(255))),
-				UInt8(round(b * CGFloat(255))),
-				UInt8(round(a * CGFloat(255)))])
+			let floats = [
+				round(r * CGFloat(255)),
+				round(g * CGFloat(255)),
+				round(b * CGFloat(255)),
+				round(a * CGFloat(255)),
+			]
+			return AGKHex.string(data: Data(bytes: [
+				UInt8(floats[0]),
+				UInt8(floats[1]),
+				UInt8(floats[2]),
+				UInt8(floats[3]),
+			]))
 		}
 
-		return AGKHex.stringFromBytes([
+		return AGKHex.string(data: Data(bytes: [
 			UInt8(round(r * CGFloat(255))),
 			UInt8(round(g * CGFloat(255))),
-			UInt8(round(b * CGFloat(255)))])
+			UInt8(round(b * CGFloat(255)))
+		]))
 	}
 
 }

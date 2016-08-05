@@ -26,10 +26,10 @@ import Foundation
 
 class AGKQueryString {
 
-	class func stringForNameValuePairs(nameValuePairs: [(name: String, value: String)]) -> String {
-		if let comps = NSURLComponents(string: "http://ab.cd") {
+	class func string(nameValuePairs: [(name: String, value: String)]) -> String {
+		if var comps = URLComponents(string: "http://ab.cd") {
 			comps.queryItems = nameValuePairs.map {
-				NSURLQueryItem(name: $0.name, value: $0.value)
+				URLQueryItem(name: $0.name, value: $0.value)
 			}
 			if let result = comps.percentEncodedQuery {
 				return result
