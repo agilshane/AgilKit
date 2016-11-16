@@ -74,10 +74,10 @@ class AGKCache: AGKNetRequestDelegate {
 
 	class func add(data: Data, url: URL, timeToLive: TimeInterval, keepIfExpired: Bool) {
 		let bp = basePath(url: url)
-		_ = try? FileManager.default.createDirectory(at: bp,
+		try? FileManager.default.createDirectory(at: bp,
 			withIntermediateDirectories: true, attributes: nil)
 		let path = bp.appendingPathComponent("file.bin", isDirectory: false)
-		_ = try? data.write(to: path, options: [.atomic])
+		try? data.write(to: path, options: [.atomic])
 		writeInfoFile(basePath: bp, timeToLive: timeToLive, keepIfExpired: keepIfExpired)
 	}
 
@@ -85,14 +85,14 @@ class AGKCache: AGKNetRequestDelegate {
 		timeToLive: TimeInterval, keepIfExpired: Bool)
 	{
 		let bp = basePath(url: url)
-		_ = try? FileManager.default.createDirectory(at: bp,
+		try? FileManager.default.createDirectory(at: bp,
 			withIntermediateDirectories: true, attributes: nil)
 		let scale = UIScreen.main.scale
 		let filename =
 			scale == CGFloat(3) ? "file@3x" :
 			scale == CGFloat(2) ? "file@2x" : "file"
 		let path = bp.appendingPathComponent(filename + ext, isDirectory: false)
-		_ = try? imageData.write(to: path, options: [.atomic])
+		try? imageData.write(to: path, options: [.atomic])
 		writeInfoFile(basePath: bp, timeToLive: timeToLive, keepIfExpired: keepIfExpired)
 	}
 
@@ -140,7 +140,7 @@ class AGKCache: AGKNetRequestDelegate {
 	class func deleteFile(url: URL) {
 		let bp = basePath(url: url)
 		fileInfos.removeValue(forKey: bp)
-		_ = try? FileManager.default.removeItem(at: bp)
+		try? FileManager.default.removeItem(at: bp)
 	}
 
 	class func fileExists(url: URL) -> Bool {
@@ -315,7 +315,7 @@ class AGKCache: AGKNetRequestDelegate {
 				break
 			}
 			fileInfos.removeValue(forKey: item.basePath)
-			_ = try? fm.removeItem(at: item.basePath)
+			try? fm.removeItem(at: item.basePath)
 			totalSize -= item.size
 		}
 
@@ -326,7 +326,7 @@ class AGKCache: AGKNetRequestDelegate {
 		let path = basePath.appendingPathComponent("file.info", isDirectory: false)
 		var s = keepIfExpired ? "1|" : "0|"
 		s += "\(Int64(floor(Date.timeIntervalSinceReferenceDate + timeToLive)))"
-		_ = try? s.write(to: path, atomically: true, encoding: .utf8)
+		try? s.write(to: path, atomically: true, encoding: .utf8)
 		fileInfos[basePath] = AGKCacheFileInfo(basePath: basePath)
 		didAddToCacheSinceLastTrim = true
 	}

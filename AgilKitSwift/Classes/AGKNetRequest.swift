@@ -103,9 +103,9 @@ class AGKNetRequest {
 				let exists = (try? responseURL.checkResourceIsReachable()) ?? false
 				if !exists {
 					self.responseURL = responseURL
-					_ = try? FileManager.default.createDirectory(at: AGKNetRequest.basePath,
+					try? FileManager.default.createDirectory(at: AGKNetRequest.basePath,
 						withIntermediateDirectories: true, attributes: nil)
-					_ = try? Data().write(to: responseURL, options: [.atomic])
+					try? Data().write(to: responseURL, options: [.atomic])
 					break
 				}
 			}
@@ -158,7 +158,7 @@ class AGKNetRequest {
 		}
 
 		if let responseURL = self.responseURL {
-			_ = try? FileManager.default.removeItem(at: responseURL)
+			try? FileManager.default.removeItem(at: responseURL)
 		}
 	}
 
@@ -199,7 +199,7 @@ class AGKNetRequest {
 		}
 
 		for pathToNuke in pathsToNuke {
-			_ = try? fm.removeItem(at: pathToNuke)
+			try? fm.removeItem(at: pathToNuke)
 		}
 	}
 
