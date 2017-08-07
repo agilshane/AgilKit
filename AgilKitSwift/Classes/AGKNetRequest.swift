@@ -71,7 +71,8 @@ class AGKNetRequest {
 		headers: [String: String]? = nil,
 		body: Data? = nil,
 		method: Method = .get,
-		writeResponseToFile: Bool = false)
+		writeResponseToFile: Bool = false,
+		cachePolicy: URLRequest.CachePolicy? = nil)
 	{
 		self.delegate = delegate
 		self.ignoreInteraction = ignoreInteraction
@@ -82,6 +83,10 @@ class AGKNetRequest {
 
 		var req = URLRequest(url: url)
 		req.httpMethod = method.rawValue
+
+		if let cachePolicy = cachePolicy {
+			req.cachePolicy = cachePolicy
+		}
 
 		if let headers = headers {
 			for (key, val) in headers {

@@ -61,9 +61,11 @@ class AGKDisplayLink {
 		return didFire ? t - originalTimestamp : CFTimeInterval(0)
 	}
 
-	init(delegate: AGKDisplayLinkDelegate, frameInterval: Int, commonModes: Bool = false) {
+	init(delegate: AGKDisplayLinkDelegate, preferredFramesPerSecond: Int = 60,
+		commonModes: Bool = false)
+	{
 		self.delegate = delegate
-		impl = AGKDisplayLinkImpl(parent: self, frameInterval: frameInterval,
+		impl = AGKDisplayLinkImpl(parent: self, preferredFramesPerSecond: preferredFramesPerSecond,
 			commonModes: commonModes)
 	}
 
@@ -87,10 +89,15 @@ private class AGKDisplayLinkImpl {
 	var displayLink: CADisplayLink?
 	weak var parent: AGKDisplayLink?
 
-	init(parent: AGKDisplayLink, frameInterval: Int, commonModes: Bool) {
+	init(parent: AGKDisplayLink, preferredFramesPerSecond: Int, commonModes: Bool) {
 		self.parent = parent
 		displayLink = CADisplayLink(target: self, selector: #selector(onTimer))
-		displayLink?.frameInterval = frameInterval
+		if #available(iOS 10.0, *) {
+			displayLink?.preferredFramesPerSecond = preferredFramesPerSecond
+		}
+		else {
+			displayLink?.frameInterval = max(1, Int(round(60.0 / Double(preferredFramesPerSecond))))
+		}
 		displayLink?.add(to: .main, forMode: commonModes ? .commonModes : .defaultRunLoopMode)
 	}
 
