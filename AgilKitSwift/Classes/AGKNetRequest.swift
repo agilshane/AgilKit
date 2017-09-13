@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 12/5/14.
-//  Copyright © 2013-2016 Agilstream, LLC. All rights reserved.
+//  Copyright © 2013-2017 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -192,7 +192,7 @@ class AGKNetRequest {
 			for path in contents {
 				guard let filename = path.pathComponents.last else { continue }
 				if filename.hasSuffix(".bin"), let range = filename.range(of: "_") {
-					let s = filename.substring(to: range.lowerBound)
+					let s = filename[..<range.lowerBound]
 					if let val = TimeInterval(s), abs(now - val) >= TimeInterval(24 * 3600) {
 						pathsToNuke.append(path)
 					}
@@ -317,14 +317,14 @@ private class AGKNetRequestImpl {
 	}
 
 	@objc
-	func onDidComplete(_ notification: Notification) {
+	private func onDidComplete(_ notification: Notification) {
 		guard let userInfo = notification.userInfo else { return }
 		guard let task = userInfo["task"] as? URLSessionTask, task == self.task else { return }
 		parent?.implDidFinish(error: userInfo["error"] as? Error)
 	}
 
 	@objc
-	func onDidReceiveData(_ notification: Notification) {
+	private func onDidReceiveData(_ notification: Notification) {
 		guard let userInfo = notification.userInfo else { return }
 		guard let task = userInfo["task"] as? URLSessionTask, task == self.task else { return }
 		guard let data = userInfo["data"] as? Data else { return }
@@ -332,7 +332,7 @@ private class AGKNetRequestImpl {
 	}
 
 	@objc
-	func onDidReceiveResponse(_ notification: Notification) {
+	private func onDidReceiveResponse(_ notification: Notification) {
 		guard let userInfo = notification.userInfo else { return }
 		guard let task = userInfo["task"] as? URLSessionTask, task == self.task else { return }
 		guard let response = userInfo["response"] as? URLResponse else { return }

@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 6/6/15.
-//  Copyright © 2015-2016 Agilstream, LLC. All rights reserved.
+//  Copyright © 2015-2017 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -346,7 +346,7 @@ private class AGKCacheFileInfo {
 
 		if let info = try? String(contentsOf: path, encoding: .utf8), info.characters.count >= 3 {
 			keepIfExpired = !info.hasPrefix("0")
-			let time = info.substring(from: info.index(info.startIndex, offsetBy: 2))
+			let time = info[info.index(info.startIndex, offsetBy: 2)...]
 			if let value = TimeInterval(time) {
 				expiry = value
 				success = true
