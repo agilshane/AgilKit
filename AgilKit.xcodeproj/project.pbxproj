@@ -46,6 +46,8 @@
 		34BEC3311A028992004F6DF5 /* AKWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC31D1A028992004F6DF5 /* AKWindowView.m */; };
 		34BEC3321A028992004F6DF5 /* AKXMLDOMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC31F1A028992004F6DF5 /* AKXMLDOMParser.m */; };
 		34BEC3331A028992004F6DF5 /* AKXMLSAXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BEC3211A028992004F6DF5 /* AKXMLSAXParser.m */; };
+		34BED2221F9FE689007E723A /* AGKKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BED2211F9FE689007E723A /* AGKKeychain.swift */; };
+		34BED2241F9FE6D3007E723A /* AGKChecksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BED2231F9FE6D3007E723A /* AGKChecksum.swift */; };
 		34C565DB1B26455D00FC7ED5 /* AKImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C565DA1B26455D00FC7ED5 /* AKImageEffects.m */; };
 		34C9118A1A325B280032D777 /* AgilKitObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C911891A325B280032D777 /* AgilKitObjCTests.m */; };
 		34C9118B1A325B280032D777 /* libAgilKitObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BEC2C41A02882B004F6DF5 /* libAgilKitObjC.a */; };
@@ -146,6 +148,8 @@
 		34BEC31F1A028992004F6DF5 /* AKXMLDOMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKXMLDOMParser.m; sourceTree = "<group>"; };
 		34BEC3201A028992004F6DF5 /* AKXMLSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKXMLSAXParser.h; sourceTree = "<group>"; };
 		34BEC3211A028992004F6DF5 /* AKXMLSAXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKXMLSAXParser.m; sourceTree = "<group>"; };
+		34BED2211F9FE689007E723A /* AGKKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKKeychain.swift; sourceTree = "<group>"; };
+		34BED2231F9FE6D3007E723A /* AGKChecksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKChecksum.swift; sourceTree = "<group>"; };
 		34C565D91B26455D00FC7ED5 /* AKImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKImageEffects.h; sourceTree = "<group>"; };
 		34C565DA1B26455D00FC7ED5 /* AKImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKImageEffects.m; sourceTree = "<group>"; };
 		34C911851A325B280032D777 /* AgilKitObjCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgilKitObjCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,12 +205,14 @@
 			isa = PBXGroup;
 			children = (
 				34582DBE1B24C1EA005D6AC9 /* AGKCache.swift */,
+				34BED2231F9FE6D3007E723A /* AGKChecksum.swift */,
 				34582DBF1B24C1EA005D6AC9 /* AGKColor.swift */,
 				34582DC01B24C1EA005D6AC9 /* AGKCrypto.swift */,
 				341B46D61CA98C1E0079275A /* AGKDisplayLink.swift */,
 				34582DC11B24C1EA005D6AC9 /* AGKHex.swift */,
 				34582DC21B24C1EA005D6AC9 /* AGKImage.swift */,
 				34582DC31B24C1EA005D6AC9 /* AGKKeyboard.swift */,
+				34BED2211F9FE689007E723A /* AGKKeychain.swift */,
 				34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */,
 				34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */,
 				34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */,
@@ -517,12 +523,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				34582DC91B24C1EA005D6AC9 /* AGKCache.swift in Sources */,
+				34BED2241F9FE6D3007E723A /* AGKChecksum.swift in Sources */,
 				34582DCA1B24C1EA005D6AC9 /* AGKColor.swift in Sources */,
 				34582DCB1B24C1EA005D6AC9 /* AGKCrypto.swift in Sources */,
 				341B46D71CA98C1E0079275A /* AGKDisplayLink.swift in Sources */,
 				34582DCC1B24C1EA005D6AC9 /* AGKHex.swift in Sources */,
 				34582DCD1B24C1EA005D6AC9 /* AGKImage.swift in Sources */,
 				34582DCE1B24C1EA005D6AC9 /* AGKKeyboard.swift in Sources */,
+				34BED2221F9FE689007E723A /* AGKKeychain.swift in Sources */,
 				34582DCF1B24C1EA005D6AC9 /* AGKLocStr.swift in Sources */,
 				34582DD01B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift in Sources */,
 				34582DD11B24C1EA005D6AC9 /* AGKNetRequest.swift in Sources */,

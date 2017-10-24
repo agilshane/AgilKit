@@ -86,10 +86,10 @@ class AGKColor {
 
 		if includeAlpha {
 			let floats = [
-				round(r * CGFloat(255)),
-				round(g * CGFloat(255)),
-				round(b * CGFloat(255)),
-				round(a * CGFloat(255)),
+				round(r * 255),
+				round(g * 255),
+				round(b * 255),
+				round(a * 255),
 			]
 			return AGKHex.string(data: Data(bytes: [
 				UInt8(floats[0]),
@@ -100,9 +100,9 @@ class AGKColor {
 		}
 
 		return AGKHex.string(data: Data(bytes: [
-			UInt8(round(r * CGFloat(255))),
-			UInt8(round(g * CGFloat(255))),
-			UInt8(round(b * CGFloat(255)))
+			UInt8(round(r * 255)),
+			UInt8(round(g * 255)),
+			UInt8(round(b * 255)),
 		]))
 	}
 
