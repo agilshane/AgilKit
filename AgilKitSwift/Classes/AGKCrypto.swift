@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 6/2/15.
-//  Copyright © 2015-2017 Agilstream, LLC. All rights reserved.
+//  Copyright © 2015-2018 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -44,14 +44,15 @@ class AGKCrypto {
 			return nil
 		}
 
-		var dataOut = Data(count: data.count + kCCBlockSizeAES128)
+		let dataOutCount = data.count + kCCBlockSizeAES128
+		var dataOut = Data(count: dataOutCount)
 		var numBytesDecrypted = 0
-		var result: Data?
+		var status: CCCryptorStatus?
 
-		key.withUnsafeBytes { (bytesKey: UnsafePointer<UInt8>) -> Void in
-			data.withUnsafeBytes { (bytesIn: UnsafePointer<UInt8>) -> Void in
-				dataOut.withUnsafeMutableBytes { (bytesOut: UnsafeMutablePointer<UInt8>) -> Void in
-					let status = CCCrypt(
+		key.withUnsafeBytes { (bytesKey: UnsafePointer<UInt8>) in
+			data.withUnsafeBytes { (bytesIn: UnsafePointer<UInt8>) in
+				dataOut.withUnsafeMutableBytes { (bytesOut: UnsafeMutablePointer<UInt8>) in
+					status = CCCrypt(
 						CCOperation(kCCDecrypt),
 						CCAlgorithm(kCCAlgorithmAES128),
 						option.value,
@@ -61,17 +62,14 @@ class AGKCrypto {
 						bytesIn,
 						data.count,
 						bytesOut,
-						dataOut.count,
+						dataOutCount,
 						&numBytesDecrypted)
-					if status == CCCryptorStatus(kCCSuccess) {
-						result = Data(bytes: Array(dataOut[0 ..< numBytesDecrypted]))
-					}
 				}
 			}
 		}
 
-		if let result = result {
-			return result
+		if status == CCCryptorStatus(kCCSuccess) {
+			return dataOut[0 ..< numBytesDecrypted]
 		}
 
 		assertionFailure("AES 128 decryption failed!")
@@ -84,14 +82,15 @@ class AGKCrypto {
 			return nil
 		}
 
-		var dataOut = Data(count: data.count + kCCBlockSizeAES128)
+		let dataOutCount = data.count + kCCBlockSizeAES128
+		var dataOut = Data(count: dataOutCount)
 		var numBytesEncrypted = 0
-		var result: Data?
+		var status: CCCryptorStatus?
 
-		key.withUnsafeBytes { (bytesKey: UnsafePointer<UInt8>) -> Void in
-			data.withUnsafeBytes { (bytesIn: UnsafePointer<UInt8>) -> Void in
-				dataOut.withUnsafeMutableBytes { (bytesOut: UnsafeMutablePointer<UInt8>) -> Void in
-					let status = CCCrypt(
+		key.withUnsafeBytes { (bytesKey: UnsafePointer<UInt8>) in
+			data.withUnsafeBytes { (bytesIn: UnsafePointer<UInt8>) in
+				dataOut.withUnsafeMutableBytes { (bytesOut: UnsafeMutablePointer<UInt8>) in
+					status = CCCrypt(
 						CCOperation(kCCEncrypt),
 						CCAlgorithm(kCCAlgorithmAES128),
 						option.value,
@@ -101,17 +100,14 @@ class AGKCrypto {
 						bytesIn,
 						data.count,
 						bytesOut,
-						dataOut.count,
+						dataOutCount,
 						&numBytesEncrypted)
-					if status == CCCryptorStatus(kCCSuccess) {
-						result = Data(bytes: Array(dataOut[0 ..< numBytesEncrypted]))
-					}
 				}
 			}
 		}
 
-		if let result = result {
-			return result
+		if status == CCCryptorStatus(kCCSuccess) {
+			return dataOut[0 ..< numBytesEncrypted]
 		}
 
 		assertionFailure("AES 128 encryption failed!")
