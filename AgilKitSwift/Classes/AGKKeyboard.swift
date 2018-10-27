@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 4/3/15.
-//  Copyright © 2015-2017 Agilstream, LLC. All rights reserved.
+//  Copyright © 2015-2018 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -37,9 +37,9 @@ class AGKKeyboard {
 		self.delegate = delegate
 		let nc = NotificationCenter.default
 		nc.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
-			name: .UIKeyboardWillHide, object: nil)
+			name: UIResponder.keyboardWillHideNotification, object: nil)
 		nc.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
-			name: .UIKeyboardWillShow, object: nil)
+			name: UIResponder.keyboardWillShowNotification, object: nil)
 	}
 
 	deinit {
@@ -49,17 +49,17 @@ class AGKKeyboard {
 	@objc
 	private func onKeyboardWillHide(_ notification: Notification) {
 		height = 0
-		let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
-		delegate?.keyboardHeightWillChange(self, duration: duration)
+		let duration = notification.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey]
+		delegate?.keyboardHeightWillChange(self, duration: duration as! Double)
 	}
 
 	@objc
 	private func onKeyboardWillShow(_ notification: Notification) {
-		if let val = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+		if let val = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
 			let size = val.cgRectValue.size
 			height = size.width > size.height ? size.height : size.width
-			let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
-			delegate?.keyboardHeightWillChange(self, duration: duration)
+			let duration = notification.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey]
+			delegate?.keyboardHeightWillChange(self, duration: duration as! Double)
 		}
 	}
 

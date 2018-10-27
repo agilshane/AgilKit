@@ -149,7 +149,7 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		// Let one run loop go by before declaring that we've finished launching.  Otherwise the
 		// animations will be wrong.
-		m_didFinishLaunching = YES;
+		self->m_didFinishLaunching = YES;
 	});
 }
 

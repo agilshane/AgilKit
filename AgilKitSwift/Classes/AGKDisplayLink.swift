@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 4/25/15.
-//  Copyright © 2015-2017 Agilstream, LLC. All rights reserved.
+//  Copyright © 2015-2018 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -44,7 +44,7 @@ class AGKDisplayLink {
 	private var originalTimestamp = CFTimeInterval(0)
 
 	var duration: CFTimeInterval {
-		return impl?.displayLink?.duration ?? CFTimeInterval(0)
+		return impl?.displayLink?.duration ?? 0
 	}
 
 	var paused: Bool {
@@ -57,8 +57,8 @@ class AGKDisplayLink {
 	}
 
 	var timestamp: CFTimeInterval {
-		let t = impl?.displayLink?.timestamp ?? CFTimeInterval(0)
-		return didFire ? t - originalTimestamp : CFTimeInterval(0)
+		let t = impl?.displayLink?.timestamp ?? 0
+		return didFire ? t - originalTimestamp : 0
 	}
 
 	init(delegate: AGKDisplayLinkDelegate, preferredFramesPerSecond: Int = 60,
@@ -77,7 +77,7 @@ class AGKDisplayLink {
 	fileprivate func implDidFire() {
 		if !didFire {
 			didFire = true
-			originalTimestamp = impl?.displayLink?.timestamp ?? CFTimeInterval(0)
+			originalTimestamp = impl?.displayLink?.timestamp ?? 0
 		}
 		delegate?.displayLinkDidFire(self)
 	}
@@ -98,7 +98,7 @@ private class AGKDisplayLinkImpl {
 		else {
 			displayLink?.frameInterval = max(1, Int(round(60.0 / Double(preferredFramesPerSecond))))
 		}
-		displayLink?.add(to: .main, forMode: commonModes ? .commonModes : .defaultRunLoopMode)
+		displayLink?.add(to: .main, forMode: commonModes ? .common : .default)
 	}
 
 	func invalidate() {

@@ -379,11 +379,11 @@ private class AGKCacheObserver {
 	init() {
 		let nc = NotificationCenter.default
 		nc.addObserver(self, selector: #selector(onAppNotification),
-			name: .UIApplicationDidBecomeActive, object: nil)
+			name: UIApplication.didBecomeActiveNotification, object: nil)
 		nc.addObserver(self, selector: #selector(onAppNotification),
-			name: .UIApplicationWillResignActive, object: nil)
+			name: UIApplication.willResignActiveNotification, object: nil)
 		nc.addObserver(self, selector: #selector(onLowMemory),
-			name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+			name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
 	}
 
 	@objc

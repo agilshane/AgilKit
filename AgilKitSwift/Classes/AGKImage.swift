@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 2/13/15.
-//  Copyright © 2013-2017 Agilstream, LLC. All rights reserved.
+//  Copyright © 2013-2018 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -64,7 +64,7 @@ class AGKImage {
 	// vertically and horizontally.
 
 	class func resizable(image: UIImage) -> UIImage {
-		let left = round(CGFloat(0.5) * image.size.width) - CGFloat(1)
+		let left = round(image.size.width / 2) - 1
 		return resizable(image: image, insetLeft: left)
 	}
 
@@ -72,19 +72,19 @@ class AGKImage {
 	// vertically and uses the given left inset.
 
 	class func resizable(image: UIImage, insetLeft: CGFloat) -> UIImage {
-		let top = round(CGFloat(0.5) * image.size.height) - CGFloat(1)
-		return image.resizableImage(withCapInsets: UIEdgeInsetsMake(top, insetLeft,
-			image.size.height - top - CGFloat(1), image.size.width - insetLeft - CGFloat(1)))
+		let top = round(image.size.height / 2) - 1
+		return image.resizableImage(withCapInsets: UIEdgeInsets(top: top, left: insetLeft,
+			bottom: image.size.height - top - 1, right: image.size.width - insetLeft - 1))
 	}
 
 	// Returns a resizable image with a 1x1 point that is not capped. The point is centered
 	// vertically and uses the given right inset.
 
 	class func resizable(image: UIImage, insetRight: CGFloat) -> UIImage {
-		let top = round(CGFloat(0.5) * image.size.height) - CGFloat(1)
-		return image.resizableImage(withCapInsets: UIEdgeInsetsMake(
-			top, image.size.width - insetRight - CGFloat(1),
-			image.size.height - top - CGFloat(1), insetRight))
+		let top = round(image.size.height / 2) - 1
+		return image.resizableImage(withCapInsets: UIEdgeInsets(
+			top: top, left: image.size.width - insetRight - 1,
+			bottom: image.size.height - top - 1, right: insetRight))
 	}
 
 	// Replaces all pixels with the given color, preserving the alpha channel.
