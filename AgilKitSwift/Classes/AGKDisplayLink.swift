@@ -92,12 +92,7 @@ private class AGKDisplayLinkImpl {
 	init(parent: AGKDisplayLink, preferredFramesPerSecond: Int, commonModes: Bool) {
 		self.parent = parent
 		displayLink = CADisplayLink(target: self, selector: #selector(onTimer))
-		if #available(iOS 10.0, *) {
-			displayLink?.preferredFramesPerSecond = preferredFramesPerSecond
-		}
-		else {
-			displayLink?.frameInterval = max(1, Int(round(60.0 / Double(preferredFramesPerSecond))))
-		}
+		displayLink?.preferredFramesPerSecond = preferredFramesPerSecond
 		displayLink?.add(to: .main, forMode: commonModes ? .common : .default)
 	}
 
