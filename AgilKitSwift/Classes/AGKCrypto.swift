@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 6/2/15.
-//  Copyright © 2015-2018 Agilstream, LLC. All rights reserved.
+//  Copyright © 2015-2019 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -49,19 +49,19 @@ class AGKCrypto {
 		var numBytesDecrypted = 0
 		var status: CCCryptorStatus?
 
-		key.withUnsafeBytes { (bytesKey: UnsafePointer<UInt8>) in
-			data.withUnsafeBytes { (bytesIn: UnsafePointer<UInt8>) in
-				dataOut.withUnsafeMutableBytes { (bytesOut: UnsafeMutablePointer<UInt8>) in
+		key.withUnsafeBytes { bytesKey in
+			data.withUnsafeBytes { bytesIn in
+				dataOut.withUnsafeMutableBytes { bytesOut in
 					status = CCCrypt(
 						CCOperation(kCCDecrypt),
 						CCAlgorithm(kCCAlgorithmAES128),
 						option.value,
-						bytesKey,
+						bytesKey.baseAddress,
 						key.count,
 						nil,
-						bytesIn,
+						bytesIn.baseAddress,
 						data.count,
-						bytesOut,
+						bytesOut.baseAddress,
 						dataOutCount,
 						&numBytesDecrypted)
 				}
@@ -87,19 +87,19 @@ class AGKCrypto {
 		var numBytesEncrypted = 0
 		var status: CCCryptorStatus?
 
-		key.withUnsafeBytes { (bytesKey: UnsafePointer<UInt8>) in
-			data.withUnsafeBytes { (bytesIn: UnsafePointer<UInt8>) in
-				dataOut.withUnsafeMutableBytes { (bytesOut: UnsafeMutablePointer<UInt8>) in
+		key.withUnsafeBytes { bytesKey in
+			data.withUnsafeBytes { bytesIn in
+				dataOut.withUnsafeMutableBytes { bytesOut in
 					status = CCCrypt(
 						CCOperation(kCCEncrypt),
 						CCAlgorithm(kCCAlgorithmAES128),
 						option.value,
-						bytesKey,
+						bytesKey.baseAddress,
 						key.count,
 						nil,
-						bytesIn,
+						bytesIn.baseAddress,
 						data.count,
-						bytesOut,
+						bytesOut.baseAddress,
 						dataOutCount,
 						&numBytesEncrypted)
 				}
@@ -116,9 +116,10 @@ class AGKCrypto {
 
 	class func md5(data: Data) -> Data {
 		var result = Data(count: Int(CC_MD5_DIGEST_LENGTH))
-		data.withUnsafeBytes { bytesIn -> Void in
-			result.withUnsafeMutableBytes { bytesOut -> Void in
-				CC_MD5(bytesIn, CC_LONG(data.count), bytesOut)
+		data.withUnsafeBytes { bytesIn in
+			result.withUnsafeMutableBytes { bytesOut in
+				let bytesOut2 = bytesOut.bindMemory(to: UInt8.self)
+				CC_MD5(bytesIn.baseAddress, CC_LONG(data.count), bytesOut2.baseAddress)
 			}
 		}
 		return result
@@ -141,23 +142,25 @@ class AGKCrypto {
 		while true {
 			let data = handle.readData(ofLength: 16384)
 			guard data.count > 0 else { break }
-			data.withUnsafeBytes { bytes -> Void in
-				CC_MD5_Update(&ctx, bytes, CC_LONG(data.count))
+			data.withUnsafeBytes { bytes in
+				_ = CC_MD5_Update(&ctx, bytes.baseAddress, CC_LONG(data.count))
 			}
 		}
 
 		var result = Data(count: Int(CC_MD5_DIGEST_LENGTH))
-		result.withUnsafeMutableBytes { bytes -> Void in
-			CC_MD5_Final(bytes, &ctx)
+		result.withUnsafeMutableBytes { bytes  in
+			let bytes2 = bytes.bindMemory(to: UInt8.self)
+			CC_MD5_Final(bytes2.baseAddress, &ctx)
 		}
 		return result
 	}
 
 	class func sha1(data: Data) -> Data {
 		var result = Data(count: Int(CC_SHA1_DIGEST_LENGTH))
-		data.withUnsafeBytes { bytesIn -> Void in
-			result.withUnsafeMutableBytes { bytesOut -> Void in
-				CC_SHA1(bytesIn, CC_LONG(data.count), bytesOut)
+		data.withUnsafeBytes { bytesIn in
+			result.withUnsafeMutableBytes { bytesOut in
+				let bytesOut2 = bytesOut.bindMemory(to: UInt8.self)
+				CC_SHA1(bytesIn.baseAddress, CC_LONG(data.count), bytesOut2.baseAddress)
 			}
 		}
 		return result
@@ -168,8 +171,12 @@ class AGKCrypto {
 		data.withUnsafeBytes { bytesIn in
 			hmacKey.withUnsafeBytes { bytesKey in
 				result.withUnsafeMutableBytes { bytesOut in
-					CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA1), bytesKey, hmacKey.count,
-						bytesIn, data.count, bytesOut)
+					CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA1),
+						bytesKey.baseAddress,
+						hmacKey.count,
+						bytesIn.baseAddress,
+						data.count,
+						bytesOut.baseAddress)
 				}
 			}
 		}
@@ -193,23 +200,25 @@ class AGKCrypto {
 		while true {
 			let data = handle.readData(ofLength: 16384)
 			guard data.count > 0 else { break }
-			data.withUnsafeBytes { bytes -> Void in
-				CC_SHA1_Update(&ctx, bytes, CC_LONG(data.count))
+			data.withUnsafeBytes { bytes in
+				_ = CC_SHA1_Update(&ctx, bytes.baseAddress, CC_LONG(data.count))
 			}
 		}
 
 		var result = Data(count: Int(CC_SHA1_DIGEST_LENGTH))
-		result.withUnsafeMutableBytes { bytes -> Void in
-			CC_SHA1_Final(bytes, &ctx)
+		result.withUnsafeMutableBytes { bytes in
+			let bytes2 = bytes.bindMemory(to: UInt8.self)
+			CC_SHA1_Final(bytes2.baseAddress, &ctx)
 		}
 		return result
 	}
 
 	class func sha256(data: Data) -> Data {
 		var result = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
-		data.withUnsafeBytes { bytesIn -> Void in
-			result.withUnsafeMutableBytes { bytesOut -> Void in
-				CC_SHA256(bytesIn, CC_LONG(data.count), bytesOut)
+		data.withUnsafeBytes { bytesIn in
+			result.withUnsafeMutableBytes { bytesOut in
+				let bytesOut2 = bytesOut.bindMemory(to: UInt8.self)
+				CC_SHA256(bytesIn.baseAddress, CC_LONG(data.count), bytesOut2.baseAddress)
 			}
 		}
 		return result

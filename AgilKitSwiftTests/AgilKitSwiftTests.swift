@@ -60,13 +60,21 @@ class AgilKitSwiftTests: XCTestCase {
 
 	func testCrypto() {
 		let data = "abcdefghijklmnopqrstuvwxyz".data(using: String.Encoding.utf8)!
-		let key = "this is the key".data(using: String.Encoding.utf8)!
+		let key = Data([0, 255, 1, 2, 3, 4, 5, 6, 254, 253, 200, 100, 50, 1, 2, 3]) 
 
-		var result = AGKHex.string(data: AGKCrypto.sha1(data: data))
+		var data2 = AGKCrypto.aes128Encrypt(data: data, key: key, option: .pkcs7Padding)!
+		var result = AGKHex.string(data: data2)
+		XCTAssertTrue(result == "12BF256D24F0EE7025BA6A28B2456DB0FFB1DC2CB2B61A1924E77D19F6BEC543")
+
+		data2 = AGKCrypto.aes128Decrypt(data: data2, key: key, option: .pkcs7Padding)!
+		result = String(data: data2, encoding: .utf8)!
+		XCTAssertTrue(result == "abcdefghijklmnopqrstuvwxyz")
+
+		result = AGKHex.string(data: AGKCrypto.sha1(data: data))
 		XCTAssertTrue(result == "32D10C7B8CF96570CA04CE37F2A19D84240D3A89")
 
 		result = AGKHex.string(data: AGKCrypto.sha1(data: data, hmacKey: key))
-		XCTAssertTrue(result == "345DF8EAF4AE8ADF276BEA5E282FA732F8F8BEF4")
+		XCTAssertTrue(result == "B226CDA6A5B631B5238EFA9F72C7A648F4F41CE2")
 
 		result = AGKHex.string(data: AGKCrypto.sha256(data: data))
 		XCTAssertTrue(result == "71C480DF93D6AE2F1EFAD1447C66C9525E316218CF51FC8D9ED832F2DAF18B73")

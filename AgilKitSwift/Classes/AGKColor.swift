@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 12/17/14.
-//  Copyright © 2013-2018 Agilstream, LLC. All rights reserved.
+//  Copyright © 2013-2019 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -81,28 +81,22 @@ class AGKColor {
 		return (r, g, b, a)
 	}
 
-	class func rrggbbString(color: UIColor, includeAlpha: Bool) -> String {
-		let (r, g, b, a) = rgba(color: color)
-
-		if includeAlpha {
-			let floats = [
-				round(r * 255),
-				round(g * 255),
-				round(b * 255),
-				round(a * 255),
-			]
-			return AGKHex.string(data: Data(bytes: [
-				UInt8(floats[0]),
-				UInt8(floats[1]),
-				UInt8(floats[2]),
-				UInt8(floats[3]),
-			]))
-		}
-
-		return AGKHex.string(data: Data(bytes: [
+	class func rrggbbString(color: UIColor) -> String {
+		let (r, g, b, _) = rgba(color: color)
+		return AGKHex.string(data: Data([
 			UInt8(round(r * 255)),
 			UInt8(round(g * 255)),
 			UInt8(round(b * 255)),
+		]))
+	}
+
+	class func rrggbbaaString(color: UIColor) -> String {
+		let (r, g, b, a) = rgba(color: color)
+		return AGKHex.string(data: Data([
+			UInt8(round(r * 255)),
+			UInt8(round(g * 255)),
+			UInt8(round(b * 255)),
+			UInt8(round(a * 255))
 		]))
 	}
 
