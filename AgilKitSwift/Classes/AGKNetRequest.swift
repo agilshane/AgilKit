@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 12/5/14.
-//  Copyright © 2013-2017 Agilstream, LLC. All rights reserved.
+//  Copyright © 2013-2019 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -44,8 +44,6 @@ class AGKNetRequest {
 
 	private static var cleanUpTime = TimeInterval(0)
 	weak var delegate: AGKNetRequestDelegate?
-	private static var ignoreCount = 0
-	private var ignoreInteraction = false
 	private var impl: AGKNetRequestImpl?
 	weak var progressDelegate: AGKNetRequestProgressDelegate?
 	private(set) var responseBody = Data()
@@ -63,10 +61,8 @@ class AGKNetRequest {
 		return url.appendingPathComponent("AGKNetRequest", isDirectory: true)
 	}()
 
-	init(
-		delegate: AGKNetRequestDelegate?,
+	init(delegate: AGKNetRequestDelegate?,
 		url: URL,
-		ignoreInteraction: Bool = false,
 		showNetActivityIndicator: Bool = false,
 		headers: [String: String]? = nil,
 		body: Data? = nil,
@@ -75,7 +71,6 @@ class AGKNetRequest {
 		cachePolicy: URLRequest.CachePolicy? = nil)
 	{
 		self.delegate = delegate
-		self.ignoreInteraction = ignoreInteraction
 		self.showNetActivityIndicator = showNetActivityIndicator
 		self.url = url
 
@@ -116,15 +111,6 @@ class AGKNetRequest {
 			}
 		}
 
-		if ignoreInteraction {
-			AGKNetRequest.ignoreCount += 1
-			if AGKNetRequest.ignoreCount == 1 {
-				#if !NO_UIAPPLICATION
-					UIApplication.shared.beginIgnoringInteractionEvents()
-				#endif
-			}
-		}
-
 		if showNetActivityIndicator {
 			AGKNetActivityIndicator.show()
 		}
@@ -140,22 +126,6 @@ class AGKNetRequest {
 	deinit {
 		impl?.cancel()
 		impl = nil
-
-		if ignoreInteraction {
-			ignoreInteraction = false
-			AGKNetRequest.ignoreCount -= 1
-
-			if AGKNetRequest.ignoreCount < 0 {
-				assertionFailure("AGKNetRequest has ended ignoring interaction too many times!")
-				AGKNetRequest.ignoreCount = 0
-			}
-
-			if AGKNetRequest.ignoreCount == 0 {
-				#if !NO_UIAPPLICATION
-					UIApplication.shared.endIgnoringInteractionEvents()
-				#endif
-			}
-		}
 
 		if showNetActivityIndicator {
 			showNetActivityIndicator = false
@@ -211,22 +181,6 @@ class AGKNetRequest {
 	fileprivate func implDidFinish(error: Error?) {
 		impl?.parent = nil
 		impl = nil
-
-		if ignoreInteraction {
-			ignoreInteraction = false
-			AGKNetRequest.ignoreCount -= 1
-
-			if AGKNetRequest.ignoreCount < 0 {
-				assertionFailure("AGKNetRequest has ended ignoring interaction too many times!")
-				AGKNetRequest.ignoreCount = 0
-			}
-
-			if AGKNetRequest.ignoreCount == 0 {
-				#if !NO_UIAPPLICATION
-					UIApplication.shared.endIgnoringInteractionEvents()
-				#endif
-			}
-		}
 
 		if showNetActivityIndicator {
 			showNetActivityIndicator = false
