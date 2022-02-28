@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 12/5/14.
-//  Copyright © 2013-2019 Agilstream, LLC. All rights reserved.
+//  Copyright © 2013-2021 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -24,11 +24,11 @@
 
 import UIKit
 
-protocol AGKNetRequestDelegate: class {
+protocol AGKNetRequestDelegate: AnyObject {
 	func netRequestDidFinish(_ netRequest: AGKNetRequest, error: Error?)
 }
 
-protocol AGKNetRequestProgressDelegate: class {
+protocol AGKNetRequestProgressDelegate: AnyObject {
 	func netRequest(_ netRequest: AGKNetRequest, didDownloadChunk chunkSize: Int64,
 		totalBytesDownloaded: Int64, totalBytesExpected: Int64)
 }
@@ -50,7 +50,6 @@ class AGKNetRequest {
 	private var responseBodyMutable: Data?
 	private(set) var responseHeaders = [String: String]()
 	private(set) var responseURL: URL?
-	private var showNetActivityIndicator = false
 	private(set) var statusCode = 0
 	private var totalBytesExpected = Int64(0)
 	let url: URL
@@ -63,7 +62,6 @@ class AGKNetRequest {
 
 	init(delegate: AGKNetRequestDelegate?,
 		url: URL,
-		showNetActivityIndicator: Bool = false,
 		headers: [String: String]? = nil,
 		body: Data? = nil,
 		method: Method = .get,
@@ -71,7 +69,6 @@ class AGKNetRequest {
 		cachePolicy: URLRequest.CachePolicy? = nil)
 	{
 		self.delegate = delegate
-		self.showNetActivityIndicator = showNetActivityIndicator
 		self.url = url
 
 		AGKNetRequest.cleanUpTempFiles()
@@ -111,10 +108,6 @@ class AGKNetRequest {
 			}
 		}
 
-		if showNetActivityIndicator {
-			AGKNetActivityIndicator.show()
-		}
-
 		// Create an instance of AGKNetRequestImpl to manage the connection, rather than
 		// managing it ourselves, because the connection retains its delegate. By having the
 		// impl code manage the connection, we (AGKNetRequest) can be released as a means to
@@ -126,12 +119,6 @@ class AGKNetRequest {
 	deinit {
 		impl?.cancel()
 		impl = nil
-
-		if showNetActivityIndicator {
-			showNetActivityIndicator = false
-			AGKNetActivityIndicator.hide()
-		}
-
 		if let responseURL = self.responseURL {
 			try? FileManager.default.removeItem(at: responseURL)
 		}
@@ -181,12 +168,6 @@ class AGKNetRequest {
 	fileprivate func implDidFinish(error: Error?) {
 		impl?.parent = nil
 		impl = nil
-
-		if showNetActivityIndicator {
-			showNetActivityIndicator = false
-			AGKNetActivityIndicator.hide()
-		}
-
 		delegate?.netRequestDidFinish(self, error: error)
 		delegate = nil
 	}

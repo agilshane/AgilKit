@@ -45,8 +45,8 @@ class AgilKitSwiftTests: XCTestCase {
 			b2 == CGFloat(206) / CGFloat(255) &&
 			a2 == 1.0)
 
-		XCTAssertTrue(AGKColor.rrggbbString(color: c0, includeAlpha: true) == "05A9CEFF")
-		XCTAssertTrue(AGKColor.rrggbbString(color: c0, includeAlpha: false) == "05A9CE")
+		XCTAssertTrue(AGKColor.rrggbbaaString(color: c0) == "05A9CEFF")
+		XCTAssertTrue(AGKColor.rrggbbString(color: c0) == "05A9CE")
 
 		let c1 = UIColor(
 			red:   CGFloat(  5) / CGFloat(255),
@@ -88,7 +88,7 @@ class AgilKitSwiftTests: XCTestCase {
 			bytes[i] = UInt8(arc4random() % 256)
 		}
 
-		let data0 = Data(bytes: UnsafePointer<UInt8>(bytes), count: count)
+		let data0 = Data(bytes: bytes, count: count)
 		let hex0 = AGKHex.string(data: data0)
 		let data1 = AGKHex.data(string: hex0)!
 		let hex1 = AGKHex.string(data: data1)

@@ -3,7 +3,7 @@
 //  AgilKit
 //
 //  Created by Shane Meyer on 6/2/15.
-//  Copyright © 2015-2019 Agilstream, LLC. All rights reserved.
+//  Copyright © 2015-2021 Agilstream, LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this
 //  software and associated documentation files (the "Software"), to deal in the Software
@@ -22,6 +22,7 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
+import CryptoKit
 import Foundation
 
 class AGKCrypto {
@@ -114,45 +115,42 @@ class AGKCrypto {
 		return nil
 	}
 
-	class func md5(data: Data) -> Data {
-		var result = Data(count: Int(CC_MD5_DIGEST_LENGTH))
-		data.withUnsafeBytes { bytesIn in
-			result.withUnsafeMutableBytes { bytesOut in
-				let bytesOut2 = bytesOut.bindMemory(to: UInt8.self)
-				CC_MD5(bytesIn.baseAddress, CC_LONG(data.count), bytesOut2.baseAddress)
-			}
-		}
-		return result
-	}
-
-	class func md5OfFile(url: URL) -> Data? {
-		guard url.isFileURL else {
-			assertionFailure("The URL is not a file URL!")
+	class func aes256Encrypt(data: Data, key: Data, option: BlockCipherOption) -> Data? {
+		guard key.count == kCCKeySizeAES256 else {
+			assertionFailure("The AES 256 key size is invalid!")
 			return nil
 		}
 
-		guard let handle = try? FileHandle(forReadingFrom: url) else {
-			assertionFailure("The file handle is nil!")
-			return nil
-		}
+		let dataOutCount = data.count + kCCBlockSizeAES128
+		var dataOut = Data(count: dataOutCount)
+		var numBytesEncrypted = 0
+		var status: CCCryptorStatus?
 
-		var ctx = CC_MD5_CTX()
-		CC_MD5_Init(&ctx)
-
-		while true {
-			let data = handle.readData(ofLength: 16384)
-			guard data.count > 0 else { break }
-			data.withUnsafeBytes { bytes in
-				_ = CC_MD5_Update(&ctx, bytes.baseAddress, CC_LONG(data.count))
+		key.withUnsafeBytes { bytesKey in
+			data.withUnsafeBytes { bytesIn in
+				dataOut.withUnsafeMutableBytes { bytesOut in
+					status = CCCrypt(
+						CCOperation(kCCEncrypt),
+						CCAlgorithm(kCCAlgorithmAES),
+						option.value,
+						bytesKey.baseAddress,
+						key.count,
+						nil,
+						bytesIn.baseAddress,
+						data.count,
+						bytesOut.baseAddress,
+						dataOutCount,
+						&numBytesEncrypted)
+				}
 			}
 		}
 
-		var result = Data(count: Int(CC_MD5_DIGEST_LENGTH))
-		result.withUnsafeMutableBytes { bytes  in
-			let bytes2 = bytes.bindMemory(to: UInt8.self)
-			CC_MD5_Final(bytes2.baseAddress, &ctx)
+		if status == CCCryptorStatus(kCCSuccess) {
+			return dataOut[0 ..< numBytesEncrypted]
 		}
-		return result
+
+		assertionFailure("AES 256 encryption failed!")
+		return nil
 	}
 
 	class func sha1(data: Data) -> Data {
@@ -214,14 +212,34 @@ class AGKCrypto {
 	}
 
 	class func sha256(data: Data) -> Data {
-		var result = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
-		data.withUnsafeBytes { bytesIn in
-			result.withUnsafeMutableBytes { bytesOut in
-				let bytesOut2 = bytesOut.bindMemory(to: UInt8.self)
-				CC_SHA256(bytesIn.baseAddress, CC_LONG(data.count), bytesOut2.baseAddress)
-			}
+		let digest = SHA256.hash(data: data)
+		return Data(digest.makeIterator())
+	}
+
+	class func sha256OfFile(url: URL) -> Data? {
+		guard url.isFileURL else {
+			assertionFailure("The URL is not a file URL!")
+			return nil
 		}
-		return result
+
+		guard let handle = try? FileHandle(forReadingFrom: url) else {
+			assertionFailure("The file handle is nil!")
+			return nil
+		}
+
+		var hash = SHA256()
+
+		while true {
+			let data = handle.readData(ofLength: 16384)
+			guard data.count > 0 else { break }
+			hash.update(data: data)
+		}
+
+		// The result, when converted to hex, should match the output of "openssl sha256 [filename]" when
+		// run from a macOS terminal.
+
+		let digest = hash.finalize()
+		return Data(digest.makeIterator())
 	}
 
 }

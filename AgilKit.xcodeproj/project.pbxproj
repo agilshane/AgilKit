@@ -19,7 +19,6 @@
 		34582DCD1B24C1EA005D6AC9 /* AGKImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC21B24C1EA005D6AC9 /* AGKImage.swift */; };
 		34582DCE1B24C1EA005D6AC9 /* AGKKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC31B24C1EA005D6AC9 /* AGKKeyboard.swift */; };
 		34582DCF1B24C1EA005D6AC9 /* AGKLocStr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */; };
-		34582DD01B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */; };
 		34582DD11B24C1EA005D6AC9 /* AGKNetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */; };
 		34582DD31B24C1EA005D6AC9 /* AGKTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */; };
 		34582DD51B24C2FB005D6AC9 /* AGKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34582DBF1B24C1EA005D6AC9 /* AGKColor.swift */; };
@@ -97,7 +96,6 @@
 		34582DC21B24C1EA005D6AC9 /* AGKImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKImage.swift; sourceTree = "<group>"; };
 		34582DC31B24C1EA005D6AC9 /* AGKKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKKeyboard.swift; sourceTree = "<group>"; };
 		34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKLocStr.swift; sourceTree = "<group>"; };
-		34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKNetActivityIndicator.swift; sourceTree = "<group>"; };
 		34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKNetRequest.swift; sourceTree = "<group>"; };
 		34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGKTimer.swift; sourceTree = "<group>"; };
 		34582DD41B24C26C005D6AC9 /* AgilKitSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AgilKitSwift-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -214,7 +212,6 @@
 				34582DC31B24C1EA005D6AC9 /* AGKKeyboard.swift */,
 				34BED2211F9FE689007E723A /* AGKKeychain.swift */,
 				34582DC41B24C1EA005D6AC9 /* AGKLocStr.swift */,
-				34582DC51B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift */,
 				34582DC61B24C1EA005D6AC9 /* AGKNetRequest.swift */,
 				3459D4E01D353B4500AA9469 /* AGKQueryString.swift */,
 				34582DC81B24C1EA005D6AC9 /* AGKTimer.swift */,
@@ -453,7 +450,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Agilstream, LLC";
 				TargetAttributes = {
 					3486EE591B24C09300ACA46E = {
@@ -533,7 +530,6 @@
 				34582DCE1B24C1EA005D6AC9 /* AGKKeyboard.swift in Sources */,
 				34BED2221F9FE689007E723A /* AGKKeychain.swift in Sources */,
 				34582DCF1B24C1EA005D6AC9 /* AGKLocStr.swift in Sources */,
-				34582DD01B24C1EA005D6AC9 /* AGKNetActivityIndicator.swift in Sources */,
 				34582DD11B24C1EA005D6AC9 /* AGKNetRequest.swift in Sources */,
 				3459D4E11D353B4500AA9469 /* AGKQueryString.swift in Sources */,
 				34582DD31B24C1EA005D6AC9 /* AGKTimer.swift in Sources */,
@@ -663,7 +659,6 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = AgilKitSwiftTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilstream.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -685,7 +680,6 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = AgilKitSwiftTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agilstream.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -719,6 +713,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -742,7 +737,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -772,6 +767,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -788,7 +784,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
